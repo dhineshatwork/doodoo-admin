@@ -1,0 +1,102 @@
+<html lang="en" >
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="../bower_components/SLDS/salesforce-lightning-design-system.min.css">
+  <!-- Angular Material style sheet -->
+  <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
+    <style>
+    .login md-card {
+        width: 300px;
+        height: 400px;
+    }
+    .md-button{
+        margin: auto!important;
+        display: flex!important;
+    }
+    </style>
+</head>
+<body ng-app="BlankApp" class="layout-boxed" ng-cloak ng-controller="signInCtrl">
+    <div layout="row" layout-fill ng-cloak>
+        <section layout="column" flex layout-align="center center" class="login">
+            <md-card  class="md-whiteframe-4dp">
+                <md-toolbar>
+                    <div layout="column" layout-padding layout-align="center center">
+                        <!--div>
+                            <md-icon class="logo">home</md-icon>
+                        </div-->
+                        <div class="md-headline md-padding">Sign In</div>
+                    </div>
+                </md-toolbar>
+                <md-card-content>
+                    <form name="colorForm">
+                        <md-input-container class="md-block">
+                        <label>Email</label>
+                        <input name="Email" ng-model="email" required>
+                        <div ng-messages="email.$error">
+                            <div ng-message="required">This is required!</div>
+                        </div>
+                        </md-input-container>
+                        <md-input-container class="md-block">
+                            <label>Password</label>
+                            <input name="Password" ng-model="password" type="password" required>
+                            <div ng-messages="password.$error">
+                            <div ng-message="required">This is required!</div>
+                            </div>
+                        </md-input-container>
+                        <md-button class="md-raised slds-align_absolute-center" ng-click="signIn()">Sign In</md-button>
+                    </form>
+                </md-card-content>
+            </md-card>
+        </section>
+  </div>
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+
+  <!-- Angular Material Library -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.js"></script>
+  
+  <!-- Your application bootstrap  -->
+  <script type="text/javascript">    
+    /**
+     * You must include the dependency on 'ngMaterial' 
+     */
+    var app = angular.module('BlankApp', ['ngMaterial']);
+    app.controller('signInCtrl',function($scope, $http){
+        $scope.email = '';
+        $scope.password = '';
+        $scope.signIn = function() {
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/signin',
+                data : {'email':$scope.email,'password':$scope.password},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                window.open('../index.html','_self');
+                console.log( 'data', data );
+            })
+        };
+        $scope.signUp = function(){
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/signup',
+                data : {'email':$scope.email,'password':$scope.password},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data );
+            })
+        };
+    });
+    app.config(['$httpProvider', function($httpProvider) {
+            $httpProvider.defaults.useXDomain = true;
+            delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        }   
+    ]);
+    
+  </script>
+  
+</body>
+</html>

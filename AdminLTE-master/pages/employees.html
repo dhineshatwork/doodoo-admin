@@ -816,7 +816,7 @@
           $scope.empToUpdate = emp;
         };
         $scope.updateEmp = function(){
-          console.log(emp);
+          console.log($scope.empToUpdate);
           $scope.showEdit = false;
           $http({
               method: 'POST',

@@ -371,13 +371,12 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tables
-        <small>advanced tables</small>
+        Categories 
+        <small>and Sub Categories</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Category</li>
       </ol>
     </section>
     <section class="content">
@@ -518,22 +517,28 @@
               </div>
             </div>
             <div class="box-header"  ng-if="showCat">
-                <span class="slds-avatar slds-avatar_large">
-                    <img alt="Person name" ng-src="{{catView.img_src}}"/>
-                </span>
-                <h3 class="box-title">{{catView.name}}</h3>
-                <span><i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;"></i><i style="cursor:pointer;" class="fa fa-trash slds-p-left_small"></i></span>
+                <h3 class="box-title">Sub Categories</h3>
             </div>
-            <div class="box-body row" ng-if="showCat">
-                <div class="col-md-12 row">
-                  <div class="slds-form-element slds-float_right col-md-4">
+            <div class="box-body slds-grid slds-wrap" ng-if="showCat">
+                <div class="slds-col slds-grid slds-wrap">
+                  <span class="slds-avatar slds-avatar_large">
+                      <img alt="Person name" ng-src="{{catView.img_src}}"/>
+                  </span>
+                  <span class="slds-p-top_medium slds-grid slds-p-left_medium">
+                    <h3 class="box-title">{{catView.name}}</h3>
+                    <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;"></i>
+                    <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small"></i>
+                  </span>
+                </div>
+                <div class="slds-col--bump-left slds-grid">
+                  <div class="slds-form-element slds-float_right slds-col">
                       <label class="slds-form-element__label" for="text-input-id-1">Search Sub Category</label>
                       <div class="slds-form-element__control">
                         <input type="text" id="text-input-id-1" ng-model="searchKey" class="slds-input" placeholder="Search...." />
                       </div>
                   </div>
                 </div>
-                <div class="col-md-12 slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-grid slds-wrap">
                   <div class="slds-size_1-of-3 slds-p-top_medium slds-align_absolute-center" ng-repeat="subcat in catView.sub_category | filter:{ name: searchKey}">
                       <span class="slds-avatar slds-avatar_large">
                         <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}"/>

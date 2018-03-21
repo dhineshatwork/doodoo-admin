@@ -857,7 +857,7 @@
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-              data :  $scope.empToUpdate,
+              data :  JSON.stringify($scope.empToUpdate),
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);

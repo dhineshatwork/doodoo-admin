@@ -397,7 +397,7 @@
             <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Banner Images</h3>
-                <button class="slds-float_right slds-button slds-button_neutral" ng-click="showModal()">Add New</button>
+                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 3" ng-click="showModal()">Add New</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
@@ -713,6 +713,7 @@
             }).success(function(data) {
                     console.log( 'data', data );
                     $scope.isModalOpen = false;
+                    getBannerImages();
             })
           });
         };
@@ -725,6 +726,7 @@
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
+              getBannerImages();
           })
         };
         $scope.showModal = function(){

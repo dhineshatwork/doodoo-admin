@@ -407,6 +407,23 @@
                       <input type="text" id="text-input-id-1" class="slds-input" ng-model="catName" />
                     </div>
                   </div>
+                  <div class="slds-form-element slds-p-bottom_small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                    <div class="slds-form-element__control">
+                      <div class="slds-combobox">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="locName" />
+                      </div>
+                      <span class="slds-pill slds-pill_link" ng-repeat="loc in locNames">
+                        <a href="javascript:void(0);" class="slds-pill__action" title="Full pill label verbiage mirrored here">
+                          <span class="slds-pill__label">{{loc}}</span>
+                        </a>
+                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
+                          <i class="fa fa-remove"></i>
+                          <span class="slds-assistive-text">Remove</span>
+                        </button>
+                      </span>
+                    </div>
+                  </div>
                   <div class="slds-form-element slds-p-bottom_medium">
                       <label class="slds-form-element__label" id="file-selector-primary-label">Category Image</label>
                       <div class="slds-form-element__control">
@@ -514,7 +531,7 @@
                 </div>
               </div>
               <div class="col-md-12 slds-grid slds-wrap">
-                <div class="slds-size_1-of-3 slds-p-top_medium slds-align_absolute-center" ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
+                <div class="slds-size_1-of-3 slds-p-top_x-large slds-align_absolute-center" ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
                     <span class="slds-avatar slds-avatar_large">
                       <img alt="Person name" ng-src="{{cat.img_src}}"/>
                     </span>
@@ -533,7 +550,7 @@
                   <span class="slds-p-top_medium slds-grid slds-p-left_medium">
                     <h3 class="box-title">{{catView.name}}</h3>
                     <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;"></i>
-                    <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small"></i>
+                    <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCat()"></i>
                   </span>
                 </div>
                 <div class="slds-col--bump-left slds-grid">
@@ -545,7 +562,7 @@
                   </div>
                 </div>
                 <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                  <div class="slds-size_1-of-3 slds-p-top_medium slds-align_absolute-center" ng-repeat="subcat in catView.sub_category | filter:{ name: searchKey}">
+                  <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center" ng-repeat="subcat in catView.sub_category | filter:{ name: searchKey}">
                       <span class="slds-avatar slds-avatar_large">
                         <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}"/>
                       </span>
@@ -788,6 +805,16 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+<div  ng-if="showSpinner" style="height: 6rem;">
+  <div>
+    <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
+      <span class="slds-assistive-text">Loading</span>
+      <div class="slds-spinner__dot-a"></div>
+      <div class="slds-spinner__dot-b"></div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
+  </div>
+</div>
 <!-- ./wrapper -->
  <!-- Angular Material requires Angular.js Libraries -->
  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -818,13 +845,29 @@
         $scope.subCatName = '';
         $scope.catImg;
         $scope.subCatImg;
+        $scope.locName;
+        $scope.locNames = ['Chennai'];
         $scope.showCat = false;
+        $scope.showSpinner = false;
+        $scope.delCat = function(){
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/admin/deleteCategory',
+              data : {'category_id':$scope.catView._id},
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log( 'data', data);
+              getCategories();
+              $scope.showCat = false;
+              $scope.catView = null;
+          })
+        };
         $scope.addCategory = function(){
           console.log($scope.catName,$scope.catImg);
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
           fd.append('file',  $scope.catImg);
-
+          $scope.showSpinner = true;
           $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
               headers: {
                   'Content-Type': undefined,
@@ -835,10 +878,12 @@
               $http({
                   method: 'POST',
                   url: 'https://freelaunce2.herokuapp.com/admin/addCategory',
-                  data : {'name':$scope.catName,'img_src':data.secure_url},
+                  data : {'name':$scope.catName,'img_src':data.secure_url,'loc_name':$scope.locNames},
                   headers: {'Content-Type':'application/json'}
               }).success(function(data) {
                   console.log( 'data', data );
+                  getCategories();
+                  $scope.showSpinner = false;
               })
           })
 
@@ -862,7 +907,7 @@
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
-             // $scope.allCat = data.categorylist;
+              getCategories();
           })
         };
         $scope.addSubCategory = function(){
@@ -885,7 +930,7 @@
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 console.log( 'data', data);
-               // $scope.allCat = data.categorylist;
+                getCategories();
             });
           });
         };
@@ -893,7 +938,7 @@
         var getCategories = function(){
           $http({
               method: 'GET',
-              url: 'https://freelaunce2.herokuapp.com/user/categorylist',
+              url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data.categorylist );

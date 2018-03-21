@@ -436,6 +436,24 @@
                         <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.designation" />
                       </div>
                     </div>
+                    <div class="slds-form-element slds-p-bottom_medium">
+                      <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-file-selector slds-file-selector_files slds-grid">
+                          <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                            <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
+                            <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
+                              <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                                </svg-->Upload Files</span>
+                              <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
+                            </label>
+                          </div>
+                         <p ng-bind="empProPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                        </div>
+                      </div>
+                    </div>
                     <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addEmp()">Add</button>
                   </div>
                 </div>
@@ -795,15 +813,27 @@
         $scope.newEmp;
         $scope.showEdit = false;
         $scope.addEmp = function(){
-          console.log($scope.newEmp);
-          $http({
-                  method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
-                  data : $scope.newEmp,
-                  headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-                  console.log( 'data', data );
-          })
+          var fd = new FormData();
+          fd.append('upload_preset', 'mytrda6j');
+          fd.append('file',  $scope.empProPic);
+          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+            headers: {
+                'Content-Type': undefined,
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+          }).success(function(result) {
+            $scope.newEmp.profile_pic = result.secure_url;
+            console.log($scope.newEmp);
+          
+            $http({
+                    method: 'POST',
+                    url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
+                    data : $scope.newEmp,
+                    headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                    console.log( 'data', data );
+            })
+          });
         }
         $scope.deleteEmp = function(id){
           console.log(id);
@@ -881,6 +911,19 @@
           })
         };
         getEmployees();
+    });
+    app.directive("ngFileSelect",function(){
+        return {
+            link: function($scope,el){
+                
+                el.bind("change", function(e){
+                    var mySelectedFile = (e.srcElement || e.target).files[0];
+                    $scope.empProPic = mySelectedFile;
+                    $scope.empProPicName = mySelectedFile.name;
+                    $scope.$digest();
+                })
+            }
+        }
     });
 </script>
 </body>

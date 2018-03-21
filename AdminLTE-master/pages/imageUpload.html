@@ -427,24 +427,24 @@
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="  slds-align_absolute-center ">
-            <div class="slds-form-element">
-              <label class="slds-form-element__label" id="file-selector-primary-label">Banner Image</label>
-              <div class="slds-form-element__control">
-                <div class="slds-file-selector slds-file-selector_files slds-grid">
-                  <div class="slds-file-selector__dropzone slds-size_3-of-9">
-                    <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)" id="banner"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" accept="image/*"/>
-                    <label class="slds-file-selector__body" for="banner" id="file-selector-secondary-label">
-                      <span class="slds-file-selector__button slds-button slds-button_neutral">
-                        <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                          <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                        </svg-->Upload Files</span>
-                      <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
-                    </label>
+              <div class="slds-form-element slds-p-bottom_medium">
+                <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
+                <div class="slds-form-element__control">
+                  <div class="slds-file-selector slds-file-selector_files slds-grid">
+                    <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                      <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
+                      <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
+                        <span class="slds-file-selector__button slds-button slds-button_neutral">
+                          <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                          </svg-->Upload Files</span>
+                        <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
+                      </label>
+                    </div>
+                   <p ng-bind="newBannerPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
                   </div>
-                 <p ng-bind="bannerImgName" class="slds-p-top_xx-small slds-truncate slds-p-left_small"></p>
                 </div>
               </div>
-            </div>
             </div>
           </div>
           <footer class="slds-modal__footer">
@@ -688,13 +688,13 @@
   
     var app = angular.module('imgUploadApp', []);
     app.controller('imgUploadCtrl',function($scope, $http){
-        $scope.newBannerImg = 'test';
         $scope.isModalOpen = false;
+        $scope.newBannerPic = {};
         $scope.addBannerImg = function(){
-          console.log($scope.newBannerImg);
+          console.log($scope.newBannerPic);
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
-          fd.append('file',  $scope.newBannerImg);
+          fd.append('file',  $scope.newBannerPic.file);
 
           $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
               headers: {
@@ -766,9 +766,8 @@
                 
                 el.bind("change", function(e){
                     var mySelectedFile = (e.srcElement || e.target).files[0];
-                    $scope.newBannerImg = mySelectedFile;
-                    $scope.bannerImgName = mySelectedFile.name;
-                    console.log($scope.newBannerImg,mySelectedFile);
+                    $scope.newBannerPic.file = mySelectedFile;
+                    $scope.newBannerPicName = mySelectedFile.name;
                     $scope.$digest();
                 })
             }

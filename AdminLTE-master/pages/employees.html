@@ -519,6 +519,15 @@
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
+              <span class="slds-avatar slds-avatar_large">
+                  <img alt="Person name" ng-src="{{empToUpdate.profile_pic}}"/>
+              </span>
+              <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
+                <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
+              </span>
+            </div>
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Name</label>
               <div class="slds-form-element__control">
@@ -782,6 +791,16 @@
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
 </div>
+<div  ng-if="showSpinner" style="height: 6rem;">
+  <div>
+    <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
+      <span class="slds-assistive-text">Loading</span>
+      <div class="slds-spinner__dot-a"></div>
+      <div class="slds-spinner__dot-b"></div>
+    </div>
+    <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
+  </div>
+</div>
 <!-- ./wrapper -->
 <!-- Angular Material requires Angular.js Libraries -->
 <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -812,10 +831,17 @@
     app.controller('empCtrl',function($scope, $http){
         $scope.newEmp;
         $scope.showEdit = false;
+        $scope.showSpinner = false;
+        $scope.showUpdatePicSelector = false;
+        $scope.updateEmpProPic = {};
         $scope.addEmp = function(){
+
+          $scope.showSpinner = true;
+
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
           fd.append('file',  $scope.empProPic);
+
           $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
             headers: {
                 'Content-Type': undefined,
@@ -832,11 +858,14 @@
                     headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                     console.log( 'data', data );
+                    $scope.showSpinner = false;
+                    getEmployees();
             })
           });
         }
         $scope.deleteEmp = function(id){
           console.log(id);
+          $scope.showSpinner = true;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/deleteEmployee',
@@ -844,6 +873,8 @@
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
+              $scope.showSpinner = false;
+              getEmployees();
           })
         };
         $scope.showUpdate = function(emp){
@@ -851,17 +882,61 @@
           $scope.showEdit = true;
           $scope.empToUpdate = emp;
         };
+        $scope.delEmpPic = function(){
+          $scope.empToUpdate.profile_pic = '';
+          //$scope.$digest();
+        };
+        $scope.updateEmpPic = function(){
+          $scope.showUpdatePicSelector = true;
+        };
         $scope.updateEmp = function(){
-          console.log($scope.empToUpdate);
-          $scope.showEdit = false;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-              data :  JSON.stringify($scope.empToUpdate),
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data);
-          })
+          $scope.showSpinner = true;
+          console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
+          if($scope.updateEmpProPic.files){
+            var fd = new FormData();
+            fd.append('upload_preset', 'mytrda6j');
+            fd.append('file',  $scope.updateEmpProPic.files);
+            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).success(function(result) {
+              $scope.empToUpdate.profile_pic = result.secure_url;
+              $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
+              console.log($scope.empToUpdate);
+              $scope.showEdit = false;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
+                  data :  $scope.empToUpdate,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log( 'data', data);
+                  $scope.showSpinner = false;
+                  getEmployees();
+                  $scope.showEdit = false;
+                  $scope.empToUpdate = null;
+                  $scope.updateEmpProPic = {};
+              })
+            });
+          }else{
+            $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
+            console.log($scope.empToUpdate);
+            $scope.showEdit = false;
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
+                data :  $scope.empToUpdate,
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                $scope.showSpinner = false;
+                getEmployees();
+                $scope.showEdit = false;
+                $scope.empToUpdate = null;
+            })
+          }
         };
         $scope.closeModal = function(){
           $scope.showEdit = false;
@@ -892,27 +967,33 @@
           });
         };*/
         $scope.allEmp = [];
-        var getEmployees = function(){
+        var getEmployees = function(isInit){
+          $scope.showSpinner = true;
           $http({
               method: 'GET',
               url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data );
+              
               $scope.allEmp = data.employeeList;
-              $(function () {
-                $('#example1').DataTable({
-                    "columnDefs": [{
-                        "orderable": false,
-                        "targets": [2,3,5]
-                    }]
+              if(isInit){
+                $(function () {
+                  $('#example1').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [2,3,5]
+                      }]
+                  })
                 })
-              })
+              }
+              $scope.showSpinner = false;
           })
         };
-        getEmployees();
+        getEmployees(true);
     });
     app.directive("ngFileSelect",function(){
+      
         return {
             link: function($scope,el){
                 
@@ -924,6 +1005,28 @@
                 })
             }
         }
+    });
+    app.directive('fileBrowser', function () {
+      
+      return {
+          template: '<input type="file" style="display: none;" />' +
+              '<ng-transclude></ng-transclude>',
+          transclude: true,
+          link: function ($scope, element) {
+              var fileInput = element.children('input[file]');
+              
+              fileInput.on('change', function (e) {
+                  var file = (e.srcElement || e.target).files[0];
+                  console.log(file, $scope.updateEmpProPic);
+                  $scope.updateEmpProPic.files = file;
+                  $scope.$digest();
+              });
+              
+              element.on('click', function () {
+                  fileInput[0].click();
+              });
+          }
+      };
     });
 </script>
 </body>

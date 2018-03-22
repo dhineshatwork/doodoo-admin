@@ -40,6 +40,12 @@
     .ng-cloak {
      display: none !important;
     }
+    .actionFix i{
+      visibility:hidden;
+    }
+    .actionFix:hover i {
+      visibility:visible;
+    }
   </style>
 
 </head>
@@ -412,12 +418,13 @@
                     <div class="slds-form-element__control">
                       <div class="slds-combobox">
                       <input type="text" id="text-input-id-1" class="slds-input" ng-model="locName" />
+                      <i class="fa fa-check slds-p-top_x-small" ng-if="locName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
                       </div>
                       <span class="slds-pill slds-pill_link" ng-repeat="loc in locNames">
-                        <a href="javascript:void(0);" class="slds-pill__action" title="Full pill label verbiage mirrored here">
+                        <span class="slds-pill__action">
                           <span class="slds-pill__label">{{loc}}</span>
-                        </a>
-                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove">
+                        </span>
+                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
                           <i class="fa fa-remove"></i>
                           <span class="slds-assistive-text">Remove</span>
                         </button>
@@ -448,6 +455,47 @@
               <!-- /.box-body -->
           </div>
             <!-- /. box -->
+            <div class="box box-solid">
+                <div class="box-header with-border">
+                  <h3 class="box-title">Add New Location</h3>
+      
+                  <div class="box-tools">
+                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
+                      </button>
+                  </div>
+                </div>
+                <div class="box-body no-padding">
+                  <div class="slds-m-around_large">
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                        <div class="slds-form-element__control">
+                          <select style="border-radius:.25rem!important;" ng-model="selectedCatLoc" class="form-control" ng-options="item.name for item in allCat"></select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                        <div class="slds-form-element__control">
+                          <div class="slds-combobox">
+                          <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName" />
+                          <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                          </div>
+                          <span class="slds-pill slds-pill_link" ng-repeat="loc in addlocNames">
+                            <span class="slds-pill__action">
+                              <span class="slds-pill__label">{{loc}}</span>
+                            </span>
+                            <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,loc)">
+                              <i class="fa fa-remove"></i>
+                              <span class="slds-assistive-text">Remove</span>
+                            </button>
+                          </span>
+                        </div>
+                    </div>
+                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addNewLocation()">Add</button>
+                    </div>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+            
             <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title">Add Sub Category</h3>
@@ -539,37 +587,46 @@
                 </div>
               </div>
             </div>
-            <div class="box-header"  ng-if="showCat">
-                <h3 class="box-title">Sub Categories</h3>
+            <div class="box-header slds-grid"  ng-if="showCat">
+                <span class="slds-col slds-grid">
+                  <i class="fa fa-chevron-left slds-p-top_xx-small" title="Back" ng-click="closeCatView()" style="font-size:1rem;cursor: pointer;"></i>
+                  <h3 class="slds-p-left_medium box-title">Category View</h3>
+                </span>
+                <span class="slds-col slds-align_absolute-center actionFix">
+                    <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{catView.img_src}}"/>
+                    </span>
+                    <span class="slds-p-top_xx-small slds-p-left_medium">
+                      <h3 class="box-title">{{catView.name}}</h3>
+                      <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;"></i>
+                      <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
+                    </span>
+                  </span>
             </div>
-            <div class="box-body slds-grid slds-wrap" ng-if="showCat">
-                <div class="slds-col slds-grid slds-wrap">
-                  <span class="slds-avatar slds-avatar_large">
-                      <img alt="Person name" ng-src="{{catView.img_src}}"/>
-                  </span>
-                  <span class="slds-p-top_medium slds-grid slds-p-left_medium">
-                    <h3 class="box-title">{{catView.name}}</h3>
-                    <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;"></i>
-                    <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCat()"></i>
-                  </span>
-                </div>
+            <div class="box-body" ng-if="showCat">
+              <div class="slds-box slds-p-around_small slds-grid slds-wrap">
+                <h3 class="slds-text-heading_medium">Sub Categories</h3>
                 <div class="slds-col--bump-left slds-grid">
                   <div class="slds-form-element slds-float_right slds-col">
                       <label class="slds-form-element__label" for="text-input-id-1">Search Sub Category</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" ng-model="searchKey" class="slds-input" placeholder="Search...." />
+                        <input type="text" id="text-input-id-1" ng-model="subCatSearchKey" class="slds-input" placeholder="Search...." />
                       </div>
                   </div>
                 </div>
                 <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                  <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center" ng-repeat="subcat in catView.sub_category | filter:{ name: searchKey}">
+                  <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center actionFix" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
                       <span class="slds-avatar slds-avatar_large">
                         <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}"/>
                       </span>
                       <span class="slds-p-left_small">{{subcat.sub_cat_name}}</span>
-                      <span><i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;"></i><i ng-click="deleteSubCat(subcat._id)" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i></span>
+                      <span>
+                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;"></i>
+                        <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
+                      </span>
                   </div>
                 </div>
+              </div>
               </div>
             <!-- /.box-body slds-avatar_circle  -->
         </div>
@@ -846,10 +903,13 @@
         $scope.catImg;
         $scope.subCatImg;
         $scope.locName;
-        $scope.locNames = ['Chennai'];
+        $scope.locNames = [];
+        $scope.addlocName;
+        $scope.addlocNames = [];
         $scope.showCat = false;
         $scope.showSpinner = false;
         $scope.delCat = function(){
+          $scope.showSpinner = true;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/deleteCategory',
@@ -858,6 +918,7 @@
           }).success(function(data) {
               console.log( 'data', data);
               getCategories();
+              $scope.showSpinner = false;
               $scope.showCat = false;
               $scope.catView = null;
           })
@@ -884,9 +945,33 @@
                   console.log( 'data', data );
                   getCategories();
                   $scope.showSpinner = false;
+                  $scope.catName = null;
+                  $scope.locNames = null;
+                  $scope.catImg = null;
+                  $scope.catImgName = '';
               })
           })
-
+        }
+        $scope.pushLocName = function(isFromAddCat){
+          if(isFromAddCat){
+            $scope.locNames.push($scope.locName);
+            $scope.locName = null;
+          }else{
+            $scope.addlocNames.push($scope.addlocName);
+            $scope.addlocName = null;
+          }
+        }
+        $scope.popLocName = function(isFromAddCat, loc){
+          console.log(isFromAddCat, loc);
+          if(isFromAddCat){
+            var index = $scope.locNames.indexOf(loc);
+            $scope.locNames.splice(index, 1);
+            $scope.locName = null;
+          }else{
+            var index = $scope.addlocNames.indexOf(loc);
+            $scope.addlocNames.splice(index, 1);
+            $scope.addlocName = null;
+          }
         }
         $scope.viewCat = function (cat) {
           $scope.catView = cat;
@@ -894,12 +979,16 @@
           $scope.showCat = true;
           //$scope.$digest();
         };
+        $scope.closeCatView = function(){
+          $scope.showCat = false;
+        };
         $scope.closeModal = function(){
           $scope.showCat = false;
           $scope.catView = null;
           //$scope.$digest();
         };
         $scope.deleteSubCat = function(subCatId){
+          $scope.showSpinner = true;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/deleteSubCategory',
@@ -908,10 +997,29 @@
           }).success(function(data) {
               console.log( 'data', data);
               getCategories();
+              $scope.showSpinner = false;
+              $scope.showCat = false;
           })
+        };
+        $scope.addNewLocation = function(){
+          console.log($scope.addlocNames,$scope.selectedCatLoc._id);
+          $scope.showSpinner = true;
+           $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/addNewLocation',
+                data : {'category_id':$scope.selectedCatLoc._id,'loc_name':$scope.addlocNames},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                getCategories();
+                $scope.showSpinner = false;
+                $scope.addlocNames = null;
+                $scope.selectedCatLoc = null;
+            });
         };
         $scope.addSubCategory = function(){
           console.log($scope.subCatName,':::::>',$scope.selectedCat._id);
+          $scope.showSpinner = true;
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
           fd.append('file',  $scope.subCatImg);
@@ -931,11 +1039,18 @@
             }).success(function(data) {
                 console.log( 'data', data);
                 getCategories();
+                $scope.showSpinner = false;
+                //document.location.reload()
+                //$scope.selectedCat = null;
+                //$scope.subCatName = '';
+                //$scope.subCatImg = {};
+                //$scope.subCatImgName = '';
             });
           });
         };
         $scope.allCat = [];
         var getCategories = function(){
+          $scope.showSpinner = true;
           $http({
               method: 'GET',
               url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
@@ -943,6 +1058,7 @@
           }).success(function(data) {
               console.log( 'data', data.categorylist );
               $scope.allCat = data.categorylist;
+              $scope.showSpinner = false;
           })
         };
         getCategories();
@@ -952,13 +1068,16 @@
             link: function($scope,el){
                 
                 el.bind("change", function(e){
+                    console.log(e);
                     var mySelectedFile = (e.srcElement || e.target).files[0];
                     if((e.srcElement || e.target).id == 'cat'){
                       $scope.catImg = mySelectedFile;
                       $scope.catImgName = mySelectedFile.name;
                     }else if((e.srcElement || e.target).id == 'subCat'){
+                      
                       $scope.subCatImg = mySelectedFile;
                       $scope.subCatImgName = mySelectedFile.name;
+                      console.log($scope.subCatImg, $scope.subCatImgName);
                     }
                     $scope.$digest();
                 })

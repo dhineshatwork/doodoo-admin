@@ -521,7 +521,8 @@
             <div class="slds-grid slds-wrap">
             <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
               <span class="slds-avatar slds-avatar_large">
-                  <img alt="Person name" ng-src="{{empToUpdate.profile_pic}}"/>
+                  <img alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
+                  <img src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
               </span>
               <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
                 <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>

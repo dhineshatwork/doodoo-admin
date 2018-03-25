@@ -581,7 +581,8 @@
               <div class="col-md-12 slds-grid slds-wrap">
                 <div class="slds-size_1-of-3 slds-p-top_x-large slds-align_absolute-center" ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
                     <span class="slds-avatar slds-avatar_large">
-                      <img alt="Person name" ng-src="{{cat.img_src}}"/>
+                      <img alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src"/>
+                      <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src"/>
                     </span>
                     <span class="slds-p-left_small">{{cat.name}}</span>
                 </div>
@@ -594,11 +595,12 @@
                 </span>
                 <span class="slds-col slds-align_absolute-center actionFix">
                     <span class="slds-avatar slds-avatar_large">
-                        <img alt="Person name" ng-src="{{catView.img_src}}"/>
+                        <img alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src"/>
                     </span>
                     <span class="slds-p-top_xx-small slds-p-left_medium">
                       <h3 class="box-title">{{catView.name}}</h3>
-                      <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;"></i>
+                      <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
                       <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
                     </span>
                   </span>
@@ -617,11 +619,12 @@
                 <div class="slds-size_1-of-1 slds-grid slds-wrap">
                   <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center actionFix" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
                       <span class="slds-avatar slds-avatar_large">
-                        <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}"/>
+                        <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src"/>
                       </span>
                       <span class="slds-p-left_small">{{subcat.sub_cat_name}}</span>
                       <span>
-                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;"></i>
+                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
                         <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
                       </span>
                   </div>
@@ -633,7 +636,7 @@
 
         <!-- /.box -->
         </div>
-        <div class="slds-hide" style="height: 640px;">
+        <div ng-if="isOpenModal" style="height: 640px;">
             <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
               <div class="slds-modal__container">
                 <header class="slds-modal__header">
@@ -641,10 +644,36 @@
                     <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
                     <span class="slds-assistive-text">Close</span>
                   </button>
-                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">header</h2>
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateCatReg">Update Category</h2>
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateSubCatReg">Update Sub Category</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                  
+                  <div class="slds-m-around_large">
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                      <div class="slds-form-element__control">
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateCatReg.name" />
+                      </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-combobox">
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="locName" />
+                        <i class="fa fa-check slds-p-top_x-small" ng-if="locName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
+                        </div>
+                        <span class="slds-pill slds-pill_link" ng-repeat="loc in updateCatReg.location">
+                          <span class="slds-pill__action">
+                            <span class="slds-pill__label">{{loc.loc_name}}</span>
+                          </span>
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
+                            <i class="fa fa-remove"></i>
+                            <span class="slds-assistive-text">Remove</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <footer class="slds-modal__footer">
                   <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
@@ -907,6 +936,7 @@
         $scope.addlocName;
         $scope.addlocNames = [];
         $scope.showCat = false;
+        $scope.isOpenModal = false;
         $scope.showSpinner = false;
         $scope.delCat = function(){
           $scope.showSpinner = true;
@@ -960,7 +990,21 @@
             $scope.addlocNames.push($scope.addlocName);
             $scope.addlocName = null;
           }
+        };
+        $scope.openUpdateModal = function(isForCat, reg){
+          $scope.isOpenModal = true;
+          if(isForCat){
+            $scope.updateCatReg = reg;
+          }else{
+            $scope.updateSubCatReg = reg;
+          }
         }
+        $scope.updateCat = function(){
+          
+        };
+        $scope.updateSubCat = function(){
+
+        };
         $scope.popLocName = function(isFromAddCat, loc){
           console.log(isFromAddCat, loc);
           if(isFromAddCat){
@@ -983,8 +1027,9 @@
           $scope.showCat = false;
         };
         $scope.closeModal = function(){
-          $scope.showCat = false;
-          $scope.catView = null;
+          $scope.updateCatReg = null;
+          $scope.updateSubCatReg = null;
+          $scope.isOpenModal = false;
           //$scope.$digest();
         };
         $scope.deleteSubCat = function(subCatId){

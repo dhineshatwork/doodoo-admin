@@ -307,7 +307,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat" ng-click="signOut()">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -418,13 +418,13 @@
                     <div class="slds-form-element__control">
                       <div class="slds-combobox">
                       <input type="text" id="text-input-id-1" class="slds-input" ng-model="locName" />
-                      <i class="fa fa-check slds-p-top_x-small" ng-if="locName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
+                      <i class="fa fa-check slds-p-top_x-small" ng-if="locName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false,true)"></i>
                       </div>
                       <span class="slds-pill slds-pill_link" ng-repeat="loc in locNames">
                         <span class="slds-pill__action">
                           <span class="slds-pill__label">{{loc}}</span>
                         </span>
-                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
+                        <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,true,loc)">
                           <i class="fa fa-remove"></i>
                           <span class="slds-assistive-text">Remove</span>
                         </button>
@@ -648,7 +648,41 @@
                   <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateSubCatReg">Update Sub Category</h2>
                 </header>
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                  <div class="slds-m-around_large">
+                  <div class="slds-m-around_large" ng-if="updateSubCatReg">
+                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                      <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src"/>
+                      </span>
+                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(false)"></i>
+                      </span>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
+                      <div class="slds-form-element__control">
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateSubCatReg.sub_cat_name" />
+                      </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                      <div class="slds-form-element__control">
+                        <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="slds-m-around_large" ng-if="updateCatReg">
+                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                      <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src"/>
+                      </span>
+                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(true)"></i>
+                      </span>
+                    </div>
                     <div class="slds-form-element slds-p-bottom_small">
                       <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                       <div class="slds-form-element__control">
@@ -659,14 +693,14 @@
                       <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                       <div class="slds-form-element__control">
                         <div class="slds-combobox">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="locName" />
-                        <i class="fa fa-check slds-p-top_x-small" ng-if="locName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateLocName.loc_name" />
+                        <i class="fa fa-check slds-p-top_x-small" ng-if="updateLocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true,true)"></i>
                         </div>
                         <span class="slds-pill slds-pill_link" ng-repeat="loc in updateCatReg.location">
                           <span class="slds-pill__action">
                             <span class="slds-pill__label">{{loc.loc_name}}</span>
                           </span>
-                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,true,loc)">
                             <i class="fa fa-remove"></i>
                             <span class="slds-assistive-text">Remove</span>
                           </button>
@@ -677,7 +711,8 @@
                 </div>
                 <footer class="slds-modal__footer">
                   <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-                  <button class="slds-button slds-button_brand">Save</button>
+                  <button class="slds-button slds-button_brand" ng-click="updateCat()" ng-if="updateCatReg">Save</button>
+                  <button class="slds-button slds-button_brand" ng-click="updateSubCat()" ng-if="updateSubCatReg">Save</button>
                 </footer>
               </div>
             </section>
@@ -926,7 +961,7 @@
 <!-- page script -->
 <script>
    var app = angular.module('categoryApp', []);
-    app.controller('categoryCtrl',function($scope, $http){
+    app.controller('categoryCtrl',function($scope, $http, $window, $location){
         $scope.catName = '';
         $scope.subCatName = '';
         $scope.catImg;
@@ -934,10 +969,19 @@
         $scope.locName;
         $scope.locNames = [];
         $scope.addlocName;
+        $scope.updateLocName = {};
         $scope.addlocNames = [];
         $scope.showCat = false;
         $scope.isOpenModal = false;
         $scope.showSpinner = false;
+        $scope.updateCatPic = {};
+        $scope.delCatPic = function(isForCat){
+          if(isForCat){
+            $scope.updateCatReg.img_src = '';
+          }else{
+            $scope.updateSubCatReg.sub_img_src = '';
+          }
+        };
         $scope.delCat = function(){
           $scope.showSpinner = true;
           $http({
@@ -982,13 +1026,19 @@
               })
           })
         }
-        $scope.pushLocName = function(isFromAddCat){
-          if(isFromAddCat){
-            $scope.locNames.push($scope.locName);
-            $scope.locName = null;
+        $scope.pushLocName = function(isFromUpdate, isFromAddCat){
+          if(isFromUpdate){
+            console.log($scope.updateLocName);
+            $scope.updateCatReg.location.push($scope.updateLocName);
+            $scope.updateLocName = {};
           }else{
-            $scope.addlocNames.push($scope.addlocName);
-            $scope.addlocName = null;
+            if(isFromAddCat){
+              $scope.locNames.push($scope.locName);
+              $scope.locName = null;
+            }else{
+              $scope.addlocNames.push($scope.addlocName);
+              $scope.addlocName = null;
+            }
           }
         };
         $scope.openUpdateModal = function(isForCat, reg){
@@ -997,24 +1047,117 @@
             $scope.updateCatReg = reg;
           }else{
             $scope.updateSubCatReg = reg;
+            $scope.updateSelectedCat = $scope.catView;
           }
         }
         $scope.updateCat = function(){
-          
+          $scope.showSpinner = true;
+          if($scope.updateCatPic.files){
+            var fd = new FormData();
+            fd.append('upload_preset', 'mytrda6j');
+            fd.append('file',  $scope.updateCatPic.files);
+            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).success(function(result) {
+              $scope.updateCatReg.img_src = result.secure_url;
+              $scope.updateCatReg.category_id = $scope.updateCatReg._id;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
+                  data :  $scope.updateCatReg,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log( 'data', data);
+                  $scope.showSpinner = false;
+                  getCategories();
+                  $scope.closeModal();
+              })
+            });
+          }else{
+            $scope.updateCatReg.category_id = $scope.updateCatReg._id;
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
+                data :  $scope.updateCatReg,
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                $scope.showSpinner = false;
+                getCategories();
+                $scope.closeModal();
+            })
+          }
+        };
+        $scope.signOut = function(){
+          $window.localStorage.clear();
+          window.location.href = 'login.html';
         };
         $scope.updateSubCat = function(){
-
-        };
-        $scope.popLocName = function(isFromAddCat, loc){
-          console.log(isFromAddCat, loc);
-          if(isFromAddCat){
-            var index = $scope.locNames.indexOf(loc);
-            $scope.locNames.splice(index, 1);
-            $scope.locName = null;
+          $scope.showSpinner = true;
+          if($scope.updateCatPic.files){
+            var fd = new FormData();
+            fd.append('upload_preset', 'mytrda6j');
+            fd.append('file',  $scope.updateCatPic.files);
+            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).success(function(result) {
+              $scope.updateSubCatReg.sub_img_src = result.secure_url;
+              $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
+              $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
+                  data :  $scope.updateSubCatReg,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log( 'data', data);
+                  $scope.showSpinner = false;
+                  getCategories();
+                  $scope.closeModal();
+              })
+            });
           }else{
-            var index = $scope.addlocNames.indexOf(loc);
-            $scope.addlocNames.splice(index, 1);
-            $scope.addlocName = null;
+            $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
+            $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
+                data :  $scope.updateSubCatReg,
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                $scope.showSpinner = false;
+                getCategories();
+                $scope.closeModal();
+            })
+          }
+        };
+        $scope.findIndexInData = function(data, property, value) {
+          for(var i = 0, l = data.length ; i < l ; i++) {
+            if(data[i][property] == value) {
+              return i;
+            }
+          }
+          return -1;
+        }
+        $scope.popLocName = function(isFromUpdate, isFromAddCat, loc){
+          if(isFromUpdate){
+            var index = $scope.findIndexInData($scope.updateCatReg.location,'loc_name',loc.loc_name);
+            $scope.updateCatReg.location.splice(index, 1);
+          }else{
+            if(isFromAddCat){
+              var index = $scope.locNames.indexOf(loc);
+              $scope.locNames.splice(index, 1);
+            }else{
+              var index = $scope.addlocNames.indexOf(loc);
+              $scope.addlocNames.splice(index, 1);
+            }
           }
         }
         $scope.viewCat = function (cat) {
@@ -1030,6 +1173,8 @@
           $scope.updateCatReg = null;
           $scope.updateSubCatReg = null;
           $scope.isOpenModal = false;
+          $scope.updateSelectedCat = null;
+          $scope.updateCatPic = {};
           //$scope.$digest();
         };
         $scope.deleteSubCat = function(subCatId){
@@ -1095,16 +1240,20 @@
         };
         $scope.allCat = [];
         var getCategories = function(){
-          $scope.showSpinner = true;
-          $http({
-              method: 'GET',
-              url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data.categorylist );
-              $scope.allCat = data.categorylist;
-              $scope.showSpinner = false;
-          })
+          if($window.localStorage['isLogin']){
+            $scope.showSpinner = true;
+            $http({
+                method: 'GET',
+                url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data.categorylist );
+                $scope.allCat = data.categorylist;
+                $scope.showSpinner = false;
+            })
+          }else{
+            window.location.href = 'login.html';
+          }
         };
         getCategories();
     });
@@ -1128,6 +1277,27 @@
                 })
             }
         }
+    });
+    app.directive('fileBrowser', function () {
+      
+      return {
+          template: '<input type="file" style="display: none;" />' +
+              '<ng-transclude></ng-transclude>',
+          transclude: true,
+          link: function ($scope, element) {
+              var fileInput = element.children('input[file]');
+              
+              fileInput.on('change', function (e) {
+                  var file = (e.srcElement || e.target).files[0];
+                  $scope.updateCatPic.files = file;
+                  $scope.$digest();
+              });
+              
+              element.on('click', function () {
+                  fileInput[0].click();
+              });
+          }
+      };
     });
 </script>
 </body>

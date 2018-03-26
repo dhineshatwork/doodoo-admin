@@ -65,7 +65,7 @@
      * You must include the dependency on 'ngMaterial' 
      */
     var app = angular.module('BlankApp', ['ngMaterial']);
-    app.controller('signInCtrl',function($scope, $http){
+    app.controller('signInCtrl',function($scope, $http, $window){
         $scope.email = '';
         $scope.password = '';
         $scope.signIn = function() {
@@ -76,6 +76,7 @@
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 window.open('../index.html','_self');
+                $window.localStorage['isLogin'] = true;
                 console.log( 'data', data );
             })
         };

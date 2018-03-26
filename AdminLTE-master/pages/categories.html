@@ -1240,8 +1240,8 @@
         };
         $scope.allCat = [];
         var getCategories = function(){
+          $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
-            $scope.showSpinner = true;
             $http({
                 method: 'GET',
                 url: 'https://freelaunce2.herokuapp.com/admin/categorylist',

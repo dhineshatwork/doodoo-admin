@@ -628,7 +628,7 @@
                             </div>
                           </header>
                           <div class="slds-no-flex">
-                            <button class="slds-button slds-button_neutral">Accept</button>
+                            <button class="slds-button slds-button_neutral" ng-click="acceptOrder(true,pendingOrder)">Accept</button>
                           </div>
                         </div>
                         <div class="slds-card__body slds-card__body_inner">Card Body (custom goes in here)</div>
@@ -953,6 +953,36 @@
     <!-- Add the sidebar's background. This div must be placed
           immediately after the control sidebar -->
     <div class="control-sidebar-bg"></div>
+    <div ng-if="isModalOpen" style="height: 640px;">
+      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+        <div class="slds-modal__container">
+          <header class="slds-modal__header">
+            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
+              <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
+              <span class="slds-assistive-text">Close</span>
+            </button>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Accept Order</h2>
+          </header>
+          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+            <div class="slds-m-around_large">
+              <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                <div class="slds-form-element slds-p-bottom_small">
+                  <label class="slds-form-element__label" for="text-input-id-1">Employee</label>
+                  <div class="slds-form-element__control">
+                    <select style="border-radius:.25rem!important;" ng-model="empSelected.id" class="form-control" ng-options="item._id as item.name for item in allEmp"></select>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <footer class="slds-modal__footer">
+            <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
+            <button class="slds-button slds-button_brand" ng-click="acceptOrder(false,null)">Save</button>
+          </footer>
+        </div>
+      </section>
+      <div class="slds-backdrop slds-backdrop_open"></div>
+    </div>
   </div>
   <!-- ./wrapper -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
@@ -976,6 +1006,8 @@
     app.controller('bookingDetailsCtrl',function($scope, $http){
         $scope.isModalOpen = false;
         $scope.newBannerPic = {};
+        $scope.orderSelected = {};
+        $scope.empSelected = {};
         $scope.addBannerImg = function(){
           console.log($scope.newBannerPic);
           var fd = new FormData();
@@ -1015,6 +1047,25 @@
               getBannerImages();
           })
         };
+        $scope.acceptOrder = function(isFromCard, order){
+          if(isFromCard){
+            console.log(order);
+            $scope.orderSelected = order;
+            $scope.showModal();
+          }else{
+            console.log($scope.orderSelected, $scope.empSelected);
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/acceptOrder',
+                data : {'order_id':$scope.orderSelected._id,"employee_id": $scope.empSelected.id},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                getAllBookingDetails();
+                $scope.closeModal();
+            })
+          }
+        };
         $scope.showModal = function(){
           $scope.isModalOpen = true;
         };
@@ -1032,8 +1083,23 @@
         };
         $scope.closeModal = function(){
           $scope.isModalOpen = false;
+          $scope.orderSelected = null;
+          $scope.empIdSelected = null;
         };
-       
+        $scope.allEmp = [];
+        var getEmployees = function(){
+          $scope.showSpinner = true;
+          $http({
+              method: 'GET',
+              url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log( 'data', data );
+              $scope.allEmp = data.employeeList;
+              $scope.showSpinner = false;
+          })
+        };
+        getEmployees();
         $scope.allBookingDetails = [];
         var getAllBookingDetails = function(){
             $http({

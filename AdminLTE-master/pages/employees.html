@@ -430,10 +430,28 @@
                         </textarea>
                       </div>
                     </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-combobox">
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
+                        <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                        </div>
+                        <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
+                          <span class="slds-pill__action">
+                            <span class="slds-pill__label">{{loc.loc_name}}</span>
+                          </span>
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,loc)">
+                            <i class="fa fa-remove"></i>
+                            <span class="slds-assistive-text">Remove</span>
+                          </button>
+                        </span>
+                      </div>
+                    </div>
                     <div class="slds-form-element slds-p-bottom_medium">
                       <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.designation" />
+                        <select style="border-radius:.25rem!important;" ng-model="newEmp.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
                       </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_medium">
@@ -571,6 +589,24 @@
                   </span>
                 </div>
               </div>
+              <div class="slds-form-element slds-p-bottom_small">
+                <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                <div class="slds-form-element__control">
+                  <div class="slds-combobox">
+                  <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
+                  <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                  </div>
+                  <span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
+                    <span class="slds-pill__action">
+                      <span class="slds-pill__label">{{loc.loc_name}}</span>
+                    </span>
+                    <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,loc)">
+                      <i class="fa fa-remove"></i>
+                      <span class="slds-assistive-text">Remove</span>
+                    </button>
+                  </span>
+                </div>
+            </div>
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
               <div class="slds-form-element__control">
@@ -829,8 +865,8 @@
 <script>
   
   var app = angular.module('empApp', []);
-    app.controller('empCtrl',function($scope, $http){
-        $scope.newEmp;
+    app.controller('empCtrl',function($scope, $http, $window){
+        $scope.newEmp = {location:[]};
         $scope.showEdit = false;
         $scope.showSpinner = false;
         $scope.showUpdatePicSelector = false;
@@ -967,6 +1003,31 @@
             });
           });
         };*/
+        $scope.popLocName = function(isFromUpdate, loc){
+          if(isFromUpdate){
+            var index = $scope.findIndexInData($scope.empToUpdate.location,'loc_name',loc.loc_name);
+            $scope.empToUpdate.location.splice(index, 1);
+          }else{
+            var index = $scope.findIndexInData($scope.newEmp.location,'loc_name',loc.loc_name);
+            $scope.newEmp.location.splice(index, 1);
+          }
+        };
+        $scope.findIndexInData = function(data, property, value) {
+          for(var i = 0, l = data.length ; i < l ; i++) {
+            if(data[i][property] == value) {
+              return i;
+            }
+          }
+          return -1;
+        };
+        $scope.pushLocName = function(isFromUpdate){
+          if(isFromUpdate){
+            $scope.empToUpdate.location.push($scope.addlocName);
+          }else{
+            $scope.newEmp.location.push($scope.addlocName);
+          }
+          $scope.addlocName = null;
+        };
         $scope.allEmp = [];
         var getEmployees = function(isInit){
           $scope.showSpinner = true;
@@ -992,6 +1053,24 @@
           })
         };
         getEmployees(true);
+        $scope.allCat = [];
+        var getCategories = function(){
+          $scope.showSpinner = true;
+          if($window.localStorage['isLogin']){
+            $http({
+                method: 'GET',
+                url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data.categorylist );
+                $scope.allCat = data.categorylist;
+                $scope.showSpinner = false;
+            })
+          }else{
+            window.location.href = 'login.html';
+          }
+        };
+        getCategories();
     });
     app.directive("ngFileSelect",function(){
       

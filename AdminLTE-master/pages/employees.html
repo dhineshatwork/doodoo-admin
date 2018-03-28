@@ -435,7 +435,7 @@
                       <div class="slds-form-element__control">
                         <div class="slds-combobox">
                         <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
-                        <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                        <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
                         </div>
                         <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
                           <span class="slds-pill__action">
@@ -506,7 +506,7 @@
                             <td>{{emp.mobile}}</td>
                             <!--td>{{emp.alt_mobile}}</td-->
                             <td>{{emp.address}}</td>
-                            <td>{{emp.designation}}</td>
+                            <td>{{catIdMap[emp.designation]}}</td>
                             <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm" ng-click="deleteEmp(emp._id)"><i class="fa fa-trash-o"></i></button>
@@ -589,18 +589,18 @@
                   </span>
                 </div>
               </div>
-              <div class="slds-form-element slds-p-bottom_small">
+              <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
                 <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                 <div class="slds-form-element__control">
                   <div class="slds-combobox">
-                  <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
-                  <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                  <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateAddlocName.loc_name" />
+                  <i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
                   </div>
                   <span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
                     <span class="slds-pill__action">
                       <span class="slds-pill__label">{{loc.loc_name}}</span>
                     </span>
-                    <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,loc)">
+                    <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
                       <i class="fa fa-remove"></i>
                       <span class="slds-assistive-text">Remove</span>
                     </button>
@@ -610,7 +610,7 @@
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
               <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.designation" />
+                  <select style="border-radius:.25rem!important;" ng-model="empToUpdate.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
               </div>
             </div>
           </div>
@@ -871,6 +871,7 @@
         $scope.showSpinner = false;
         $scope.showUpdatePicSelector = false;
         $scope.updateEmpProPic = {};
+        $scope.updateAddlocName = {};
         $scope.addEmp = function(){
 
           $scope.showSpinner = true;
@@ -1022,11 +1023,16 @@
         };
         $scope.pushLocName = function(isFromUpdate){
           if(isFromUpdate){
-            $scope.empToUpdate.location.push($scope.addlocName);
+            if(!($scope.empToUpdate.hasOwnProperty('location'))){
+              $scope.empToUpdate['location'] = [];
+            }
+            $scope.empToUpdate.location.push($scope.updateAddlocName);
           }else{
             $scope.newEmp.location.push($scope.addlocName);
           }
-          $scope.addlocName = null;
+          console.log($scope.addlocName,$scope.empToUpdate);
+          $scope.addlocName = {};
+          $scope.updateAddlocName = {};
         };
         $scope.allEmp = [];
         var getEmployees = function(isInit){
@@ -1054,6 +1060,7 @@
         };
         getEmployees(true);
         $scope.allCat = [];
+        $scope.catIdMap = {};
         var getCategories = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
@@ -1064,6 +1071,10 @@
             }).success(function(data) {
                 console.log( 'data', data.categorylist );
                 $scope.allCat = data.categorylist;
+                for(var i = 0; i < $scope.allCat.length; i++){
+                  $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
+                }
+                console.log('Map:::>',$scope.catIdMap);
                 $scope.showSpinner = false;
             })
           }else{

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,39 +10,46 @@
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
-  <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css"-->
   <!-- Ionicons -->
   <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
   <!-- DataTables -->
   <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../bower_components/SLDS/salesforce-lightning-design-system.min.css">
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
   <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
+
+  <!-- Google Font -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
   <style>
     label{
       margin-bottom:0!important;
     }
+    .slds-button{
+      color: black;
+    }
     .ng-cloak {
      display: none !important;
     }
+    .actionFix i{
+      visibility:hidden;
+    }
+    .actionFix:hover i {
+      visibility:visible;
+    }
   </style>
-  <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+
 </head>
-<body class="hold-transition skin-blue sidebar-mini ng-cloak" ng-app="empApp" ng-controller="empCtrl">
+<body class="hold-transition skin-blue sidebar-mini ng-cloak"  ng-app="categoryApp"  ng-controller="categoryCtrl" style="min-height: auto;">
 <div class="wrapper">
 
   <header class="main-header">
@@ -300,7 +307,7 @@
                   <a href="#" class="btn btn-default btn-flat">Profile</a>
                 </div>
                 <div class="pull-right">
-                  <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                  <a href="#" class="btn btn-default btn-flat" ng-click="signOut()">Sign out</a>
                 </div>
               </li>
             </ul>
@@ -342,35 +349,35 @@
       <ul class="sidebar-menu" data-widget="tree">
             <li class="header">MAIN NAVIGATION</li>
             <li>
-              <a href="booking.html">
-                <i class="fa fa-book"></i>
-                <span>Booking Details</span>
-              </a>
-            </li>
-            <li  class="active">
-              <a href="employees.html">
-                <i class="fa fa-fw fa-users"></i>
-                <span>Employees</span>
-              </a>
-            </li>
-            <li>
-              <a href="categories.html">
-                <i class="fa  fa-list-alt"></i>
-                <span>Category</span>
-              </a>
-            </li>
-            <li>
-              <a href="services.html">
-                <i class="fa  fa-wrench"></i>
-                <span>Services</span>
-              </a>
-            </li>
-            <li>
-              <a href="imageUpload.html">
-                <i class="fa   fa-upload"></i>
-                <span>Image Upload</span>
-              </a>
-            </li>
+                <a href="booking.html">
+                  <i class="fa fa-book"></i>
+                  <span>Booking Details</span>
+                </a>
+              </li>
+              <li>
+                <a href="employees.html">
+                  <i class="fa fa-fw fa-users"></i>
+                  <span>Employees</span>
+                </a>
+              </li>
+              <li>
+                <a href="categories.html">
+                  <i class="fa  fa-list-alt"></i>
+                  <span>Category</span>
+                </a>
+              </li>
+              <li  class="active">
+                <a href="services.html">
+                  <i class="fa  fa-wrench"></i>
+                  <span>Services</span>
+                </a>
+              </li>
+              <li>
+                <a href="imageUpload.html">
+                  <i class="fa   fa-upload"></i>
+                  <span>Image Upload</span>
+                </a>
+              </li>
           </ul>
         </section>
     <!-- /.sidebar -->
@@ -382,21 +389,20 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-        Data Tables
-        <small>advanced tables</small>
+        Categories 
+        <small>and Sub Categories</small>
       </h1>
       <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li><a href="#">Tables</a></li>
-        <li class="active">Data tables</li>
+        <li><a href="#"><i class="fa fa-dashboard"></i>Home</a></li>
+        <li class="active">Category</li>
       </ol>
     </section>
     <section class="content">
         <div class="row">
             <div class="col-md-4">
-              <div class="box box-solid">
+            <div class="box box-solid">
                 <div class="box-header with-border">
-                  <h3 class="box-title">Add Employee</h3>
+                  <h3 class="box-title">Add Services</h3>
       
                   <div class="box-tools">
                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
@@ -406,229 +412,224 @@
                 <div class="box-body no-padding">
                   <div class="slds-m-around_large">
                     <div class="slds-form-element slds-p-bottom_small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Name</label>
+                        <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                        <div class="slds-form-element__control">
+                            <select style="border-radius:.25rem!important;" ng-model="selectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.name" />
+                        <select style="border-radius:.25rem!important;" ng-model="selectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in selectedCat.sub_category"></select>
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Description</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.description" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Price</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Durtion</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.durtion" class="form-control"></select>
+                        </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.promises" class="form-control"></select>
+                        </div>
+                    </div>
+                    <!--div class="slds-form-element slds-p-bottom_medium">
+                        <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
+                        <div class="slds-form-element__control">
+                          <div class="slds-file-selector slds-file-selector_files slds-grid">
+                            <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                              <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="subCat" accept="image/*"/>
+                              <label class="slds-file-selector__body" for="subCat" id="file-selector-secondary-label">
+                                <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                  <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                                  </svg>Upload Files</span>
+                                <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+                              </label>
+                            </div>
+                           <p ng-bind="subCatImgName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                          </div>
+                        </div>
+                    </div-->
+                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addServices()">Add</button>
+                  </div>
+                </div>
+                <!-- /.box-body -->
+            </div>
+            </div>
+            <!-- /.col -->
+            <div class="col-md-8">
+            <div class="box">
+            <div class="box-header"  ng-if="!showCat">
+                <h3 class="box-title">Categories</h3>
+            </div>
+            <!-- /.box-header -->
+            <div class="box-body row"  ng-if="!showCat">
+              <div class="col-md-12 row">
+                <div class="slds-form-element slds-float_right col-md-4">
+                    <label class="slds-form-element__label" for="text-input-id-1">Search Category</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" ng-model="searchKey" class="slds-input" placeholder="Search...." />
+                    </div>
+                </div>
+              </div>
+              <div class="col-md-12 slds-grid slds-wrap">
+                <div class="slds-size_1-of-3 slds-p-top_x-large slds-align_absolute-center" ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
+                    <span class="slds-avatar slds-avatar_large">
+                      <img alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src"/>
+                      <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src"/>
+                    </span>
+                    <span class="slds-p-left_small">{{cat.name}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="box-header slds-grid"  ng-if="showCat">
+                <span class="slds-col slds-grid">
+                  <i class="fa fa-chevron-left slds-p-top_xx-small" title="Back" ng-click="closeCatView()" style="font-size:1rem;cursor: pointer;"></i>
+                  <h3 class="slds-p-left_medium box-title">Category View</h3>
+                </span>
+                <span class="slds-col slds-align_absolute-center actionFix">
+                    <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src"/>
+                    </span>
+                    <span class="slds-p-top_xx-small slds-p-left_medium">
+                      <h3 class="box-title">{{catView.name}}</h3>
+                      <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
+                      <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
+                    </span>
+                  </span>
+            </div>
+            <div class="box-body" ng-if="showCat">
+              <div class="slds-box slds-p-around_small slds-grid slds-wrap">
+                <h3 class="slds-text-heading_medium">Sub Categories</h3>
+                <div class="slds-col--bump-left slds-grid">
+                  <div class="slds-form-element slds-float_right slds-col">
+                      <label class="slds-form-element__label" for="text-input-id-1">Search Sub Category</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.email" />
+                        <input type="text" id="text-input-id-1" ng-model="subCatSearchKey" class="slds-input" placeholder="Search...." />
+                      </div>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-grid slds-wrap">
+                  <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center actionFix" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
+                      <span class="slds-avatar slds-avatar_large">
+                        <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src"/>
+                      </span>
+                      <span class="slds-p-left_small">{{subcat.sub_cat_name}}</span>
+                      <span>
+                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
+                        <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
+                      </span>
+                  </div>
+                </div>
+              </div>
+              </div>
+            <!-- /.box-body slds-avatar_circle  -->
+        </div>
+
+        <!-- /.box -->
+        </div>
+        <div ng-if="isOpenModal" style="height: 640px;">
+            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
+              <div class="slds-modal__container">
+                <header class="slds-modal__header">
+                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
+                    <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
+                    <span class="slds-assistive-text">Close</span>
+                  </button>
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateCatReg">Update Category</h2>
+                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateSubCatReg">Update Sub Category</h2>
+                </header>
+                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                  <div class="slds-m-around_large" ng-if="updateSubCatReg">
+                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                      <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src"/>
+                      </span>
+                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(false)"></i>
+                      </span>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
+                      <div class="slds-form-element__control">
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateSubCatReg.sub_cat_name" />
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.mobile" />
+                        <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.alt_mobile" />
-                      </div>
+                  </div>
+                  <div class="slds-m-around_large" ng-if="updateCatReg">
+                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                      <span class="slds-avatar slds-avatar_large">
+                        <img alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src"/>
+                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src"/>
+                      </span>
+                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(true)"></i>
+                      </span>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Address</label>
+                    <div class="slds-form-element slds-p-bottom_small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                       <div class="slds-form-element__control">
-                        <textarea id="text-input-id-1" class="slds-textarea" ng-model="newEmp.address">
-                        </textarea>
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateCatReg.name" />
                       </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_small">
                       <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                       <div class="slds-form-element__control">
                         <div class="slds-combobox">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
-                        <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateLocName.loc_name" />
+                        <i class="fa fa-check slds-p-top_x-small" ng-if="updateLocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(true,true)"></i>
                         </div>
-                        <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
+                        <span class="slds-pill slds-pill_link" ng-repeat="loc in updateCatReg.location">
                           <span class="slds-pill__action">
                             <span class="slds-pill__label">{{loc.loc_name}}</span>
                           </span>
-                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(false,loc)">
+                          <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,true,loc)">
                             <i class="fa fa-remove"></i>
                             <span class="slds-assistive-text">Remove</span>
                           </button>
                         </span>
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
-                      <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="newEmp.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
-                      </div>
-                    </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
-                      <div class="slds-form-element__control">
-                        <div class="slds-file-selector slds-file-selector_files slds-grid">
-                          <div class="slds-file-selector__dropzone slds-size_3-of-9">
-                            <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
-                            <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
-                              <span class="slds-file-selector__button slds-button slds-button_neutral">
-                                <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                                </svg-->Upload Files</span>
-                              <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
-                            </label>
-                          </div>
-                         <p ng-bind="empProPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
-                        </div>
-                      </div>
-                    </div>
-                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addEmp()">Add</button>
                   </div>
                 </div>
-                <!-- /.box-body -->
-            </div>
-              <!-- /. box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-8">
-            <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">Data Table With Full Features</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table id="example1" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <!--th>Alternate Mobile</th-->
-                            <th>Address</th>
-                            <th>Designation</th>
-                            <th>Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="emp in allEmp">
-                            <td>{{emp.name}}</td>
-                            <td>{{emp.email}}</td>
-                            <td>{{emp.mobile}}</td>
-                            <!--td>{{emp.alt_mobile}}</td-->
-                            <td>{{emp.address}}</td>
-                            <td>{{catIdMap[emp.designation]}}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="deleteEmp(emp._id)"><i class="fa fa-trash-o"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="showUpdate(emp)"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa  fa-eye"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-
-        <!-- /.box -->
-        </div>
-        </div>
-    </section>
-    <div style="height: 640px;" ng-if="showEdit">
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
-          <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
-              <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
-              <span class="slds-assistive-text">Close</span>
-            </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
-          </header>
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <div class="slds-grid slds-wrap">
-            <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
-              <span class="slds-avatar slds-avatar_large">
-                  <img alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
-                  <img src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
-              </span>
-              <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
-                <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
-                <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
-              </span>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Name</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.name" />
+                <footer class="slds-modal__footer">
+                  <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
+                  <button class="slds-button slds-button_brand" ng-click="updateCat()" ng-if="updateCatReg">Save</button>
+                  <button class="slds-button slds-button_brand" ng-click="updateSubCat()" ng-if="updateSubCatReg">Save</button>
+                </footer>
               </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.email" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.mobile" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <label class="slds-form-element__label" for="text-input-id-1">Address</label>
-                <div class="slds-form-element__control">
-                  <textarea id="text-input-id-1" class="slds-textarea" ng-model="empToUpdate.address">
-                  </textarea>
-                </div>
-              </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.alt_mobile" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <div class="slds-form-element__control">
-                  <span class="slds-checkbox">
-                    <input type="checkbox" name="options" id="checkbox-2" ng-model="empToUpdate.availability_status" />
-                    <label class="slds-checkbox__label" for="checkbox-2">
-                      <span class="slds-checkbox_faux"></span>
-                      <span class="slds-form-element__label">Availability Status</span>
-                    </label>
-                  </span>
-                </div>
-              </div>
-              <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
-                <div class="slds-form-element__control">
-                  <div class="slds-combobox">
-                  <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateAddlocName.loc_name" />
-                  <i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
-                  </div>
-                  <span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
-                    <span class="slds-pill__action">
-                      <span class="slds-pill__label">{{loc.loc_name}}</span>
-                    </span>
-                    <button class="slds-button slds-button_icon slds-button_icon slds-pill__remove" title="Remove"  ng-click="popLocName(true,loc)">
-                      <i class="fa fa-remove"></i>
-                      <span class="slds-assistive-text">Remove</span>
-                    </button>
-                  </span>
-                </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
-              <div class="slds-form-element__control">
-                  <select style="border-radius:.25rem!important;" ng-model="empToUpdate.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
-              </div>
-            </div>
+            </section>
+            <div class="slds-backdrop slds-backdrop_open"></div>
           </div>
-          </div>
-          <footer class="slds-modal__footer">
-            <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="updateEmp()">Update</button>
-          </footer>
-        </div>
-      </section>
-      <div class="slds-backdrop slds-backdrop_open"></div>
     </div>
+    </section>
+    
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -845,11 +846,11 @@
   </div>
 </div>
 <!-- ./wrapper -->
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+ <!-- Angular Material requires Angular.js Libraries -->
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+ <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
 <!-- jQuery 3 -->
 <script src="../bower_components/jquery/dist/jquery.min.js"></script>
@@ -857,8 +858,7 @@
 <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 <!-- DataTables -->
 <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
-<!--script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script-->
+<script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 <!-- SlimScroll -->
 <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -869,125 +869,252 @@
 <script src="../dist/js/demo.js"></script>
 <!-- page script -->
 <script>
-  
-  var app = angular.module('empApp', []);
-    app.controller('empCtrl',function($scope, $http, $window){
-        $scope.newEmp = {location:[]};
-        $scope.showEdit = false;
+   var app = angular.module('categoryApp', []);
+    app.controller('categoryCtrl',function($scope, $http, $window, $location){
+        $scope.catName = '';
+        $scope.subCatName = '';
+        $scope.catImg;
+        $scope.subCatImg;
+        $scope.locName;
+        $scope.locNames = [];
+        $scope.addlocName;
+        $scope.updateLocName = {};
+        $scope.addlocNames = [];
+        $scope.showCat = false;
+        $scope.isOpenModal = false;
         $scope.showSpinner = false;
-        $scope.showUpdatePicSelector = false;
-        $scope.updateEmpProPic = {};
-        $scope.updateAddlocName = {};
-        $scope.addEmp = function(){
-
-          $scope.showSpinner = true;
-
-          var fd = new FormData();
-          fd.append('upload_preset', 'mytrda6j');
-          fd.append('file',  $scope.empProPic);
-
-          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-            headers: {
-                'Content-Type': undefined,
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-          }).success(function(result) {
-            $scope.newEmp.profile_pic = result.secure_url;
-            console.log($scope.newEmp);
-          
-            $http({
-                    method: 'POST',
-                    url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
-                    data : $scope.newEmp,
-                    headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                    console.log( 'data', data );
-                    $scope.showSpinner = false;
-                    getEmployees();
-            })
-          });
-        }
-        $scope.deleteEmp = function(id){
-          console.log(id);
+        $scope.updateCatPic = {};
+        $scope.delCatPic = function(isForCat){
+          if(isForCat){
+            $scope.updateCatReg.img_src = '';
+          }else{
+            $scope.updateSubCatReg.sub_img_src = '';
+          }
+        };
+        $scope.delCat = function(){
           $scope.showSpinner = true;
           $http({
               method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/deleteEmployee',
-              data : {'employee_id':id},
+              url: 'https://freelaunce2.herokuapp.com/admin/deleteCategory',
+              data : {'category_id':$scope.catView._id},
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
+              getCategories();
               $scope.showSpinner = false;
-              getEmployees();
+              $scope.showCat = false;
+              $scope.catView = null;
           })
         };
-        $scope.showUpdate = function(emp){
-          console.log(emp);
-          $scope.showEdit = true;
-          $scope.empToUpdate = emp;
-        };
-        $scope.delEmpPic = function(){
-          $scope.empToUpdate.profile_pic = '';
-          //$scope.$digest();
-        };
-        $scope.updateEmpPic = function(){
-          $scope.showUpdatePicSelector = true;
-        };
-        $scope.updateEmp = function(){
+        $scope.addServices = function(){
+         /* console.log($scope.catName,$scope.catImg);
+          var fd = new FormData();
+          fd.append('upload_preset', 'mytrda6j');
+          fd.append('file',  $scope.catImg);
           $scope.showSpinner = true;
-          console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
-          if($scope.updateEmpProPic.files){
+          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+          }).success(function(data) {*/
+              //console.log( 'data', data.secure_url );
+              $scope.newServ.category = $scope.selectedCat.name;
+              $scope.newServ.sub_category = $scope.selectedSubCat.sub_cat_name;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/addServices',
+                  data : $scope.newServ,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log(data);
+              })
+         // })
+        }
+        $scope.pushLocName = function(isFromUpdate, isFromAddCat){
+          if(isFromUpdate){
+            console.log($scope.updateLocName);
+            $scope.updateCatReg.location.push($scope.updateLocName);
+            $scope.updateLocName = {};
+          }else{
+            if(isFromAddCat){
+              $scope.locNames.push($scope.locName);
+              $scope.locName = null;
+            }else{
+              $scope.addlocNames.push($scope.addlocName);
+              $scope.addlocName = null;
+            }
+          }
+        };
+        $scope.openUpdateModal = function(isForCat, reg){
+          $scope.isOpenModal = true;
+          if(isForCat){
+            $scope.updateCatReg = reg;
+          }else{
+            $scope.updateSubCatReg = reg;
+            $scope.updateSelectedCat = $scope.catView;
+          }
+        }
+        $scope.updateCat = function(){
+          $scope.showSpinner = true;
+          if($scope.updateCatPic.files){
             var fd = new FormData();
             fd.append('upload_preset', 'mytrda6j');
-            fd.append('file',  $scope.updateEmpProPic.files);
+            fd.append('file',  $scope.updateCatPic.files);
             $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
               headers: {
                   'Content-Type': undefined,
                   'X-Requested-With': 'XMLHttpRequest'
               }
             }).success(function(result) {
-              $scope.empToUpdate.profile_pic = result.secure_url;
-              $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-              console.log($scope.empToUpdate);
-              $scope.showEdit = false;
+              $scope.updateCatReg.img_src = result.secure_url;
+              $scope.updateCatReg.category_id = $scope.updateCatReg._id;
               $http({
                   method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-                  data :  $scope.empToUpdate,
+                  url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
+                  data :  $scope.updateCatReg,
                   headers: {'Content-Type':'application/json'}
               }).success(function(data) {
                   console.log( 'data', data);
                   $scope.showSpinner = false;
-                  getEmployees();
-                  $scope.showEdit = false;
-                  $scope.empToUpdate = null;
-                  $scope.updateEmpProPic = {};
+                  getCategories();
+                  $scope.closeModal();
               })
             });
           }else{
-            $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-            console.log($scope.empToUpdate);
-            $scope.showEdit = false;
+            $scope.updateCatReg.category_id = $scope.updateCatReg._id;
             $http({
                 method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-                data :  $scope.empToUpdate,
+                url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
+                data :  $scope.updateCatReg,
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 console.log( 'data', data);
                 $scope.showSpinner = false;
-                getEmployees();
-                $scope.showEdit = false;
-                $scope.empToUpdate = null;
+                getCategories();
+                $scope.closeModal();
             })
           }
         };
-        $scope.closeModal = function(){
-          $scope.showEdit = false;
-          $scope.empToUpdate = null;
+        $scope.signOut = function(){
+          $window.localStorage.clear();
+          window.location.href = 'login.html';
         };
-        /*$scope.addSubCategory = function(){
+        $scope.updateSubCat = function(){
+          $scope.showSpinner = true;
+          if($scope.updateCatPic.files){
+            var fd = new FormData();
+            fd.append('upload_preset', 'mytrda6j');
+            fd.append('file',  $scope.updateCatPic.files);
+            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).success(function(result) {
+              $scope.updateSubCatReg.sub_img_src = result.secure_url;
+              $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
+              $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
+                  data :  $scope.updateSubCatReg,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log( 'data', data);
+                  $scope.showSpinner = false;
+                  getCategories();
+                  $scope.closeModal();
+              })
+            });
+          }else{
+            $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
+            $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
+                data :  $scope.updateSubCatReg,
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                $scope.showSpinner = false;
+                getCategories();
+                $scope.closeModal();
+            })
+          }
+        };
+        $scope.findIndexInData = function(data, property, value) {
+          for(var i = 0, l = data.length ; i < l ; i++) {
+            if(data[i][property] == value) {
+              return i;
+            }
+          }
+          return -1;
+        }
+        $scope.popLocName = function(isFromUpdate, isFromAddCat, loc){
+          if(isFromUpdate){
+            var index = $scope.findIndexInData($scope.updateCatReg.location,'loc_name',loc.loc_name);
+            $scope.updateCatReg.location.splice(index, 1);
+          }else{
+            if(isFromAddCat){
+              var index = $scope.locNames.indexOf(loc);
+              $scope.locNames.splice(index, 1);
+            }else{
+              var index = $scope.addlocNames.indexOf(loc);
+              $scope.addlocNames.splice(index, 1);
+            }
+          }
+        }
+        $scope.viewCat = function (cat) {
+          $scope.catView = cat;
+          console.log($scope.catView);
+          $scope.showCat = true;
+          //$scope.$digest();
+        };
+        $scope.closeCatView = function(){
+          $scope.showCat = false;
+        };
+        $scope.closeModal = function(){
+          $scope.updateCatReg = null;
+          $scope.updateSubCatReg = null;
+          $scope.isOpenModal = false;
+          $scope.updateSelectedCat = null;
+          $scope.updateCatPic = {};
+          //$scope.$digest();
+        };
+        $scope.deleteSubCat = function(subCatId){
+          $scope.showSpinner = true;
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/admin/deleteSubCategory',
+              data : {'category_id':$scope.catView._id,'sub_category_id':subCatId},
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log( 'data', data);
+              getCategories();
+              $scope.showSpinner = false;
+              $scope.showCat = false;
+          })
+        };
+        $scope.addNewLocation = function(){
+          console.log($scope.addlocNames,$scope.selectedCatLoc._id);
+          $scope.showSpinner = true;
+           $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/addNewLocation',
+                data : {'category_id':$scope.selectedCatLoc._id,'loc_name':$scope.addlocNames},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log( 'data', data);
+                getCategories();
+                $scope.showSpinner = false;
+                $scope.addlocNames = null;
+                $scope.selectedCatLoc = null;
+            });
+        };
+        $scope.addSubCategory = function(){
           console.log($scope.subCatName,':::::>',$scope.selectedCat._id);
+          $scope.showSpinner = true;
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
           fd.append('file',  $scope.subCatImg);
@@ -1006,67 +1133,17 @@
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 console.log( 'data', data);
-               // $scope.allCat = data.categorylist;
+                getCategories();
+                $scope.showSpinner = false;
+                //document.location.reload()
+                //$scope.selectedCat = null;
+                //$scope.subCatName = '';
+                //$scope.subCatImg = {};
+                //$scope.subCatImgName = '';
             });
           });
-        };*/
-        $scope.popLocName = function(isFromUpdate, loc){
-          if(isFromUpdate){
-            var index = $scope.findIndexInData($scope.empToUpdate.location,'loc_name',loc.loc_name);
-            $scope.empToUpdate.location.splice(index, 1);
-          }else{
-            var index = $scope.findIndexInData($scope.newEmp.location,'loc_name',loc.loc_name);
-            $scope.newEmp.location.splice(index, 1);
-          }
         };
-        $scope.findIndexInData = function(data, property, value) {
-          for(var i = 0, l = data.length ; i < l ; i++) {
-            if(data[i][property] == value) {
-              return i;
-            }
-          }
-          return -1;
-        };
-        $scope.pushLocName = function(isFromUpdate){
-          if(isFromUpdate){
-            if(!($scope.empToUpdate.hasOwnProperty('location'))){
-              $scope.empToUpdate['location'] = [];
-            }
-            $scope.empToUpdate.location.push($scope.updateAddlocName);
-          }else{
-            $scope.newEmp.location.push($scope.addlocName);
-          }
-          console.log($scope.addlocName,$scope.empToUpdate);
-          $scope.addlocName = {};
-          $scope.updateAddlocName = {};
-        };
-        $scope.allEmp = [];
-        var getEmployees = function(isInit){
-          $scope.showSpinner = true;
-          $http({
-              method: 'GET',
-              url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data );
-              
-              $scope.allEmp = data.employeeList;
-              if(isInit){
-                $(function () {
-                  $('#example1').DataTable({
-                      "columnDefs": [{
-                          "orderable": false,
-                          "targets": [2,3,5]
-                      }]
-                  })
-                })
-              }
-              $scope.showSpinner = false;
-          })
-        };
-        getEmployees(true);
         $scope.allCat = [];
-        $scope.catIdMap = {};
         var getCategories = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
@@ -1077,10 +1154,6 @@
             }).success(function(data) {
                 console.log( 'data', data.categorylist );
                 $scope.allCat = data.categorylist;
-                for(var i = 0; i < $scope.allCat.length; i++){
-                  $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
-                }
-                console.log('Map:::>',$scope.catIdMap);
                 $scope.showSpinner = false;
             })
           }else{
@@ -1090,14 +1163,21 @@
         getCategories();
     });
     app.directive("ngFileSelect",function(){
-      
         return {
             link: function($scope,el){
                 
                 el.bind("change", function(e){
+                    console.log(e);
                     var mySelectedFile = (e.srcElement || e.target).files[0];
-                    $scope.empProPic = mySelectedFile;
-                    $scope.empProPicName = mySelectedFile.name;
+                    if((e.srcElement || e.target).id == 'cat'){
+                      $scope.catImg = mySelectedFile;
+                      $scope.catImgName = mySelectedFile.name;
+                    }else if((e.srcElement || e.target).id == 'subCat'){
+                      
+                      $scope.subCatImg = mySelectedFile;
+                      $scope.subCatImgName = mySelectedFile.name;
+                      console.log($scope.subCatImg, $scope.subCatImgName);
+                    }
                     $scope.$digest();
                 })
             }
@@ -1114,8 +1194,7 @@
               
               fileInput.on('change', function (e) {
                   var file = (e.srcElement || e.target).files[0];
-                  console.log(file, $scope.updateEmpProPic);
-                  $scope.updateEmpProPic.files = file;
+                  $scope.updateCatPic.files = file;
                   $scope.$digest();
               });
               

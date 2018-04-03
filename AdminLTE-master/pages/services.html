@@ -399,49 +399,48 @@
     </section>
     <section class="content">
         <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-6">
             <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title">Add Services</h3>
-      
                   <div class="box-tools">
                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                       </button>
                   </div>
                 </div>
                 <div class="box-body no-padding">
-                  <div class="slds-m-around_large">
-                    <div class="slds-form-element slds-p-bottom_small">
+                  <div class="slds-m-around_large slds-grid slds-wrap">
+                    <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                         <div class="slds-form-element__control">
                             <select style="border-radius:.25rem!important;" ng-model="selectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
                         </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
                       <div class="slds-form-element__control">
                         <select style="border-radius:.25rem!important;" ng-model="selectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in selectedCat.sub_category"></select>
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Description</label>
                         <div class="slds-form-element__control">
                             <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.description" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                         <div class="slds-form-element__control">
                             <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
-                        <label class="slds-form-element__label" for="text-input-id-1">Durtion</label>
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Duration</label>
                         <div class="slds-form-element__control">
-                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.durtion" class="form-control"></select>
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.duration" class="form-control"></select>
                         </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
                         <div class="slds-form-element__control">
                             <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.promises" class="form-control"></select>
@@ -465,81 +464,89 @@
                           </div>
                         </div>
                     </div-->
-                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addServices()">Add</button>
+                    <div class="slds-align_absolute-center  slds-p-top_medium">
+                      <button class="slds-button slds-button_neutral" ng-click="addServices()">Add</button>
+                    </div>
                   </div>
                 </div>
                 <!-- /.box-body -->
             </div>
             </div>
             <!-- /.col -->
-            <div class="col-md-8">
+            <div class="col-md-6">
             <div class="box">
-            <div class="box-header"  ng-if="!showCat">
-                <h3 class="box-title">Categories</h3>
+            <div class="box-header">
+                <h3 class="box-title">Update Services</h3>
             </div>
             <!-- /.box-header -->
-            <div class="box-body row"  ng-if="!showCat">
-              <div class="col-md-12 row">
-                <div class="slds-form-element slds-float_right col-md-4">
-                    <label class="slds-form-element__label" for="text-input-id-1">Search Category</label>
-                    <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" ng-model="searchKey" class="slds-input" placeholder="Search...." />
-                    </div>
-                </div>
-              </div>
-              <div class="col-md-12 slds-grid slds-wrap">
-                <div class="slds-size_1-of-3 slds-p-top_x-large slds-align_absolute-center" ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
-                    <span class="slds-avatar slds-avatar_large">
-                      <img alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src"/>
-                      <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src"/>
-                    </span>
-                    <span class="slds-p-left_small">{{cat.name}}</span>
-                </div>
-              </div>
-            </div>
-            <div class="box-header slds-grid"  ng-if="showCat">
-                <span class="slds-col slds-grid">
-                  <i class="fa fa-chevron-left slds-p-top_xx-small" title="Back" ng-click="closeCatView()" style="font-size:1rem;cursor: pointer;"></i>
-                  <h3 class="slds-p-left_medium box-title">Category View</h3>
-                </span>
-                <span class="slds-col slds-align_absolute-center actionFix">
-                    <span class="slds-avatar slds-avatar_large">
-                        <img alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src"/>
-                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src"/>
-                    </span>
-                    <span class="slds-p-top_xx-small slds-p-left_medium">
-                      <h3 class="box-title">{{catView.name}}</h3>
-                      <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
-                      <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
-                    </span>
-                  </span>
-            </div>
-            <div class="box-body" ng-if="showCat">
-              <div class="slds-box slds-p-around_small slds-grid slds-wrap">
-                <h3 class="slds-text-heading_medium">Sub Categories</h3>
-                <div class="slds-col--bump-left slds-grid">
-                  <div class="slds-form-element slds-float_right slds-col">
-                      <label class="slds-form-element__label" for="text-input-id-1">Search Sub Category</label>
+            <div class="box-body">
+              <div class="slds-m-around_large slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-grid slds-wrap slds-box">
+                  <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                       <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" ng-model="subCatSearchKey" class="slds-input" placeholder="Search...." />
+                          <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
                       </div>
                   </div>
-                </div>
-                <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                  <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center actionFix" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
-                      <span class="slds-avatar slds-avatar_large">
-                        <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src"/>
-                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src"/>
-                      </span>
-                      <span class="slds-p-left_small">{{subcat.sub_cat_name}}</span>
-                      <span>
-                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
-                        <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
-                      </span>
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
+                    <div class="slds-form-element__control">
+                      <select style="border-radius:.25rem!important;" ng-model="updateSelectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in updateSelectedCat.sub_category"></select>
+                    </div>
+                  </div>
+                  <div class="slds-align_absolute-center  slds-p-top_medium">
+                      <button class="slds-button slds-button_neutral" ng-if="!updateServ" ng-click="getService()">Get Service</button>
                   </div>
                 </div>
+                <div class="slds-size_1-of-1 slds-m-top_small slds-grid slds-wrap slds-box" ng-if="updateServ">
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Description</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.description" class="form-control"></select>
+                      </div>
+                  </div>
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Price</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.price" class="form-control"></select>
+                      </div>
+                  </div>
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Duration</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.duration" class="form-control"></select>
+                      </div>
+                  </div>
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.promises" class="form-control"></select>
+                      </div>
+                  </div>
+                  <div class="slds-align_absolute-center  slds-p-top_medium">
+                      <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
+                  </div>
+                </div>
+                <!--div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
+                    <div class="slds-form-element__control">
+                      <div class="slds-file-selector slds-file-selector_files slds-grid">
+                        <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                          <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="subCat" accept="image/*"/>
+                          <label class="slds-file-selector__body" for="subCat" id="file-selector-secondary-label">
+                            <span class="slds-file-selector__button slds-button slds-button_neutral">
+                              <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                              </svg>Upload Files</span>
+                            <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
+                          </label>
+                        </div>
+                       <p ng-bind="subCatImgName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                      </div>
+                    </div>
+                </div-->
               </div>
-              </div>
+            </div>
             <!-- /.box-body slds-avatar_circle  -->
         </div>
 
@@ -871,27 +878,7 @@
 <script>
    var app = angular.module('categoryApp', []);
     app.controller('categoryCtrl',function($scope, $http, $window, $location){
-        $scope.catName = '';
-        $scope.subCatName = '';
-        $scope.catImg;
-        $scope.subCatImg;
-        $scope.locName;
-        $scope.locNames = [];
-        $scope.addlocName;
-        $scope.updateLocName = {};
-        $scope.addlocNames = [];
-        $scope.showCat = false;
-        $scope.isOpenModal = false;
-        $scope.showSpinner = false;
-        $scope.updateCatPic = {};
-        $scope.delCatPic = function(isForCat){
-          if(isForCat){
-            $scope.updateCatReg.img_src = '';
-          }else{
-            $scope.updateSubCatReg.sub_img_src = '';
-          }
-        };
-        $scope.delCat = function(){
+        $scope.delServ = function(){
           $scope.showSpinner = true;
           $http({
               method: 'POST',
@@ -906,143 +893,60 @@
               $scope.catView = null;
           })
         };
+
+        $scope.getService = function(){
+          $scope.showSpinner = true;
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/user/getServiceDetails',
+              data : {'category':$scope.updateSelectedCat._id, 'sub_category':$scope.updateSelectedSubCat._id},
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log(data.serviceDetails);
+              $scope.showSpinner = false;
+              $scope.updateServ = data.serviceDetails;
+          })
+        };
+        $scope.updateServices = function(){
+          $scope.showSpinner = true;
+          $scope.updateServ.service_id = $scope.updateServ._id;
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/admin/servicesUpdate',
+              data : $scope.updateServ,
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+            console.log(data);
+            $scope.showSpinner = false;
+            $scope.updateServ =null;
+            $scope.updateSelectedCat = null;
+            $scope.updateSelectedSubCat = null;
+          })
+        };
+
         $scope.addServices = function(){
-         /* console.log($scope.catName,$scope.catImg);
-          var fd = new FormData();
-          fd.append('upload_preset', 'mytrda6j');
-          fd.append('file',  $scope.catImg);
           $scope.showSpinner = true;
-          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-              headers: {
-                  'Content-Type': undefined,
-                  'X-Requested-With': 'XMLHttpRequest'
-              }
-          }).success(function(data) {*/
-              //console.log( 'data', data.secure_url );
-              $scope.newServ.category = $scope.selectedCat.name;
-              $scope.newServ.sub_category = $scope.selectedSubCat.sub_cat_name;
-              $http({
-                  method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/addServices',
-                  data : $scope.newServ,
-                  headers: {'Content-Type':'application/json'}
-              }).success(function(data) {
-                  console.log(data);
-              })
-         // })
-        }
-        $scope.pushLocName = function(isFromUpdate, isFromAddCat){
-          if(isFromUpdate){
-            console.log($scope.updateLocName);
-            $scope.updateCatReg.location.push($scope.updateLocName);
-            $scope.updateLocName = {};
-          }else{
-            if(isFromAddCat){
-              $scope.locNames.push($scope.locName);
-              $scope.locName = null;
-            }else{
-              $scope.addlocNames.push($scope.addlocName);
-              $scope.addlocName = null;
-            }
-          }
+          $scope.newServ.category = $scope.selectedCat._id;
+          $scope.newServ.sub_category = $scope.selectedSubCat._id;
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/admin/addServices',
+              data : $scope.newServ,
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log(data);
+              $scope.showSpinner = false;
+              $scope.newServ = null;
+              $scope.selectedCat = null;
+              $scope.selectedSubCat = null;
+          })
         };
-        $scope.openUpdateModal = function(isForCat, reg){
-          $scope.isOpenModal = true;
-          if(isForCat){
-            $scope.updateCatReg = reg;
-          }else{
-            $scope.updateSubCatReg = reg;
-            $scope.updateSelectedCat = $scope.catView;
-          }
-        }
-        $scope.updateCat = function(){
-          $scope.showSpinner = true;
-          if($scope.updateCatPic.files){
-            var fd = new FormData();
-            fd.append('upload_preset', 'mytrda6j');
-            fd.append('file',  $scope.updateCatPic.files);
-            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-              headers: {
-                  'Content-Type': undefined,
-                  'X-Requested-With': 'XMLHttpRequest'
-              }
-            }).success(function(result) {
-              $scope.updateCatReg.img_src = result.secure_url;
-              $scope.updateCatReg.category_id = $scope.updateCatReg._id;
-              $http({
-                  method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
-                  data :  $scope.updateCatReg,
-                  headers: {'Content-Type':'application/json'}
-              }).success(function(data) {
-                  console.log( 'data', data);
-                  $scope.showSpinner = false;
-                  getCategories();
-                  $scope.closeModal();
-              })
-            });
-          }else{
-            $scope.updateCatReg.category_id = $scope.updateCatReg._id;
-            $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/updateCategory',
-                data :  $scope.updateCatReg,
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                $scope.showSpinner = false;
-                getCategories();
-                $scope.closeModal();
-            })
-          }
-        };
+
         $scope.signOut = function(){
           $window.localStorage.clear();
           window.location.href = 'login.html';
         };
-        $scope.updateSubCat = function(){
-          $scope.showSpinner = true;
-          if($scope.updateCatPic.files){
-            var fd = new FormData();
-            fd.append('upload_preset', 'mytrda6j');
-            fd.append('file',  $scope.updateCatPic.files);
-            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-              headers: {
-                  'Content-Type': undefined,
-                  'X-Requested-With': 'XMLHttpRequest'
-              }
-            }).success(function(result) {
-              $scope.updateSubCatReg.sub_img_src = result.secure_url;
-              $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
-              $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
-              $http({
-                  method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
-                  data :  $scope.updateSubCatReg,
-                  headers: {'Content-Type':'application/json'}
-              }).success(function(data) {
-                  console.log( 'data', data);
-                  $scope.showSpinner = false;
-                  getCategories();
-                  $scope.closeModal();
-              })
-            });
-          }else{
-            $scope.updateSubCatReg.category_id = $scope.updateSelectedCat._id;
-            $scope.updateSubCatReg.sub_category_id = $scope.updateSubCatReg._id;
-            $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/updateSubCategory',
-                data :  $scope.updateSubCatReg,
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                $scope.showSpinner = false;
-                getCategories();
-                $scope.closeModal();
-            })
-          }
-        };
+
         $scope.findIndexInData = function(data, property, value) {
           for(var i = 0, l = data.length ; i < l ; i++) {
             if(data[i][property] == value) {
@@ -1051,99 +955,9 @@
           }
           return -1;
         }
-        $scope.popLocName = function(isFromUpdate, isFromAddCat, loc){
-          if(isFromUpdate){
-            var index = $scope.findIndexInData($scope.updateCatReg.location,'loc_name',loc.loc_name);
-            $scope.updateCatReg.location.splice(index, 1);
-          }else{
-            if(isFromAddCat){
-              var index = $scope.locNames.indexOf(loc);
-              $scope.locNames.splice(index, 1);
-            }else{
-              var index = $scope.addlocNames.indexOf(loc);
-              $scope.addlocNames.splice(index, 1);
-            }
-          }
-        }
-        $scope.viewCat = function (cat) {
-          $scope.catView = cat;
-          console.log($scope.catView);
-          $scope.showCat = true;
-          //$scope.$digest();
-        };
-        $scope.closeCatView = function(){
-          $scope.showCat = false;
-        };
-        $scope.closeModal = function(){
-          $scope.updateCatReg = null;
-          $scope.updateSubCatReg = null;
-          $scope.isOpenModal = false;
-          $scope.updateSelectedCat = null;
-          $scope.updateCatPic = {};
-          //$scope.$digest();
-        };
-        $scope.deleteSubCat = function(subCatId){
-          $scope.showSpinner = true;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/deleteSubCategory',
-              data : {'category_id':$scope.catView._id,'sub_category_id':subCatId},
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data);
-              getCategories();
-              $scope.showSpinner = false;
-              $scope.showCat = false;
-          })
-        };
-        $scope.addNewLocation = function(){
-          console.log($scope.addlocNames,$scope.selectedCatLoc._id);
-          $scope.showSpinner = true;
-           $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/addNewLocation',
-                data : {'category_id':$scope.selectedCatLoc._id,'loc_name':$scope.addlocNames},
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                getCategories();
-                $scope.showSpinner = false;
-                $scope.addlocNames = null;
-                $scope.selectedCatLoc = null;
-            });
-        };
-        $scope.addSubCategory = function(){
-          console.log($scope.subCatName,':::::>',$scope.selectedCat._id);
-          $scope.showSpinner = true;
-          var fd = new FormData();
-          fd.append('upload_preset', 'mytrda6j');
-          fd.append('file',  $scope.subCatImg);
 
-          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-            headers: {
-                'Content-Type': undefined,
-                'X-Requested-With': 'XMLHttpRequest'
-            }
-          }).success(function(result) {
-            console.log(result);
-            $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/addSubCategory',
-                data : {'category_id':$scope.selectedCat._id,'sub_cat_name':$scope.subCatName,'sub_img_src':result.secure_url},
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                getCategories();
-                $scope.showSpinner = false;
-                //document.location.reload()
-                //$scope.selectedCat = null;
-                //$scope.subCatName = '';
-                //$scope.subCatImg = {};
-                //$scope.subCatImgName = '';
-            });
-          });
-        };
         $scope.allCat = [];
+
         var getCategories = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
@@ -1161,48 +975,6 @@
           }
         };
         getCategories();
-    });
-    app.directive("ngFileSelect",function(){
-        return {
-            link: function($scope,el){
-                
-                el.bind("change", function(e){
-                    console.log(e);
-                    var mySelectedFile = (e.srcElement || e.target).files[0];
-                    if((e.srcElement || e.target).id == 'cat'){
-                      $scope.catImg = mySelectedFile;
-                      $scope.catImgName = mySelectedFile.name;
-                    }else if((e.srcElement || e.target).id == 'subCat'){
-                      
-                      $scope.subCatImg = mySelectedFile;
-                      $scope.subCatImgName = mySelectedFile.name;
-                      console.log($scope.subCatImg, $scope.subCatImgName);
-                    }
-                    $scope.$digest();
-                })
-            }
-        }
-    });
-    app.directive('fileBrowser', function () {
-      
-      return {
-          template: '<input type="file" style="display: none;" />' +
-              '<ng-transclude></ng-transclude>',
-          transclude: true,
-          link: function ($scope, element) {
-              var fileInput = element.children('input[file]');
-              
-              fileInput.on('change', function (e) {
-                  var file = (e.srcElement || e.target).files[0];
-                  $scope.updateCatPic.files = file;
-                  $scope.$digest();
-              });
-              
-              element.on('click', function () {
-                  fileInput[0].click();
-              });
-          }
-      };
     });
 </script>
 </body>

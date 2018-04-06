@@ -184,6 +184,12 @@
                             <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.promises" class="form-control"></select>
                         </div>
                     </div>
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.offers" class="form-control"></select>
+                      </div>
+                    </div>
                     <!--div class="slds-form-element slds-p-bottom_medium">
                         <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
                         <div class="slds-form-element__control">
@@ -202,7 +208,7 @@
                           </div>
                         </div>
                     </div-->
-                    <div class="slds-align_absolute-center  slds-p-top_medium">
+                    <div class="slds-size_1-of-1  slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="addServices()">Add</button>
                     </div>
                   </div>
@@ -261,7 +267,13 @@
                           <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.promises" class="form-control"></select>
                       </div>
                   </div>
-                  <div class="slds-align_absolute-center  slds-p-top_medium">
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.offers" class="form-control"></select>
+                    </div>
+                  </div>
+                  <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
                   </div>
                 </div>

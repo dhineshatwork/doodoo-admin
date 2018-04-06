@@ -498,6 +498,7 @@
 
         $scope.allBannerImg = [];
         var getBannerImages = function(){
+          if($window.localStorage['isLogin']){
             $http({
                 method: 'GET',
                 url: 'https://freelaunce2.herokuapp.com/user/getbannerpic',
@@ -507,6 +508,9 @@
                 $scope.email = data.email;
                 $scope.allBannerImg = data.banner_img;
             })
+          }else{
+            window.location.href = 'login.html';
+          }
         };
         getBannerImages();
     });

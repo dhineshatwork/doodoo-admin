@@ -340,7 +340,7 @@
                                         <ul class="slds-dropdown__list" role="menu">
                                           <li class="slds-dropdown__item" role="presentation">
                                             <a href="javascript:void(0);" role="menuitem" tabindex="0">
-                                              <span class="slds-truncate" title="Cancel">Cancel</span>
+                                              <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(inprogressOrder._id)">Cancel</span>
                                             </a>
                                           </li>
                                           <li class="slds-dropdown__item" role="presentation">
@@ -709,6 +709,19 @@
                 $scope.closeModal();
             })
           }
+        };
+        $scope.cancelOrder = function(orderId){
+          console.log(orderId);
+          $http({
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/user/cancelOrder',
+              data : {'order_id':orderId},
+              headers: {'Content-Type':'application/json'}
+          }).success(function(data) {
+              console.log( 'data', data);
+              getAllBookingDetails();
+              //$scope.closeModal();
+          })
         };
         $scope.showModal = function(){
           $scope.isModalOpen = true;

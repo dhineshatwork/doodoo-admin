@@ -17,7 +17,7 @@ app.get('/',function(req,res){
 
 
 console.log("listening...",process.env.PORT )
-//app.listen(process.env.PORT || 2018)
-app.listen(2018,function(req,res){
+app.listen(process.env.PORT || 2018)
+/*app.listen(2018,function(req,res){
     console.log("listening...")
-})
+})*/

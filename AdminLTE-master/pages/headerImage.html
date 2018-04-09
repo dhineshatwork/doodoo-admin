@@ -110,9 +110,9 @@
                       </a>
                     </li>
                     <li class="active">
-                      <a href="imageUpload.html">
+                      <a href="headerImage.html">
                         <i class="fa   fa-upload"></i>
-                        <span>Image Upload</span>
+                        <span>Header Image</span>
                       </a>
                     </li>
                 </ul>
@@ -141,14 +141,14 @@
             <div class="box">
             <div class="box-header">
                 <h3 class="box-title">Banner Images</h3>
-                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 3" ng-click="showModal()">Add New</button>
+                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 5" ng-click="showModal()">Add New</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
                 <div class="slds-grid">
-                    <div class="slds-col slds-m-around_medium bannerImgAction" ng-repeat="banImg in allBannerImg">
+                    <div class="slds-col slds-m-around_medium bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
                       <i class="fa fa-trash-o slds-float_right" title="Delete" ng-click="delBannerImg(banImg._id)" style="font-size: 15px;cursor: pointer;"></i>  
-                      <img src="{{banImg.img_src}}"/>
+                      <img src="{{banImg.img_src}}" style="max-width: 20rem!important;max-height: 20rem!important;"/>
                     </div>
                   </div>
             </div>
@@ -202,14 +202,6 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.4.0
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
-
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
     <!-- Create the tabs -->

@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
     <!-- Theme style -->
     <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
+     <!-- DataTables -->
+    <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css">
     <!-- AdminLTE Skins. Choose a skin from the css/skins
           folder instead of downloading all of them to reduce the load. -->
     <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
@@ -150,9 +154,9 @@
                         </a>
                       </li>
                       <li>
-                        <a href="imageUpload.html">
+                        <a href="headerImage.html">
                           <i class="fa   fa-upload"></i>
-                          <span>Image Upload</span>
+                          <span>Header Image</span>
                         </a>
                       </li>
                   </ul>
@@ -181,240 +185,141 @@
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
                 <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
+                <li><a href="#inprogress" data-toggle="tab">In Progress</a></li>
                 <li><a href="#completed" data-toggle="tab">Completed</a></li>
                 <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
-                <li><a href="#inprogress" data-toggle="tab">In Progress</a></li>
               </ul>
               <div class="tab-content">
 
                 <!-- pending tab -->
                 <div class="tab-pane active" id="pending">
-                    <div class="slds-p-around_medium">
-                    <article class="slds-card">
-                        <div class="slds-card__header slds-grid">
-                          <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                            <div class="slds-media__figure">
-                              <i class="fa fa-hourglass-half"></i>
-                            </div>
-                            <div class="slds-media__body">
-                                <h2>
-                                  <span class="slds-text-heading_small">Pending</span>
-                                </h2>
-                            </div>
-                          </header>
-                        </div>
-                        <div class="slds-card__body">
-                          <ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-                            <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2"  ng-repeat="pendingOrder in allBookingDetails | filter:{ booked: true, status : 'Pending'}">
-                              <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-                                <div class="slds-media__body">
-                                  <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                                    <h3 class="slds-tile__title slds-truncate"><a href="javascript:void(0);">{{pendingOrder._id}}</a></h3>
-                                    <div class="slds-shrink-none slds-dropdown-trigger slds-dropdown-trigger_click slds-is-close" ng-click="toggleActionBtn($event)">
-                                      <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
-                                        <i class="fa fa-sort-down" style="bottom: .29rem;right: 0.29rem!important;position: absolute;font-size: 1rem;"></i>
-                                        <span class="slds-assistive-text">More options</span>
-                                      </button>
-                                      <div class="slds-dropdown slds-dropdown_left">
-                                          <ul class="slds-dropdown__list" role="menu">
-                                            <li class="slds-dropdown__item" role="presentation">
-                                              <a href="javascript:void(0);" role="menuitem" tabindex="0">
-                                                <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(pendingOrder._id)">Cancel</span>
-                                              </a>
-                                            </li>
-                                            <li class="slds-dropdown__item" role="presentation">
-                                              <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                                                <span class="slds-truncate" ng-click="acceptOrder(true,pendingOrder)">Accept Order</span>
-                                              </a>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <div class="slds-tile__detail">
-                                    <dl class="slds-list_horizontal slds-wrap">
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{pendingOrder.category}}">{{pendingOrder.category}}</dd>
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Sub Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{pendingOrder.sub_category}}">{{pendingOrder.sub_category}}</dd>
-                                    </dl>
-                                  </div>
-                                </div>
-                              </article>
-                            </li>
-                          </ul>
-                        </div>
-                        <!--footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer-->
-                      </article>
+                    <div class="slds-box slds-m-around_medium">
+                        <table id="pendingTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Booking Id</th>
+                                    <th>User Name</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="pendingOrder in allBookingDetails | filter:{ booked: true, status : 'Pending'}">
+                                  <td>{{pendingOrder.booking_id}}</td>
+                                  <td>{{pendingOrder.user_name}}</td>
+                                  <td>{{pendingOrder.category}}</td>
+                                  <td>{{pendingOrder.sub_category}}</td>
+                                  <td>{{pendingOrder.location}}</td-->
+                                  <td>{{pendingOrder.price}}</td>
+                                  <td>
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                      <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(pendingOrder._id)">Cancel</span>
+                                    </a>
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="-1">
+                                      <span class="slds-truncate" ng-click="acceptOrder(true,pendingOrder)">Accept Order</span>
+                                    </a>
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
                       </div>
                 </div>
                 <!-- /#pending -->
-
+                <!-- In Progress tab -->
+                <div class="tab-pane" id="inprogress">
+                    <div class="slds-box slds-m-around_medium">
+                        <table id="inprogressTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Booking Id</th>
+                                    <th>User Name</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr ng-repeat="inprogressOrder in allBookingDetails | filter:{ booked: true, status : 'Accepted'}">
+                                  <td>{{inprogressOrder.booking_id}}</td>
+                                  <td>{{inprogressOrder.user_name}}</td>
+                                  <td>{{inprogressOrder.category}}</td>
+                                  <td>{{inprogressOrder.sub_category}}</td>
+                                  <td>{{inprogressOrder.location}}</td>
+                                  <td>{{inprogressOrder.price}}</td>
+                                  <td>
+                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
+                                      <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(inprogressOrder._id)">Cancel</span>
+                                    </a>
+                                  </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      </div>
+                  </div>
+                  <!-- /#inprogress -->
                 <!-- completed tab -->
                 <div class="tab-pane" id="completed">
-                    <div class="slds-p-around_medium">
-                    <article class="slds-card">
-                        <div class="slds-card__header slds-grid">
-                          <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                            <div class="slds-media__figure">
-                              <i class="fa fa-hourglass-half"></i>
-                            </div>
-                            <div class="slds-media__body">
-                                <h2>
-                                  <span class="slds-text-heading_small">Completed</span>
-                                </h2>
-                            </div>
-                          </header>
-                        </div>
-                        <div class="slds-card__body">
-                          <ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-                            <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2"    ng-repeat="completedOrder in allBookingDetails | filter:{ booked: true, status : 'Completed'}">
-                              <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-                                <div class="slds-media__body">
-                                  <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                                    <h3 class="slds-tile__title slds-truncate"><a href="javascript:void(0);">{{completedOrder._id}}</a></h3>
-                                    <div class="slds-shrink-none slds-dropdown-trigger slds-dropdown-trigger_click slds-is-close" ng-click="toggleActionBtn($event)">
-                                      <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
-                                        <i class="fa fa-sort-down" style="bottom: .29rem;right: 0.29rem!important;position: absolute;font-size: 1rem;"></i>
-                                        <span class="slds-assistive-text">More options</span>
-                                      </button>
-                                      <div class="slds-dropdown slds-dropdown_left">
-                                          <ul class="slds-dropdown__list" role="menu">
-                                            <li class="slds-dropdown__item" role="presentation">
-                                              <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                                                <span class="slds-truncate" title="Completed">Completed</span>
-                                              </a>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                    </div>
-                                  </div>
-                                  <div class="slds-tile__detail">
-                                    <dl class="slds-list_horizontal slds-wrap">
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{completedOrder.category}}">{{completedOrder.category}}</dd>
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Sub Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{completedOrder.sub_category}}">{{completedOrder.sub_category}}</dd>
-                                    </dl>
-                                  </div>
-                                </div>
-                              </article>
-                            </li>
-                          </ul>
-                        </div>
-                        <!--footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer-->
-                      </article>
+                    <div class="slds-box slds-m-around_medium">
+                        <table id="completeTable" class="table table-bordered table-hover">
+                            <thead>
+                                <tr>
+                                    <th>Booking Id</th>
+                                    <th>User Name</th>
+                                    <th>Category</th>
+                                    <th>Sub Category</th>
+                                    <th>Location</th>
+                                    <th>Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr  ng-repeat="completedOrder in allBookingDetails | filter:{ booked: true, status : 'Completed'}">
+                                  <td>{{completedOrder.booking_id}}</td>
+                                  <td>{{completedOrder.user_name}}</td>
+                                  <td>{{completedOrder.category}}</td>
+                                  <td>{{completedOrder.sub_category}}</td>
+                                  <td>{{completedOrder.location}}</td-->
+                                  <td>{{completedOrder.price}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
                       </div>
                 </div>
                 <!-- /#completed -->
   
                 <!-- cancelled-->
                 <div class="tab-pane" id="cancelled">
-                    <div class="slds-p-around_medium">
-                    <article class="slds-card">
-                        <div class="slds-card__header slds-grid">
-                          <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                            <div class="slds-media__figure">
-                              <i class="fa fa-hourglass-half"></i>
-                            </div>
-                            <div class="slds-media__body">
-                                <h2>
-                                  <span class="slds-text-heading_small">Cancelled</span>
-                                </h2>
-                            </div>
-                          </header>
-                        </div>
-                        <div class="slds-card__body">
-                          <ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-                            <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2"    ng-repeat="canceledOrder in allBookingDetails | filter:{ booked: true, status : 'Cancelled'}">
-                              <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-                                <div class="slds-media__body">
-                                  <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                                    <h3 class="slds-tile__title slds-truncate"><a href="javascript:void(0);">{{canceledOrder._id}}</a></h3>
-                                  </div>
-                                  <div class="slds-tile__detail">
-                                    <dl class="slds-list_horizontal slds-wrap">
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{canceledOrder.category}}">{{canceledOrder.category}}</dd>
-                                      <dt class="slds-item_label slds-text-color_weak slds-truncate">Sub Category:</dt>
-                                      <dd class="slds-item_detail slds-truncate" title="{{canceledOrder.sub_category}}">{{canceledOrder.sub_category}}</dd>
-                                    </dl>
-                                  </div>
-                                </div>
-                              </article>
-                            </li>
-                          </ul>
-                        </div>
-                        <!--footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer-->
-                      </article>
-                      </div>
+                    <div class="slds-box slds-m-around_medium">
+                      <table id="cancelTable" class="table table-bordered table-hover">
+                          <thead>
+                              <tr>
+                                  <th>Booking Id</th>
+                                  <th>User Name</th>
+                                  <th>Category</th>
+                                  <th>Sub Category</th>
+                                  <th>Location</th>
+                                  <th>Price</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              <tr ng-repeat="canceledOrder in allBookingDetails | filter:{ booked: true, status : 'Cancelled'}">
+                                <td>{{canceledOrder.booking_id}}</td>
+                                  <td>{{canceledOrder.user_name}}</td>
+                                  <td>{{canceledOrder.category}}</td>
+                                  <td>{{canceledOrder.sub_category}}</td>
+                                  <td>{{canceledOrder.location}}</td-->
+                                  <td>{{canceledOrder.price}}</td>
+                              </tr>
+                          </tbody>
+                      </table>
+                    </div>
                 </div>
                 <!-- /#cancelled -->
-                <!-- In Progress tab -->
-                <div class="tab-pane" id="inprogress">
-                  <div class="slds-p-around_medium">
-                    <article class="slds-card">
-                      <div class="slds-card__header slds-grid">
-                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                          <div class="slds-media__figure">
-                            <i class="fa fa-hourglass-half"></i>
-                          </div>
-                          <div class="slds-media__body">
-                              <h2>
-                                <span class="slds-text-heading_small">In Progress</span>
-                              </h2>
-                          </div>
-                        </header>
-                      </div>
-                      <div class="slds-card__body">
-                        <ul class="slds-card__body_inner slds-grid slds-wrap slds-grid_pull-padded">
-                          <li class="slds-p-horizontal_small slds-size_1-of-1 slds-medium-size_1-of-2"   ng-repeat="inprogressOrder in allBookingDetails | filter:{ booked: true, status : 'Accepted'}">
-                            <article class="slds-tile slds-media slds-card__tile slds-hint-parent">
-                              <div class="slds-media__body">
-                                <div class="slds-grid slds-grid_align-spread slds-has-flexi-truncate">
-                                  <h3 class="slds-tile__title slds-truncate"><a href="javascript:void(0);">{{inprogressOrder._id}}</a></h3>
-                                  <div class="slds-shrink-none slds-dropdown-trigger slds-dropdown-trigger_click slds-is-close" ng-click="toggleActionBtn($event)">
-                                    <button class="slds-button slds-button_icon slds-button_icon-border-filled slds-button_icon-x-small" aria-haspopup="true" title="More options">
-                                      <!--svg class="slds-button__icon slds-button__icon_hint" aria-hidden="true">
-                                        <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/assets/icons/utility-sprite/svg/symbols.svg#down" />
-                                      </svg-->
-                                      <i class="fa fa-sort-down" style="bottom: .29rem;right: 0.29rem!important;position: absolute;font-size: 1rem;"></i>
-                                      <span class="slds-assistive-text">More options</span>
-                                    </button>
-                                    <div class="slds-dropdown slds-dropdown_left">
-                                        <ul class="slds-dropdown__list" role="menu">
-                                          <li class="slds-dropdown__item" role="presentation">
-                                            <a href="javascript:void(0);" role="menuitem" tabindex="0">
-                                              <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(inprogressOrder._id)">Cancel</span>
-                                            </a>
-                                          </li>
-                                          <li class="slds-dropdown__item" role="presentation">
-                                            <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                                              <span class="slds-truncate" title="Completed">Completed</span>
-                                            </a>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                  </div>
-                                </div>
-                                <div class="slds-tile__detail">
-                                  <dl class="slds-list_horizontal slds-wrap">
-                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Category:</dt>
-                                    <dd class="slds-item_detail slds-truncate" title="{{inprogressOrder.category}}">{{inprogressOrder.category}}</dd>
-                                    <dt class="slds-item_label slds-text-color_weak slds-truncate">Sub Category:</dt>
-                                    <dd class="slds-item_detail slds-truncate" title="{{inprogressOrder.sub_category}}">{{inprogressOrder.sub_category}}</dd>
-                                  </dl>
-                                </div>
-                              </div>
-                            </article>
-                          </li>
-                        </ul>
-                      </div>
-                      <!--footer class="slds-card__footer"><a href="javascript:void(0);">View All <span class="slds-assistive-text">entity type</span></a></footer-->
-                    </article>
-                  </div>
-                </div>
-                <!-- /#inprogress -->
+                
               </div>
               <!-- /.tab-content -->
             </div>
@@ -427,15 +332,7 @@
       <!-- /.content -->
     </div>
     <!-- /.content-wrapper -->
-    <footer class="main-footer">
-      <div class="pull-right hidden-xs">
-        <b>Version</b> 2.4.0
-      </div>
-      <strong>Copyright &copy; 2014-2016 <a href="https://adminlte.io">Almsaeed Studio</a>.</strong> All rights
-      reserved.
-    </footer>
-    <!-- Add the sidebar's background. This div must be placed
-          immediately after the control sidebar -->
+    
     <div class="control-sidebar-bg"></div>
     <div ng-if="isModalOpen" style="height: 640px;">
       <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
@@ -492,6 +389,8 @@
   <script src="../bower_components/fastclick/lib/fastclick.js"></script>
   <!-- AdminLTE App -->
   <script src="../dist/js/adminlte.min.js"></script>
+  <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
   
@@ -532,7 +431,7 @@
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 console.log( 'data', data);
-                getAllBookingDetails();
+                getAllBookingDetails(false);
                 $scope.closeModal();
                 $scope.showSpinner = false;
             })
@@ -548,7 +447,7 @@
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
-              getAllBookingDetails();
+              getAllBookingDetails(false);
               $scope.showSpinner = false;
           })
         };
@@ -580,7 +479,7 @@
         getEmployees();
 
         $scope.allBookingDetails = [];
-        var getAllBookingDetails = function(){
+        var getAllBookingDetails = function(isFromInit){
             $scope.showSpinner = true;
             $http({
                 method: 'GET',
@@ -590,9 +489,37 @@
                 console.log( 'data', data.bookingDetails );
                 $scope.allBookingDetails = data.bookingDetails;
                 $scope.showSpinner = false;
+                if(isFromInit){
+                $(function () {
+                  $('#cancelTable').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [0]
+                      }]
+                  })
+                  $('#completeTable').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [0]
+                      }]
+                  })
+                  $('#inprogressTable').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [0,6]
+                      }]
+                  })
+                  $('#pendingTable').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [0,6]
+                      }]
+                  })
+                })
+                }
             })
         };
-        getAllBookingDetails();
+        getAllBookingDetails(true);
     });
   </script>
 

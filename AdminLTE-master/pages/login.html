@@ -7,8 +7,8 @@
   <link rel="stylesheet" href="https://ajax.googleapis.com/ajax/libs/angular_material/1.1.0/angular-material.min.css">
     <style>
     .login md-card {
-        width: 300px;
-        height: 400px;
+        width: 250px;
+        height: 350px;
     }
     .md-button{
         margin: auto!important;
@@ -29,19 +29,22 @@
                     </div>
                 </md-toolbar>
                 <md-card-content>
+                    <div ng-if="showError" class="slds-align_absolute-center" style="color: rgb(221,44,0);">
+                        {{errorMessage}}
+                    </div>
                     <form name="colorForm">
                         <md-input-container class="md-block">
-                        <label>Email</label>
-                        <input name="Email" ng-model="email" required>
-                        <div ng-messages="email.$error">
-                            <div ng-message="required">This is required!</div>
-                        </div>
+                            <label>Email</label>
+                            <input name="Email" ng-model="email" required>
+                            <div ng-messages="email.$error">
+                                <div ng-message="required">This is required!</div>
+                            </div>
                         </md-input-container>
                         <md-input-container class="md-block">
                             <label>Password</label>
                             <input name="Password" ng-model="password" type="password" required>
                             <div ng-messages="password.$error">
-                            <div ng-message="required">This is required!</div>
+                                <div ng-message="required">This is required!</div>
                             </div>
                         </md-input-container>
                         <md-button class="md-raised slds-align_absolute-center" ng-click="signIn()">Sign In</md-button>
@@ -50,6 +53,16 @@
             </md-card>
         </section>
   </div>
+  <div  ng-if="showSpinner" style="height: 6rem;">
+    <div>
+        <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+        </div>
+        <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
+    </div>
+ </div>
   <!-- Angular Material requires Angular.js Libraries -->
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
@@ -68,16 +81,26 @@
     app.controller('signInCtrl',function($scope, $http, $window){
         $scope.email = '';
         $scope.password = '';
+        $scope.showError = false;
+        $scope.showSpinner = false;
         $scope.signIn = function() {
+            $scope.showSpinner = true;
             $http({
                 method: 'POST',
                 url: 'https://freelaunce2.herokuapp.com/admin/signin',
                 data : {'email':$scope.email,'password':$scope.password},
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
-                window.open('../index.html','_self');
-                $window.localStorage['isLogin'] = true;
                 console.log( 'data', data );
+                $scope.showSpinner = false;
+                if(data.status){
+                    window.open('../index.html','_self');
+                    $window.localStorage['isLogin'] = true;
+                }else{
+                    console.log( 'data', data, data.message );
+                    $scope.showError = true;
+                    $scope.errorMessage = data.message;
+                }
             })
         };
         $scope.signUp = function(){
@@ -87,7 +110,15 @@
                 data : {'email':$scope.email,'password':$scope.password},
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
-                console.log( 'data', data );
+                console.log( 'data', data, data.message );
+                if(data.message.indexOf('email') != -1){
+                    console.log('email');
+                    $scope.showEmailError = true;
+                }
+                if(data.message.indexOf('password') != -1){
+                    console.log('password');
+                    $scope.showPasswordError = true;
+                }
             })
         };
     });

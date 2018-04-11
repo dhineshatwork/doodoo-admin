@@ -129,18 +129,19 @@
             <section class="sidebar">
               <ul class="sidebar-menu" data-widget="tree">
                     <li class="header">MAIN NAVIGATION</li>
+                    <li>
+                        <a href="../index.html">
+                          <i class="fa fa-dashboard"></i>
+                          <span>Dashboard</span>
+                        </a>
+                      </li>
                     <li class="active">
                         <a href="booking.html">
                           <i class="fa fa-book"></i>
-                          <span>Booking Details</span>
+                          <span>Bookings</span>
                         </a>
                       </li>
-                      <li>
-                        <a href="employees.html">
-                          <i class="fa fa-fw fa-users"></i>
-                          <span>Employees</span>
-                        </a>
-                      </li>
+                      
                       <li>
                         <a href="categories.html">
                           <i class="fa  fa-list-alt"></i>
@@ -153,6 +154,18 @@
                           <span>Services</span>
                         </a>
                       </li>
+                      <li>
+                          <a href="employees.html">
+                            <i class="fa fa-fw fa-users"></i>
+                            <span>Employees</span>
+                          </a>
+                        </li>
+                        <li>
+                            <a href="employees.html">
+                              <i class="fa fa-fw fa-users"></i>
+                              <span>Users</span>
+                            </a>
+                          </li>
                       <li>
                         <a href="headerImage.html">
                           <i class="fa   fa-upload"></i>
@@ -168,7 +181,7 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Booking Details
+          Bookings
           <!--small>a set of beautiful icons</small-->
         </h1>
         <!--ol class="breadcrumb">
@@ -184,8 +197,8 @@
           <div class="col-xs-12">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#pending" data-toggle="tab">Pending</a></li>
-                <li><a href="#inprogress" data-toggle="tab">In Progress</a></li>
+                <li class="active"><a href="#pending" data-toggle="tab">Requested</a></li>
+                <li><a href="#inprogress" data-toggle="tab">On going</a></li>
                 <li><a href="#completed" data-toggle="tab">Completed</a></li>
                 <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
               </ul>
@@ -238,6 +251,7 @@
                                     <th>Sub Category</th>
                                     <th>Location</th>
                                     <th>Price</th>
+                                    <th>Employee</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -248,6 +262,7 @@
                                   <td>{{inprogressOrder.category}}</td>
                                   <td>{{inprogressOrder.sub_category}}</td>
                                   <td>{{inprogressOrder.location}}</td>
+                                  <td>{{inprogressOrder.emp_name}}</td>
                                   <td>{{inprogressOrder.price}}</td>
                                   <td>
                                     <button class="slds-button slds-button_neutral " ng-click="cancelOrder(inprogressOrder._id)">Cancel</button>
@@ -502,7 +517,7 @@
                   $('#inprogressTable').DataTable({
                       "columnDefs": [{
                           "orderable": false,
-                          "targets": [0,6]
+                          "targets": [0,7]
                       }]
                   })
                   $('#pendingTable').DataTable({

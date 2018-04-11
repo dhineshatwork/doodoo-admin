@@ -215,12 +215,10 @@
                                   <td>{{pendingOrder.location}}</td-->
                                   <td>{{pendingOrder.price}}</td>
                                   <td>
-                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
-                                      <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(pendingOrder._id)">Cancel</span>
-                                    </a>
-                                    <a href="javascript:void(0);" role="menuitem" tabindex="-1">
-                                      <span class="slds-truncate" ng-click="acceptOrder(true,pendingOrder)">Accept Order</span>
-                                    </a>
+                                    <div class="slds-button-group" role="group">
+                                      <button class="slds-button slds-button_neutral " ng-click="cancelOrder(pendingOrder._id)">Cancel</button>
+                                      <button class="slds-button slds-button_neutral " ng-click="acceptOrder(true,pendingOrder)">Accept Order</button>
+                                    </div>
                                   </td>
                                 </tr>
                             </tbody>
@@ -252,9 +250,7 @@
                                   <td>{{inprogressOrder.location}}</td>
                                   <td>{{inprogressOrder.price}}</td>
                                   <td>
-                                    <a href="javascript:void(0);" role="menuitem" tabindex="0">
-                                      <span class="slds-truncate" title="Cancel" ng-click="cancelOrder(inprogressOrder._id)">Cancel</span>
-                                    </a>
+                                    <button class="slds-button slds-button_neutral " ng-click="cancelOrder(inprogressOrder._id)">Cancel</button>
                                   </td>
                                 </tr>
                             </tbody>

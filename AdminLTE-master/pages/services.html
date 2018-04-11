@@ -190,24 +190,24 @@
                           <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.offers" class="form-control"></select>
                       </div>
                     </div>
-                    <!--div class="slds-form-element slds-p-bottom_medium">
-                        <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
-                        <div class="slds-form-element__control">
-                          <div class="slds-file-selector slds-file-selector_files slds-grid">
-                            <div class="slds-file-selector__dropzone slds-size_3-of-9">
-                              <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="subCat" accept="image/*"/>
-                              <label class="slds-file-selector__body" for="subCat" id="file-selector-secondary-label">
-                                <span class="slds-file-selector__button slds-button slds-button_neutral">
-                                  <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                                    <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                                  </svg>Upload Files</span>
-                                <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span>
-                              </label>
-                            </div>
-                           <p ng-bind="subCatImgName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                    <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
+                      <div class="slds-form-element__control">
+                        <div class="slds-file-selector slds-file-selector_files slds-grid">
+                          <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                            <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="subCat" accept="image/*"/>
+                            <label class="slds-file-selector__body" for="subCat" id="file-selector-secondary-label">
+                              <span class="slds-file-selector__button slds-button slds-button_neutral">
+                                <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                                  <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                                </svg-->Upload Files</span>
+                              <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
+                            </label>
                           </div>
+                         <p ng-bind="newServPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
                         </div>
-                    </div-->
+                      </div>
+                  </div>
                     <div class="slds-size_1-of-1  slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="addServices()">Add</button>
                     </div>
@@ -273,11 +273,7 @@
                         <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.offers" class="form-control"></select>
                     </div>
                   </div>
-                  <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
-                      <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
-                  </div>
-                </div>
-                <!--div class="slds-form-element slds-p-bottom_medium">
+                  <!--div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                     <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
                     <div class="slds-form-element__control">
                       <div class="slds-file-selector slds-file-selector_files slds-grid">
@@ -295,6 +291,11 @@
                       </div>
                     </div>
                 </div-->
+                  <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
+                      <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
+                  </div>
+                </div>
+               
               </div>
             </div>
             <!-- /.box-body slds-avatar_circle  -->
@@ -475,20 +476,49 @@
 
         $scope.addServices = function(){
           $scope.showSpinner = true;
-          $scope.newServ.category = $scope.selectedCat._id;
-          $scope.newServ.sub_category = $scope.selectedSubCat._id;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/addServices',
-              data : $scope.newServ,
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log(data);
-              $scope.showSpinner = false;
-              $scope.newServ = null;
-              $scope.selectedCat = null;
-              $scope.selectedSubCat = null;
-          })
+          if($scope.newServPic.file){
+            var fd = new FormData();
+            fd.append('upload_preset', 'mytrda6j');
+            fd.append('file',   $scope.newServPic.file);
+            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+              headers: {
+                  'Content-Type': undefined,
+                  'X-Requested-With': 'XMLHttpRequest'
+              }
+            }).success(function(result) {
+              $scope.newServ.image = result.secure_url;
+              $scope.newServ.category = $scope.selectedCat._id;
+              $scope.newServ.sub_category = $scope.selectedSubCat._id;
+              $http({
+                  method: 'POST',
+                  url: 'https://freelaunce2.herokuapp.com/admin/addServices',
+                  data : $scope.newServ,
+                  headers: {'Content-Type':'application/json'}
+              }).success(function(data) {
+                  console.log(data);
+                  $scope.showSpinner = false;
+                  $scope.newServ = null;
+                  $scope.selectedCat = null;
+                  $scope.selectedSubCat = null;
+              })
+            });
+          }else{
+            $scope.newServ.category = $scope.selectedCat._id;
+            $scope.newServ.sub_category = $scope.selectedSubCat._id;
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/addServices',
+                data : $scope.newServ,
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                console.log(data);
+                $scope.showSpinner = false;
+                $scope.newServ = null;
+                $scope.selectedCat = null;
+                $scope.selectedSubCat = null;
+                $scope.newServPic = {};
+            })
+          }
         };
 
         $scope.signOut = function(){
@@ -524,6 +554,19 @@
           }
         };
         getCategories();
+    });
+    app.directive("ngFileSelect",function(){
+        return {
+            link: function($scope,el){
+                
+                el.bind("change", function(e){
+                    var mySelectedFile = (e.srcElement || e.target).files[0];
+                    $scope.newServPic.file = mySelectedFile;
+                    $scope.newServPicName = mySelectedFile.name;
+                    $scope.$digest();
+                })
+            }
+        }
     });
 </script>
 </body>

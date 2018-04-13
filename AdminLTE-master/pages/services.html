@@ -180,6 +180,12 @@
                         </div>
                     </div>
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Location</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.location" class="form-control"></select>
+                      </div>
+                    </div>  
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                         <div class="slds-form-element__control">
                             <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
@@ -262,6 +268,12 @@
                           <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.description" class="form-control"></select>
                       </div>
                   </div>
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Location</label>
+                    <div class="slds-form-element__control">
+                        <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.location" class="form-control"></select>
+                    </div>
+                  </div>  
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                       <div class="slds-form-element__control">
@@ -514,6 +526,8 @@
                   $scope.newServ = null;
                   $scope.selectedCat = null;
                   $scope.selectedSubCat = null;
+                  $scope.newServPicName  = null;
+          
               })
             });
           }else{
@@ -532,6 +546,7 @@
                 $scope.selectedCat = null;
                 $scope.selectedSubCat = null;
                 $scope.newServPic = {};
+                $scope.newServPicName  = '';
             })
           }
         };

@@ -138,6 +138,18 @@
               <span>Header Image</span>
             </a>
           </li>
+          <li>
+            <a href="headerImage.html">
+              <i class="fa   fa-upload"></i>
+              <span>Offer Image</span>
+            </a>
+          </li>
+          <li>
+            <a href="headerImage.html">
+              <i class="fa   fa-upload"></i>
+              <span>Notification</span>
+            </a>
+          </li>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -368,7 +380,7 @@
                   <i class="fa fa-chevron-left slds-p-top_xx-small" title="Back" ng-click="closeCatView()" style="font-size:1rem;cursor: pointer;"></i>
                   <h3 class="slds-p-left_medium box-title">Category View</h3>
                 </span>
-                <span class="slds-col slds-align_absolute-center actionFix slds-grid slds-wrap">
+                <span class="slds-col slds-p-top_large  slds-align_absolute-center actionFix slds-grid slds-wrap">
                   <div class="slds-size_4-of-5 slds-grid slds-wrap">
                     <span class="slds-size_1-of-1 slds-align_absolute-center">
                       <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src" />
@@ -378,7 +390,7 @@
                       <h3 class="box-title">{{catView.name}}</h3>
                     </span>
                   </div>
-                  <div class="slds-size_1-of-5">
+                  <div class="slds-size_1-of-5"><!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
                     <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
                     <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
                   </div>
@@ -396,16 +408,19 @@
                     </div>
                   </div>
                   <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                    <div class="slds-size_1-of-3 slds-p-top_large slds-align_absolute-center actionFix" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
-                      <span class="slds-avatar slds-avatar_large">
-                        <img alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src" />
-                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src" />
-                      </span>
-                      <span class="slds-p-left_small">{{subcat.sub_cat_name}}</span>
-                      <span>
-                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
-                        <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
-                      </span>
+                      <div class="slds-size_1-of-3  actionFix slds-p-top_x-large slds-align_absolute-center slds-grid" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
+                        <div class="slds-size_3-of-4 slds-grid slds-wrap">
+                          <div class="slds-align_absolute-center slds-size_1-of-1">
+                            <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src" />
+                            <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src" />
+                          </div>
+                          <div class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{subcat.sub_cat_name}}</div>
+                        </div>
+                        <span class="slds-size_1-of-4">
+                            <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
+                            <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>

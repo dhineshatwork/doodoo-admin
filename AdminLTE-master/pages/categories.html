@@ -392,7 +392,7 @@
                   </div>
                   <div class="slds-size_1-of-5"><!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
                     <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
-                    <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" ng-click="delCat()"></i>
+                    <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" confirmed-click="delCat()" ng-confirm-click></i>
                   </div>
                 </span>
               </div>
@@ -418,7 +418,7 @@
                         </div>
                         <span class="slds-size_1-of-4">
                             <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
-                            <i ng-click="deleteSubCat(subcat._id)" title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
+                            <i confirmed-click="deleteSubCat(subcat._id)" ng-confirm-click title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
                         </span>
                       </div>
                     </div>
@@ -448,9 +448,9 @@
                 <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
                   <div class="slds-m-around_large" ng-if="updateSubCatReg">
                     <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
-                      <span class="slds-avatar slds-avatar_large">
-                        <img alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src" />
-                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src" />
+                      <span>
+                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src" />
+                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src" />
                       </span>
                       <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
                         <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
@@ -472,9 +472,9 @@
                   </div>
                   <div class="slds-m-around_large" ng-if="updateCatReg">
                     <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
-                      <span class="slds-avatar slds-avatar_large">
-                        <img alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src" />
-                        <img src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src" />
+                      <span>
+                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src" />
+                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src" />
                       </span>
                       <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
                         <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
@@ -899,6 +899,20 @@
         }
       };
     });
+    app.directive('ngConfirmClick', [
+        function(){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick || "Are you sure want to delete?";
+                    var clickAction = attr.confirmedClick;
+                    element.bind('click',function (event) {
+                        if ( window.confirm(msg) ) {
+                            scope.$eval(clickAction)
+                        }
+                    });
+                }
+            };
+    }])
   </script>
 </body>
 

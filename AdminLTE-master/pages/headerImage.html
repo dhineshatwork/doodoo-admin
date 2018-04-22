@@ -190,12 +190,12 @@
               <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
               <span class="slds-assistive-text">Close</span>
             </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Header Image</h2>
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="  slds-align_absolute-center ">
               <div class="slds-form-element slds-p-bottom_medium">
-                <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
+                <label class="slds-form-element__label" id="file-selector-primary-label">Header Image</label>
                 <div class="slds-form-element__control">
                   <div class="slds-file-selector slds-file-selector_files slds-grid">
                     <div class="slds-file-selector__dropzone slds-size_3-of-9">
@@ -225,196 +225,16 @@
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                <p>New phone +1(800)555-1234</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                <p>nora@example.com</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                <p>Execution time 5 seconds</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="label label-danger pull-right">70%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Update Resume
-                <span class="label label-success pull-right">95%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Laravel Integration
-                <span class="label label-warning pull-right">50%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Back End Framework
-                <span class="label label-primary pull-right">68%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
+  <div  ng-if="showSpinner" style="height: 6rem;">
+    <div>
+      <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
       </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Allow mail redirect
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Other sets of options are available
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Expose author name in posts
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Allow the user to show his name in blog posts
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Show me as online
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Turn off notifications
-              <input type="checkbox" class="pull-right">
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Delete chat history
-              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-            </label>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
+      <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
     </div>
-  </aside>
-  <!-- /.control-sidebar -->
+  </div>
   <!-- Add the sidebar's background. This div must be placed
        immediately after the control sidebar -->
   <div class="control-sidebar-bg"></div>
@@ -449,8 +269,12 @@
     app.controller('imgUploadCtrl',function($scope, $http, $window, $location){
         $scope.isModalOpen = false;
         $scope.newBannerPic = {};
+        $scope.showSpinner = false;
         $scope.addBannerImg = function(){
           console.log($scope.newBannerPic);
+          $scope.isModalOpen = false;
+          $scope.showSpinner = true;
+          
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
           fd.append('file',  $scope.newBannerPic.file);
@@ -471,13 +295,14 @@
                     headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                     console.log( 'data', data );
-                    $scope.isModalOpen = false;
+                    $scope.showSpinner = false;
                     getBannerImages();
             })
           });
         };
         $scope.delBannerImg = function(id){
           console.log(id);
+          $scope.showSpinner = true;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/deleteBannerPic',
@@ -486,33 +311,16 @@
           }).success(function(data) {
               console.log( 'data', data);
               getBannerImages();
+              $scope.showSpinner = false;
           })
         };
         $scope.showModal = function(){
           $scope.isModalOpen = true;
         };
-        $scope.updateEmp = function(){
-          console.log($scope.empToUpdate);
-          $scope.showEdit = false;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-              data :  $scope.empToUpdate,
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data);
-          })
-        };
-        $scope.closeModal = function(){
-          $scope.isModalOpen = false;
-        };
-        $scope.signOut = function(){
-          $window.localStorage.clear();
-          window.location.href = 'login.html';
-        };
 
         $scope.allBannerImg = [];
         var getBannerImages = function(){
+          $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
             $http({
                 method: 'GET',
@@ -522,8 +330,10 @@
                 console.log( 'data', data.banner_img );
                 $scope.email = data.email;
                 $scope.allBannerImg = data.banner_img;
+                $scope.showSpinner = false;
             })
           }else{
+            $scope.showSpinner = false;
             window.location.href = 'login.html';
           }
         };

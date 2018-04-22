@@ -209,9 +209,9 @@
           <div class="col-xs-12">
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
-                <li class="active"><a href="#pending" data-toggle="tab">Requested</a></li>
+                <li class="active"><a href="#pending"  data-toggle="tab">Requested</a></li>
                 <li><a href="#inprogress" data-toggle="tab">On going</a></li>
-                <li><a href="#completed" data-toggle="tab">Completed</a></li>
+                <li><a href="#completed" ng-click="completedBookings()" data-toggle="tab">Completed</a></li>
                 <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
               </ul>
               <div class="tab-content">
@@ -429,7 +429,9 @@
           $window.localStorage.clear();
           window.location.href = 'login.html';
         };
-        
+        $scope.completedBookings = function(){
+          console.log('completed');
+        };
         $scope.toggleActionBtn = function($event){
           if($event.currentTarget.getAttribute("class").includes('slds-is-close')){
             $(event.currentTarget).addClass('slds-is-open');
@@ -443,10 +445,20 @@
           if(isFromCard){
             console.log(order);
             $scope.orderSelected = order;
-            $scope.showModal();
+            $http({
+                method: 'POST',
+                url: 'https://freelaunce2.herokuapp.com/admin/searchEmployee',
+                data : {'location':$scope.orderSelected._id,"category_id": $scope.empSelected.id},
+                headers: {'Content-Type':'application/json'}
+            }).success(function(data) {
+                $scope.showModal();
+            })
+            
           }else{
             console.log($scope.orderSelected, $scope.empSelected);
+            $scope.closeModal();
             $scope.showSpinner = true;
+            
             $http({
                 method: 'POST',
                 url: 'https://freelaunce2.herokuapp.com/admin/acceptOrder',
@@ -455,7 +467,6 @@
             }).success(function(data) {
                 console.log( 'data', data);
                 getAllBookingDetails(false);
-                $scope.closeModal();
                 $scope.showSpinner = false;
             })
           }

@@ -3,7 +3,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Data Tables</title>
+  <title>Dodoo | Services</title>
+  <link rel="shortcut icon" href="../dist/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../dist/img/favicon.ico" type="image/x-icon">
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -55,7 +57,7 @@
 
         <header class="main-header">
           <!-- Logo -->
-          <a href="../index.html" class="logo">
+          <a href="../dashboard.html" class="logo">
             <!-- mini logo for sidebar mini 50x50 pixels -->
             <span class="logo-mini"><b>DoDoo</b></span>
             <!-- logo for regular state and mobile devices -->
@@ -88,7 +90,7 @@
             <ul class="sidebar-menu" data-widget="tree">
                   <li class="header">MAIN NAVIGATION</li>
                   <li>
-                    <a href="../index.html">
+                    <a href="../dashboard.html">
                       <i class="fa fa-dashboard"></i>
                       <span>Dashboard</span>
                     </a>
@@ -498,7 +500,7 @@
 
         $scope.signOut = function(){
           $window.localStorage.clear();
-          window.location.href = 'login.html';
+          window.location.href = '../index.html';
         };
 
         $scope.findIndexInData = function(data, property, value) {
@@ -525,7 +527,7 @@
                 $scope.showSpinner = false;
             })
           }else{
-            window.location.href = 'login.html';
+            window.location.href = '../index.html';
           }
         };
         getCategories();

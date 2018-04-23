@@ -4,7 +4,9 @@
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>AdminLTE 2 | Data Tables</title>
+  <link rel="shortcut icon" href="../dist/img/favicon.ico" type="image/x-icon">
+  <link rel="icon" href="../dist/img/favicon.ico" type="image/x-icon">
+  <title>DoDoo | Categories</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -60,7 +62,7 @@
 
     <header class="main-header">
       <!-- Logo -->
-      <a href="../index.html" class="logo">
+      <a href="../dashboard.html" class="logo">
         <!-- mini logo for sidebar mini 50x50 pixels -->
         <span class="logo-mini">
           <b>DoDoo</b>
@@ -96,7 +98,7 @@
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
           <li>
-              <a href="../index.html">
+              <a href="../dashboard.html">
                 <i class="fa fa-dashboard"></i>
                 <span>Dashboard</span>
               </a>
@@ -293,15 +295,15 @@
               <div class="box-body no-padding">
                 <div class="slds-m-around_large">
                   <div class="slds-form-element slds-p-bottom_small">
-                    <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
-                    <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="subCatName" />
-                    </div>
-                  </div>
-                  <div class="slds-form-element slds-p-bottom_small">
                     <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                     <div class="slds-form-element__control">
                       <select style="border-radius:.25rem!important;" ng-model="selectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
+                    </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="subCatName" />
                     </div>
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
@@ -693,7 +695,7 @@
       };
       $scope.signOut = function () {
         $window.localStorage.clear();
-        window.location.href = 'login.html';
+        window.location.href = '../index.html';
       };
       $scope.updateSubCat = function () {
         $scope.showSpinner = true;
@@ -852,7 +854,7 @@
             $scope.showSpinner = false;
           })
         } else {
-          window.location.href = 'login.html';
+          window.location.href = '../index.html';
         }
       };
       getCategories();

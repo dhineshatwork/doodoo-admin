@@ -133,7 +133,7 @@
                   </a>
                 </li>
                 <li>
-                  <a href="headerImage.html">
+                  <a href="offerImage.html">
                     <i class="fa   fa-upload"></i>
                     <span>Offer Image</span>
                   </a>
@@ -272,10 +272,10 @@
                     </div>
                   </div>
                   <div class="slds-align_absolute-center  slds-p-top_medium">
-                      <button class="slds-button slds-button_neutral" ng-if="!updateServ" ng-click="getService()">Get Service</button>
+                      <button class="slds-button slds-button_neutral" ng-if="!updateServ.price" ng-click="getService()">Get Service</button>
                   </div>
                 </div>
-                <div class="slds-size_1-of-1 slds-m-top_small slds-grid slds-wrap slds-box" ng-if="updateServ">
+                <div class="slds-size_1-of-1 slds-m-top_small slds-grid slds-wrap slds-box" ng-if="updateServ.price">
                   <div class="slds-size_1-of-1 slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
                     <span>
                       <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateServ.image}}" ng-if="updateServ.image" />
@@ -323,6 +323,7 @@
                     </div>
                   </div>
                   <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
+                      <button class="slds-button slds-button_neutral" ng-click="cancelUpdate()">Cancel</button>
                       <button class="slds-button slds-button_neutral" confirmed-click="deleteServices()" ng-confirm-click>Delete</button>
                       <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
                   </div>
@@ -383,6 +384,7 @@
     app.controller('categoryCtrl',function($scope, $http, $window, $location){
       $scope.newServPic = {};
       $scope.updateServImage = {};
+      $scope.updateServlocation={};
         $scope.delServ = function(){
           $scope.showSpinner = true;
           $http({
@@ -398,7 +400,9 @@
               $scope.catView = null;
           })
         };
-
+        $scope.cancelUpdate = function(){
+          $scope.updateServ = {};
+        }
         $scope.getService = function(){
           $scope.showSpinner = true;
           $http({
@@ -410,13 +414,14 @@
               console.log(data.serviceDetails);
               $scope.showSpinner = false;
               $scope.updateServ = data.serviceDetails;
-              $scope.updateServlocation = $scope.updateServ.location;
+              $scope.updateServlocation = $scope.updateServ.location != null ? $scope.updateServ.location : {formatted_address:''};
           })
         };
         $scope.updateServices = function(){
           $scope.showSpinner = true;
-          $scope.updateServ.service_id = $scope.updateServ._id;
-          $scope.updateServ = updateServlocation.formatted_address;
+          console.log($scope.updateServlocation)
+     /* $scope.updateServ.service_id = $scope.updateServ._id;
+          $scope.updateServ.location =  $scope.updateServlocation;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/admin/servicesUpdate',
@@ -428,7 +433,7 @@
             $scope.updateServ =null;
             $scope.updateSelectedCat = null;
             $scope.updateSelectedSubCat = null;
-          })
+          })*/
         };
         $scope.deleteServices = function(){
           console.log($scope.updateServ);

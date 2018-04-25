@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="../dist/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="../dist/img/favicon.ico" type="image/x-icon">
-  <title>Dodoo | Header Images</title>
+  <title>Dodoo | Offer Images</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -124,13 +124,13 @@
                             <span>Users</span>
                           </a>
                         </li>
-                    <li class="active">
+                    <li>
                       <a href="headerImage.html">
                         <i class="fa   fa-upload"></i>
                         <span>Header Image</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                       <a href="offerImage.html">
                         <i class="fa   fa-upload"></i>
                         <span>Offer Image</span>
@@ -153,11 +153,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Header Images
+       Offer Images
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Header Images</li>
+        <li class="active">Offer Images</li>
       </ol>
     </section>
     <section class="content">
@@ -165,15 +165,15 @@
             <div class="col-md-12">
             <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Header Images</h3>
-                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 5" ng-click="showModal()">Add New</button>
+                <h3 class="box-title">Offer Images</h3>
+                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 1" ng-click="showModal()">Add New</button>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
-                <div class="slds-grid slds-wrap">
+                <div class="slds-grid slds-wrap" ng-if="allBannerImg">
                     <div class="slds-size_1-of-2 slds-m-vertical_medium slds-p-horizontal_small bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
                       <i class="fa fa-trash-o slds-float_right" title="Delete" ng-click="delBannerImg(banImg._id)" style="font-size: 15px;cursor: pointer;"></i>  
-                      <img src="{{banImg.img_src}}"/>
+                      <img src="{{banImg.img_src}}" ng-if="banImg.img_src"/>
                     </div>
                   </div>
             </div>
@@ -192,12 +192,12 @@
               <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
               <span class="slds-assistive-text">Close</span>
             </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Header Image</h2>
+            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Offer Image</h2>
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="  slds-align_absolute-center ">
               <div class="slds-form-element slds-p-bottom_medium">
-                <label class="slds-form-element__label" id="file-selector-primary-label">Header Image</label>
+                <label class="slds-form-element__label" id="file-selector-primary-label">Offer Image</label>
                 <div class="slds-form-element__control">
                   <div class="slds-file-selector slds-file-selector_files slds-grid">
                     <div class="slds-file-selector__dropzone slds-size_3-of-9">
@@ -272,6 +272,9 @@
         $scope.isModalOpen = false;
         $scope.newBannerPic = {};
         $scope.showSpinner = false;
+        $scope.showModal = function(){
+          $scope.isModalOpen = true;
+        };
         $scope.closeModal = function(){
           $scope.isModalOpen = false;
           $scope.newBannerPic = {};
@@ -291,12 +294,15 @@
                   'X-Requested-With': 'XMLHttpRequest'
               }
           }).success(function(data) {
+            console.log(data.secure_url);
+            var imgsrc = [];
+            imgsrc.push(data.secure_url);
             $http({
                     method: 'POST',
-                    url: 'https://freelaunce2.herokuapp.com/admin/addbannerpic',
+                    url: 'https://freelaunce2.herokuapp.com/admin/addofferpic',
                     data :  {
                               "email": $scope.email,
-                              "img_src": [data.secure_url]
+                              "img_src": imgsrc
                             },
                     headers: {'Content-Type':'application/json'}
             }).success(function(data) {
@@ -311,8 +317,8 @@
           $scope.showSpinner = true;
           $http({
               method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/deleteBannerPic',
-              data : {'banner_id':id,"email": $scope.email},
+              url: 'https://freelaunce2.herokuapp.com/admin/deleteofferPic',
+              data : {'offer_id':id,"email": $scope.email},
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log( 'data', data);
@@ -320,23 +326,22 @@
               $scope.showSpinner = false;
           })
         };
-        $scope.showModal = function(){
-          $scope.isModalOpen = true;
-        };
-
+        
         $scope.allBannerImg = [];
         var getBannerImages = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
             $http({
                 method: 'GET',
-                url: 'https://freelaunce2.herokuapp.com/user/getbannerpic',
+                url: 'https://freelaunce2.herokuapp.com/user/getOfferPic',
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
-                console.log( 'data', data.banner_img );
-                $scope.email = data.email;
-                $scope.allBannerImg = data.banner_img;
+                console.log( 'data', data );
                 $scope.showSpinner = false;
+                if(data.status){
+                  $scope.email = data.email;
+                  $scope.allBannerImg = data.pic.offer_img;
+                }
             })
           }else{
             $scope.showSpinner = false;

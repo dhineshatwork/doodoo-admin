@@ -75,7 +75,7 @@
               <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                  <a href="#" ng-click="signOut()">Sign out</a>   
+                  <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>   
                 </li>
               </ul>
             </div>
@@ -99,7 +99,13 @@
                         <span>Bookings</span>
                       </a>
                     </li>
-                    
+                    <li>
+                        <a href="revenuedetails.html">
+                          <i class="fa fa-inr"></i>
+                          <span>Revenue Details</span>
+                        </a>
+                      </li>
+                    <li> 
                     <li>
                       <a href="categories.html">
                         <i class="fa  fa-list-alt"></i>
@@ -118,12 +124,12 @@
                           <span>Employees</span>
                         </a>
                       </li>
-                      <li>
+                      <!--li>
                           <a href="employees.html">
                             <i class="fa fa-fw fa-users"></i>
                             <span>Users</span>
                           </a>
-                        </li>
+                        </li-->
                     <li>
                       <a href="headerImage.html">
                         <i class="fa   fa-upload"></i>
@@ -132,16 +138,23 @@
                     </li>
                     <li class="active">
                       <a href="offerImage.html">
-                        <i class="fa   fa-upload"></i>
+                        <i class="fa  fa-cloud-upload"></i>
                         <span>Offer Image</span>
                       </a>
                     </li>
                     <li>
                       <a href="headerImage.html">
-                        <i class="fa   fa-upload"></i>
+                        <i class="fa   fa-bell"></i>
                         <span>Notification</span>
                       </a>
                     </li>
+                    <li>
+                        <a href="booking.html">
+                          <i class="fa fa-bar-chart"></i>
+                          <span>Analytics</span>
+                        </a>
+                      </li>
+                    <li>
                 </ul>
               </section>
           <!-- /.sidebar -->
@@ -170,7 +183,7 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
-                <div class="slds-grid slds-wrap" ng-if="allBannerImg">
+                <div class="slds-align_absolute-center " ng-if="allBannerImg">
                     <div class="slds-size_1-of-2 slds-m-vertical_medium slds-p-horizontal_small bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
                       <i class="fa fa-trash-o slds-float_right" title="Delete" ng-click="delBannerImg(banImg._id)" style="font-size: 15px;cursor: pointer;"></i>  
                       <img src="{{banImg.img_src}}" ng-if="banImg.img_src"/>
@@ -297,6 +310,7 @@
             console.log(data.secure_url);
             var imgsrc = [];
             imgsrc.push(data.secure_url);
+            console.log(typeof imgsrc);
             $http({
                     method: 'POST',
                     url: 'https://freelaunce2.herokuapp.com/admin/addofferpic',

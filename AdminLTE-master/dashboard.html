@@ -73,7 +73,8 @@
               <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                  <a href="#" ng-click="signOut()">Sign out</a>   
+                    
+                  <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>   
                 </li>
               </ul>
             </div>
@@ -97,7 +98,12 @@
                         <span>Bookings</span>
                       </a>
                     </li>
-                    
+                    <li>
+                        <a href="pages/revenuedetails.html">
+                          <i class="fa fa-inr"></i>
+                          <span>Revenue Details</span>
+                        </a>
+                      </li>
                     <li>
                       <a href="pages/categories.html">
                         <i class="fa  fa-list-alt"></i>
@@ -117,12 +123,12 @@
                           <span>Employees</span>
                         </a>
                       </li>
-                      <li>
+                      <!--li>
                           <a href="pages/employees.html">
                             <i class="fa fa-fw fa-users"></i>
                             <span>Users</span>
                           </a>
-                        </li>
+                        </li-->
                         <li>
                       <a href="pages/headerImage.html">
                         <i class="fa   fa-upload"></i>
@@ -131,16 +137,23 @@
                     </li>
                     <li>
                       <a href="pages/offerImage.html">
-                        <i class="fa   fa-upload"></i>
+                        <i class="fa   fa-cloud-upload"></i>
                         <span>Offer Image</span>
                       </a>
                     </li>
                     <li>
-                      <a href="headerImage.html">
-                        <i class="fa   fa-upload"></i>
+                      <a href="pages/headerImage.html">
+                        <i class="fa  fa-bell"></i>
                         <span>Notification</span>
                       </a>
                     </li>
+                    <li>
+                        <a href="pages/booking.html">
+                          <i class="fa fa-bar-chart"></i>
+                          <span>Analytics</span>
+                        </a>
+                      </li>
+                    <li>
                 </ul>
               </section>
           <!-- /.sidebar -->
@@ -184,13 +197,14 @@
           <!-- small box -->
           <div class="small-box bg-green">
             <div class="inner">
-              <h3>{{revenue}}<!--sup style="font-size: 20px">%</sup--></h3>
+               
+              <h3><sup style="font-size: 20px"><i class="fa fa-rupee"></i></sup>{{revenue}}</h3>
               <p>Monthly Revenue</p>
             </div>
             <div class="icon">
               <i class="ion ion-cash"></i>
             </div>
-            <a href="#" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
+            <a href="pages/revenuedetails.html" class="small-box-footer">More info <i class="fa fa-arrow-circle-right"></i></a>
           </div>
         </div>
         <!-- ./col -->

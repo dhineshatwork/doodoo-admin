@@ -77,7 +77,7 @@
               <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                  <a href="#" ng-click="signOut()">Sign out</a>   
+                  <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>   
                 </li>
               </ul>
             </div>
@@ -101,7 +101,13 @@
                     <span>Bookings</span>
                   </a>
                 </li>
-                
+                <li>
+                    <a href="revenuedetails.html">
+                      <i class="fa fa-inr"></i>
+                      <span>Revenue Details</span>
+                    </a>
+                  </li>
+                <li>
                 <li>
                   <a href="categories.html">
                     <i class="fa  fa-list-alt"></i>
@@ -120,12 +126,12 @@
                       <span>Employees</span>
                     </a>
                   </li>
-                  <li>
+                  <!--li>
                       <a href="employees.html">
                         <i class="fa fa-fw fa-users"></i>
                         <span>Users</span>
                       </a>
-                    </li>
+                    </li-->
                 <li>
                   <a href="headerImage.html">
                     <i class="fa   fa-upload"></i>
@@ -134,16 +140,23 @@
                 </li>
                 <li>
                   <a href="offerImage.html">
-                    <i class="fa   fa-upload"></i>
+                    <i class="fa   fa-cloud-upload"></i>
                     <span>Offer Image</span>
                   </a>
                 </li>
                 <li>
                   <a href="headerImage.html">
-                    <i class="fa   fa-upload"></i>
+                    <i class="fa   fa-bell"></i>
                     <span>Notification</span>
                   </a>
                 </li>
+                <li>
+                    <a href="booking.html">
+                      <i class="fa fa-bar-chart"></i>
+                      <span>Analytics</span>
+                    </a>
+                  </li>
+                <li>
                 </ul>
               </section>
           <!-- /.sidebar -->
@@ -162,12 +175,7 @@
         <li class="active">Services</li>
       </ol>
     </section>
-    <div class="slds-size_1-of-2 slds-form-element slds-p-around_small" style="margin-left:20rem;">
-        <label class="slds-form-element__label" for="text-input-id-1">Location</label>
-        <div class="slds-form-element__control">
-          <input type="text" class="slds-input" g-places-autocomplete ng-model="location" />
-        </div>
-      </div> 
+    
     <section class="content">
         <div class="row">
             <div class="col-md-6">
@@ -193,18 +201,13 @@
                         <select style="border-radius:.25rem!important;" ng-model="selectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in selectedCat.sub_category"></select>
                       </div>
                     </div>
-                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                        <label class="slds-form-element__label" for="text-input-id-1">Description</label>
+                    <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Location</label>
                         <div class="slds-form-element__control">
-                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.description" class="form-control"></select>
+                          <input style="border-radius:.25rem!important;" type="text" class="slds-input" g-places-autocomplete ng-model="location" />
                         </div>
-                    </div>
-                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                        <label class="slds-form-element__label" for="text-input-id-1">Price</label>
-                        <div class="slds-form-element__control">
-                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
-                        </div>
-                    </div>
+                      </div> 
+                      
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Duration</label>
                         <div class="slds-form-element__control">
@@ -212,17 +215,31 @@
                         </div>
                     </div>
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                        <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
+                        <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                         <div class="slds-form-element__control">
-                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.promises" class="form-control"></select>
+                            <input type="number" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
                         </div>
                     </div>
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
-                      <div class="slds-form-element__control">
-                          <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.offers" class="form-control"></select>
+                        <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
+                        <div class="slds-form-element__control">
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.offers" class="form-control"></select>
+                        </div>
                       </div>
+                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
+                        <div class="slds-form-element__control">
+                            <textarea style="border-radius:.25rem!important;" ng-model="newServ.promises" class="form-control"></textarea>
+                        </div>
                     </div>
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                        <label class="slds-form-element__label" for="text-input-id-1">Description</label>
+                        <div class="slds-form-element__control">
+                            <textarea style="border-radius:.25rem!important;" ng-model="newServ.description" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    
+                    
                     <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
                       <div class="slds-form-element__control">
@@ -272,10 +289,10 @@
                     </div>
                   </div>
                   <div class="slds-align_absolute-center  slds-p-top_medium">
-                      <button class="slds-button slds-button_neutral" ng-if="!updateServ.price" ng-click="getService()">Get Service</button>
+                      <button class="slds-button slds-button_neutral" ng-if="!updateServ.price && !updateServ.location && !updateServ.promises" ng-click="getService()">Get Service</button>
                   </div>
                 </div>
-                <div class="slds-size_1-of-1 slds-m-top_small slds-grid slds-wrap slds-box" ng-if="updateServ.price">
+                <div class="slds-size_1-of-1 slds-m-top_small slds-grid slds-wrap slds-box" ng-if="updateServ.price || updateServ.location || updateServ.promises">
                   <div class="slds-size_1-of-1 slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
                     <span>
                       <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateServ.image}}" ng-if="updateServ.image" />
@@ -287,41 +304,43 @@
                     </span>
                   </div>
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Description</label>
-                      <div class="slds-form-element__control">
-                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.description" class="form-control"></select>
-                      </div>
-                  </div>
-                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                     <label class="slds-form-element__label" for="text-input-id-1">Location</label>
                     <div class="slds-form-element__control">
-                        <input type="text" style="border-radius:.25rem!important;"  g-places-autocomplete ng-model="updateServlocation" class="form-control"></select>
+                        <input type="text" style="border-radius:.25rem!important;"  g-places-autocomplete ng-model="updateServlocation" class="form-control"/>
                     </div>
                   </div>  
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                       <div class="slds-form-element__control">
-                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.price" class="form-control"></select>
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.price" class="form-control"/>
                       </div>
                   </div>
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Duration</label>
                       <div class="slds-form-element__control">
-                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.duration" class="form-control"></select>
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.duration" class="form-control"/>
                       </div>
                   </div>
+                  
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
+                      <div class="slds-form-element__control">
+                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.offers" class="form-control"></select>
+                      </div>
+                    </div>
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Promises</label>
                       <div class="slds-form-element__control">
-                          <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.promises" class="form-control"></select>
+                          <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.promises" class="form-control"></textarea>
                       </div>
                   </div>
                   <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
-                    <label class="slds-form-element__label" for="text-input-id-1">Offers</label>
-                    <div class="slds-form-element__control">
-                        <input type="text" style="border-radius:.25rem!important;" ng-model="updateServ.offers" class="form-control"></select>
-                    </div>
+                      <label class="slds-form-element__label" for="text-input-id-1">Description</label>
+                      <div class="slds-form-element__control">
+                          <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.description" class="form-control"></textarea>
+                      </div>
                   </div>
+                  
                   <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="cancelUpdate()">Cancel</button>
                       <button class="slds-button slds-button_neutral" confirmed-click="deleteServices()" ng-confirm-click>Delete</button>
@@ -420,7 +439,7 @@
         $scope.updateServices = function(){
           $scope.showSpinner = true;
           console.log($scope.updateServlocation)
-     /* $scope.updateServ.service_id = $scope.updateServ._id;
+          $scope.updateServ.service_id = $scope.updateServ._id;
           $scope.updateServ.location =  $scope.updateServlocation;
           $http({
               method: 'POST',
@@ -433,7 +452,7 @@
             $scope.updateServ =null;
             $scope.updateSelectedCat = null;
             $scope.updateSelectedSubCat = null;
-          })*/
+          })
         };
         $scope.deleteServices = function(){
           console.log($scope.updateServ);
@@ -467,7 +486,8 @@
               $scope.newServ.image = result.secure_url;
               $scope.newServ.category = $scope.selectedCat._id;
               $scope.newServ.sub_category = $scope.selectedSubCat._id;
-              $scope.newServ.location = $scope.location;
+              $scope.newServ.location = $scope.location.formatted_address;
+              console.log($scope.newServ);
               $http({
                   method: 'POST',
                   url: 'https://freelaunce2.herokuapp.com/admin/addServices',
@@ -487,6 +507,7 @@
             $scope.newServ.category = $scope.selectedCat._id;
             $scope.newServ.sub_category = $scope.selectedSubCat._id;
             $scope.newServ.location = $scope.location.formatted_address;
+            console.log($scope.newServ);
             $http({
                 method: 'POST',
                 url: 'https://freelaunce2.herokuapp.com/admin/addServices',

@@ -5,7 +5,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <link rel="shortcut icon" href="../dist/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="../dist/img/favicon.ico" type="image/x-icon">
-    <title>DoDoo | Bookings</title>
+    <title>DoDoo | Revenue Details</title>
     <!-- Tell the browser to be responsive to screen width -->
     <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
     <!-- Bootstrap 3.3.7 -->
@@ -137,13 +137,13 @@
                           <span>Dashboard</span>
                         </a>
                       </li>
-                    <li class="active">
+                    <li>
                         <a href="booking.html">
                           <i class="fa fa-book"></i>
                           <span>Bookings</span>
                         </a>
                       </li>
-                      <li>
+                      <li class="active">
                           <a href="revenuedetails.html">
                             <i class="fa fa-inr"></i>
                             <span>Revenue Details</span>
@@ -208,103 +208,25 @@
       <!-- Content Header (Page header) -->
       <section class="content-header">
         <h1>
-          Bookings
+          Revenue Details
           <!--small>a set of beautiful icons</small-->
         </h1>
-        <!--ol class="breadcrumb">
+        <ol class="breadcrumb">
           <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-          <li><a href="#">UI</a></li>
-          <li class="active">Icons</li>
-        </ol-->
+          <li class="active">Revenue Details</li>
+        </ol>
       </section>
   
       <!-- Main content -->
       <section class="content">
         <div class="row">
           <div class="col-xs-12">
-            <div class="nav-tabs-custom">
-              <ul class="nav nav-tabs">
-                <li class="active"><a href="#pending"  data-toggle="tab">Requested</a></li>
-                <li><a href="#inprogress" data-toggle="tab">On going</a></li>
-                <li><a href="#completed" ng-click="completedBookings()" data-toggle="tab">Completed</a></li>
-                <li><a href="#cancelled" data-toggle="tab">Cancelled</a></li>
-              </ul>
-              <div class="tab-content">
-
-                <!-- pending tab -->
-                <div class="tab-pane active" id="pending">
-                    <div class="slds-box slds-m-around_medium">
-                        <table id="pendingTable" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Booking Id</th>
-                                    <th>User Name</th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
-                                    <th style="width: 3.5rem!important;">Booked on</th>
-                                    <th>Location</th>
-                                    <th>Price</th>
-                                    <th style="width: 12rem!important;">Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="pendingOrder in allBookingDetails | filter:{ booked: true, status : 'Pending'}">
-                                  <td>{{pendingOrder.booking_id}}</td>
-                                  <td>{{pendingOrder.user_name}}</td>
-                                  <td>{{pendingOrder.category}}</td>
-                                  <td>{{pendingOrder.sub_category}}</td>
-                                  <td>{{pendingOrder.booked_on | date:'dd/MM/yyyy hh:mm a'}}</td>
-                                  <td>{{pendingOrder.location}}</td-->
-                                  <td>{{pendingOrder.price}}</td>
-                                  <td>
-                                    <div class="slds-button-group" role="group">
-                                      <button class="slds-button slds-button_neutral " ng-click="cancelOrder(pendingOrder._id)">Cancel</button>
-                                      <button class="slds-button slds-button_neutral " ng-click="acceptOrder(true,pendingOrder)">Accept Order</button>
-                                    </div>
-                                  </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
-                </div>
-                <!-- /#pending -->
-                <!-- In Progress tab -->
-                <div class="tab-pane" id="inprogress">
-                    <div class="slds-box slds-m-around_medium">
-                        <table id="inprogressTable" class="table table-bordered table-hover">
-                            <thead>
-                                <tr>
-                                    <th>Booking Id</th>
-                                    <th>User Name</th>
-                                    <th>Category</th>
-                                    <th>Sub Category</th>
-                                    <th style="width: 3.5rem!important;">Booked on</th>
-                                    <th>Location</th>
-                                    <th>Price</th>
-                                    <th>Employee</th>
-                                    <th>Action</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr ng-repeat="inprogressOrder in allBookingDetails | filter:{ booked: true, status : 'Accepted'}">
-                                  <td>{{inprogressOrder.booking_id}}</td>
-                                  <td>{{inprogressOrder.user_name}}</td>
-                                  <td>{{inprogressOrder.category}}</td>
-                                  <td>{{inprogressOrder.sub_category}}</td>
-                                  <td>{{inprogressOrder.booked_on  | date:'dd/MM/yyyy hh:mm a'}}</td>
-                                  <td>{{inprogressOrder.location}}</td>
-                                  <td>{{inprogressOrder.price}}</td>
-                                  <td>{{inprogressOrder.emp_name}}</td>
-                                  <td>
-                                    <button class="slds-button slds-button_neutral " ng-click="cancelOrder(inprogressOrder._id)">Cancel</button>
-                                  </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                      </div>
+              <div class="box">
+                  <div class="box-header">
+                      <h3 class="box-title">Completed Bookings</h3>
                   </div>
-                  <!-- /#inprogress -->
-                <!-- completed tab -->
+                  <!-- /.box-header -->
+                  <div class="box-body">
                 <div class="tab-pane" id="completed">
                     <div class="slds-box slds-m-around_medium">
                         <table id="completeTable" class="table table-bordered table-hover">
@@ -334,42 +256,8 @@
                       </div>
                 </div>
                 <!-- /#completed -->
-  
-                <!-- cancelled-->
-                <div class="tab-pane" id="cancelled">
-                    <div class="slds-box slds-m-around_medium">
-                      <table id="cancelTable" class="table table-bordered table-hover">
-                          <thead>
-                              <tr>
-                                  <th>Booking Id</th>
-                                  <th>User Name</th>
-                                  <th>Category</th>
-                                  <th>Sub Category</th>
-                                  <th style="width: 3.5rem!important;">Booked on</th>
-                                  <th>Location</th>
-                                  <th>Price</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              <tr ng-repeat="canceledOrder in allBookingDetails | filter:{ booked: true, status : 'Cancelled'}">
-                                <td>{{canceledOrder.booking_id}}</td>
-                                  <td>{{canceledOrder.user_name}}</td>
-                                  <td>{{canceledOrder.category}}</td>
-                                  <td>{{canceledOrder.sub_category}}</td>
-                                  <td>{{canceledOrder.booked_on  | date:'dd/MM/yyyy hh:mm a'}}</td>
-                                  <td>{{canceledOrder.location}}</td>
-                                  <td>{{canceledOrder.price}}</td>
-                              </tr>
-                          </tbody>
-                      </table>
-                    </div>
-                </div>
-                <!-- /#cancelled -->
-                
-              </div>
-              <!-- /.tab-content -->
-            </div>
-            <!-- /.nav-tabs-custom -->
+  </div>
+  </div>
           </div>
           <!-- /.col -->
         </div>
@@ -548,28 +436,10 @@
                 $scope.showSpinner = false;
                 if(isFromInit){
                 $(function () {
-                  $('#cancelTable').DataTable({
-                      "columnDefs": [{
-                          "orderable": false,
-                          "targets": [0]
-                      }]
-                  })
                   $('#completeTable').DataTable({
                       "columnDefs": [{
                           "orderable": false,
                           "targets": [0]
-                      }]
-                  })
-                  $('#inprogressTable').DataTable({
-                      "columnDefs": [{
-                          "orderable": false,
-                          "targets": [0,8]
-                      }]
-                  })
-                  $('#pendingTable').DataTable({
-                      "columnDefs": [{
-                          "orderable": false,
-                          "targets": [0,7]
                       }]
                   })
                 })

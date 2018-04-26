@@ -25,7 +25,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-
+  <link rel="stylesheet" href="../bower_components/angular-google-places-autocomplete/src/autocomplete.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -38,6 +38,9 @@
     }
     .ng-cloak {
      display: none !important;
+    }
+    .pac-container{
+      z-index: 10000!important;
     }
   </style>
   <!-- Google Font -->
@@ -69,7 +72,7 @@
               <ul class="nav navbar-nav">
                 <!-- User Account: style can be found in dropdown.less -->
                 <li class="dropdown user user-menu">
-                  <a href="#" ng-click="signOut()">Sign out</a>   
+                  <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>   
                 </li>
               </ul>
             </div>
@@ -93,7 +96,13 @@
                         <span>Bookings</span>
                       </a>
                     </li>
-                   
+                    <li>
+                        <a href="revenuedetails.html">
+                          <i class="fa fa-inr"></i>
+                          <span>Revenue Details</span>
+                        </a>
+                      </li>
+                    <li>
                     <li>
                       <a href="categories.html">
                         <i class="fa  fa-list-alt"></i>
@@ -112,12 +121,12 @@
                           <span>Employees</span>
                         </a>
                       </li>
-                      <li>
+                      <!--li>
                           <a href="employees.html">
                             <i class="fa fa-fw fa-users"></i>
                             <span>Users</span>
                           </a>
-                        </li>
+                        </li-->
                     
                     <li>
                       <a href="headerImage.html">
@@ -127,16 +136,23 @@
                     </li>
                     <li>
                       <a href="offerImage.html">
-                        <i class="fa   fa-upload"></i>
+                        <i class="fa   fa-cloud-upload"></i>
                         <span>Offer Image</span>
                       </a>
                     </li>
                     <li>
                       <a href="headerImage.html">
-                        <i class="fa   fa-upload"></i>
+                        <i class="fa   fa-bell"></i>
                         <span>Notification</span>
                       </a>
                     </li>
+                    <li>
+                        <a href="booking.html">
+                          <i class="fa fa-bar-chart"></i>
+                          <span>Analytics</span>
+                        </a>
+                      </li>
+                    <li>
                 </ul>
               </section>
           <!-- /.sidebar -->
@@ -162,7 +178,7 @@
               <div class="box box-solid">
                 <div class="box-header with-border">
                   <h3 class="box-title">Add Employee</h3>
-      
+                  
                   <div class="box-tools">
                       <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
                       </button>
@@ -170,7 +186,9 @@
                 </div>
                 <div class="box-body no-padding">
                   <div class="slds-m-around_large">
+                    
                     <div class="slds-form-element slds-p-bottom_small">
+                      
                       <label class="slds-form-element__label" for="text-input-id-1">Name</label>
                       <div class="slds-form-element__control">
                         <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.name" />
@@ -201,12 +219,11 @@
                         </textarea>
                       </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                    <div class="slds-form-element slds-p-bottom_medium">
+                      <label class="slds-form-element__label" for="text-input-id-1">Available Location</label>
                       <div class="slds-form-element__control">
-                        <div class="slds-combobox">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="addlocName.loc_name" />
-                        <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                        <input type="text" id="text-input-id-1" class="slds-input"  g-places-autocomplete ng-model="addlocName" />
+                        <!--i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
                         </div>
                         <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
                           <span class="slds-pill__action">
@@ -216,8 +233,8 @@
                             <i class="fa fa-remove"></i>
                             <span class="slds-assistive-text">Remove</span>
                           </button>
-                        </span>
-                      </div>
+                        </span-->
+                    </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_medium">
                       <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
@@ -282,7 +299,7 @@
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-default btn-sm" ng-click="deleteEmp(emp._id)"><i class="fa fa-trash-o"></i></button>
                                     <button type="button" class="btn btn-default btn-sm" ng-click="showUpdate(emp)"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm"><i class="fa  fa-eye"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm" ng-click="showView(emp)"><i class="fa  fa-eye"></i></button>
                                 </div>
                             </td>
                         </tr>
@@ -313,7 +330,7 @@
                   <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
                   <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
               </span>
-              <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+              <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small" ng-if="!isView">
                 <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
                 <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
               </span>
@@ -321,53 +338,17 @@
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Name</label>
               <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.name" />
+                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.name" />
               </div>
             </div>
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.email" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.mobile" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <label class="slds-form-element__label" for="text-input-id-1">Address</label>
-                <div class="slds-form-element__control">
-                  <textarea id="text-input-id-1" class="slds-textarea" ng-model="empToUpdate.address">
-                  </textarea>
-                </div>
-              </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" class="slds-input" ng-model="empToUpdate.alt_mobile" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <div class="slds-form-element__control">
-                  <span class="slds-checkbox">
-                    <input type="checkbox" name="options" id="checkbox-2" ng-model="empToUpdate.availability_status" />
-                    <label class="slds-checkbox__label" for="checkbox-2">
-                      <span class="slds-checkbox_faux"></span>
-                      <span class="slds-form-element__label">Availability Status</span>
-                    </label>
-                  </span>
-                </div>
-              </div>
-              <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
                 <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                 <div class="slds-form-element__control">
-                  <div class="slds-combobox">
-                  <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateAddlocName.loc_name" />
-                  <i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i>
+                <!--div class="slds-combobox"-->
+                  <input type="text" id="text-input-id-1"  ng-disabled="isView" class="slds-input"  g-places-autocomplete ng-model="updatelocName" />
+                  <!--i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i-->
                   </div>
-                  <span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
+                  <!--span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
                     <span class="slds-pill__action">
                       <span class="slds-pill__label">{{loc.loc_name}}</span>
                     </span>
@@ -376,17 +357,54 @@
                       <span class="slds-assistive-text">Remove</span>
                     </button>
                   </span>
-                </div>
+                </div-->
             </div>
+            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.mobile" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                <label class="slds-form-element__label" for="text-input-id-1">Address</label>
+                <div class="slds-form-element__control">
+                  <textarea id="text-input-id-1" class="slds-textarea" ng-disabled="isView" ng-model="empToUpdate.address">
+                  </textarea>
+                </div>
+              </div>
+            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.alt_mobile" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                <div class="slds-form-element__control">
+                  <span class="slds-checkbox">
+                    <input type="checkbox" name="options" id="checkbox-2" ng-disabled="isView" ng-model="empToUpdate.availability_status" />
+                    <label class="slds-checkbox__label" for="checkbox-2">
+                      <span class="slds-checkbox_faux"></span>
+                      <span class="slds-form-element__label">Availability Status</span>
+                    </label>
+                  </span>
+                </div>
+              </div>
+              
             <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
               <div class="slds-form-element__control">
-                  <select style="border-radius:.25rem!important;" ng-model="empToUpdate.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
+                  <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
               </div>
             </div>
           </div>
           </div>
-          <footer class="slds-modal__footer">
+          <footer class="slds-modal__footer" ng-if="!isView">
             <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
             <button class="slds-button slds-button_brand" ng-click="updateEmp()">Update</button>
           </footer>
@@ -434,14 +452,20 @@
 <!-- AdminLTE for demo purposes -->
 <script src="../dist/js/demo.js"></script>
 <!-- page script -->
+<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAONFiPe-AiSCZNx7vKpYQWtC4fAqo3pvg"></script>
+
+<script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
 <script>
   
-  var app = angular.module('empApp', []);
+  var app = angular.module('empApp', ['google.places']);
     app.controller('empCtrl',function($scope, $http, $window, $location){
         $scope.newEmp = {location:[]};
         $scope.showEdit = false;
         $scope.showSpinner = false;
         $scope.showUpdatePicSelector = false;
+        $scope.isView = false;
+        $scope.addlocName;
+        $scope.updatelocName = {};
         $scope.updateEmpProPic = {};
         $scope.updateAddlocName = {};
         $scope.addEmp = function(){
@@ -459,6 +483,7 @@
             }
           }).success(function(result) {
             $scope.newEmp.profile_pic = result.secure_url;
+            $scope.newEmp.location = $scope.addlocName.formatted_address;
             console.log($scope.newEmp);
           
             $http({
@@ -469,6 +494,7 @@
             }).success(function(data) {
                     console.log( 'data', data );
                     $scope.showSpinner = false;
+                    $scope.addlocName = {};
                     getEmployees();
             })
           });
@@ -490,7 +516,17 @@
         $scope.showUpdate = function(emp){
           console.log(emp);
           $scope.showEdit = true;
+          $scope.isView = false;
           $scope.empToUpdate = emp;
+          //$scope.updatelocName = emp.location.length > 0 ? emp.location:{};
+        };
+        $scope.showView = function(emp){
+          console.log(emp);
+          $scope.showEdit = true;
+          $scope.empToUpdate = emp;
+          $scope.isView = true;
+         // console.log(emp.location.length);
+          $scope.updatelocName = emp.location && emp.location.length > 0 ? emp.location:{};
         };
         $scope.delEmpPic = function(){
           $scope.empToUpdate.profile_pic = '';
@@ -501,6 +537,7 @@
         };
         $scope.updateEmp = function(){
           $scope.showSpinner = true;
+          $scope.showEdit = false;
           console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
           if($scope.updateEmpProPic.files){
             var fd = new FormData();
@@ -514,6 +551,8 @@
             }).success(function(result) {
               $scope.empToUpdate.profile_pic = result.secure_url;
               $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
+              console.log(updatelocName);
+              $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
               console.log($scope.empToUpdate);
               $scope.showEdit = false;
               $http({
@@ -525,13 +564,16 @@
                   console.log( 'data', data);
                   $scope.showSpinner = false;
                   getEmployees();
-                  $scope.showEdit = false;
+                  
                   $scope.empToUpdate = null;
+                  $scope.updatelocName = {};
                   $scope.updateEmpProPic = {};
               })
             });
           }else{
             $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
+            console.log($scope.updatelocName);
+            $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
             console.log($scope.empToUpdate);
             $scope.showEdit = false;
             $http({
@@ -542,6 +584,7 @@
             }).success(function(data) {
                 console.log( 'data', data);
                 $scope.showSpinner = false;
+                $scope.updatelocName = {};
                 getEmployees();
                 $scope.showEdit = false;
                 $scope.empToUpdate = null;
@@ -556,6 +599,7 @@
         $scope.closeModal = function(){
           $scope.showEdit = false;
           $scope.empToUpdate = null;
+          $scope.isView = false;
         };
         $scope.popLocName = function(isFromUpdate, loc){
           if(isFromUpdate){

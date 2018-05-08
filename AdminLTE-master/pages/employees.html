@@ -141,13 +141,13 @@
                       </a>
                     </li>
                     <li>
-                      <a href="headerImage.html">
+                      <a href="notification.html">
                         <i class="fa   fa-bell"></i>
                         <span>Notification</span>
                       </a>
                     </li>
                     <li>
-                        <a href="booking.html">
+                        <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                           <i class="fa fa-bar-chart"></i>
                           <span>Analytics</span>
                         </a>
@@ -237,9 +237,15 @@
                     </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
+                      <label class="slds-form-element__label" for="text-input-id-1">Category</label>
                       <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="newEmp.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
+                        <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCat()"></select>
+                      </div>
+                    </div>
+                    <div class="slds-form-element slds-p-bottom_medium">
+                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
+                      <div class="slds-form-element__control">
+                        <select style="border-radius:.25rem!important;" ng-model="newEmp.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
                       </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_medium">
@@ -327,21 +333,21 @@
             <div class="slds-grid slds-wrap">
             <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
               <span>
-                  <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
-                  <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
+                  <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
+                  <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
               </span>
               <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small" ng-if="!isView">
                 <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
                 <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
               </span>
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Name</label>
               <div class="slds-form-element__control">
                 <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.name" />
               </div>
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
                 <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                 <div class="slds-form-element__control">
                 <!--div class="slds-combobox"-->
@@ -359,47 +365,52 @@
                   </span>
                 </div-->
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
               <div class="slds-form-element__control">
                 <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" />
               </div>
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
               <div class="slds-form-element__control">
                 <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.mobile" />
               </div>
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
                 <label class="slds-form-element__label" for="text-input-id-1">Address</label>
                 <div class="slds-form-element__control">
                   <textarea id="text-input-id-1" class="slds-textarea" ng-disabled="isView" ng-model="empToUpdate.address">
                   </textarea>
                 </div>
               </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
               <div class="slds-form-element__control">
                 <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.alt_mobile" />
               </div>
             </div>
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <div class="slds-form-element__control">
-                  <span class="slds-checkbox">
-                    <input type="checkbox" name="options" id="checkbox-2" ng-disabled="isView" ng-model="empToUpdate.availability_status" />
-                    <label class="slds-checkbox__label" for="checkbox-2">
-                      <span class="slds-checkbox_faux"></span>
-                      <span class="slds-form-element__label">Availability Status</span>
-                    </label>
-                  </span>
-                </div>
-              </div>
-              
-            <div class="slds-size_1-of-2 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Designation</label>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Category</label>
               <div class="slds-form-element__control">
-                  <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.designation" class="form-control" ng-options="item._id as item.name for item in allCat"></select>
+                <select style="border-radius:.25rem!important;" ng-model="empToUpdate.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCat()"></select>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
+              <div class="slds-form-element__control">
+                <select style="border-radius:.25rem!important;" ng-model="empToUpdate.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <div class="slds-form-element__control">
+                <span class="slds-checkbox">
+                  <input type="checkbox" name="options" id="checkbox-2" ng-disabled="isView" ng-model="empToUpdate.availability_status" />
+                  <label class="slds-checkbox__label" for="checkbox-2">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label">Availability Status</span>
+                  </label>
+                </span>
               </div>
             </div>
           </div>
@@ -631,6 +642,10 @@
           $scope.addlocName = {};
           $scope.updateAddlocName = {};
         };
+        $scope.updateSubCat=function(){
+            console.log($scope.newEmp.category);
+            $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
+        }
         $scope.allEmp = [];
         var getEmployees = function(isInit){
           $scope.showSpinner = true;
@@ -658,6 +673,7 @@
         getEmployees(true);
         $scope.allCat = [];
         $scope.catIdMap = {};
+        $scope.subCatWithCatIdMap = {}; 
         var getCategories = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
@@ -670,8 +686,9 @@
                 $scope.allCat = data.categorylist;
                 for(var i = 0; i < $scope.allCat.length; i++){
                   $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
+                  $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
                 }
-                console.log('Map:::>',$scope.catIdMap);
+                console.log($scope.subCatWithCatIdMap,'<:::Map:::>',$scope.catIdMap);
                 $scope.showSpinner = false;
             })
           }else{

@@ -145,13 +145,13 @@
                   </a>
                 </li>
                 <li>
-                  <a href="headerImage.html">
+                  <a href="notification.html">
                     <i class="fa   fa-bell"></i>
                     <span>Notification</span>
                   </a>
                 </li>
                 <li>
-                    <a href="booking.html">
+                    <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                       <i class="fa fa-bar-chart"></i>
                       <span>Analytics</span>
                     </a>
@@ -192,13 +192,13 @@
                     <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                         <div class="slds-form-element__control">
-                            <select style="border-radius:.25rem!important;" ng-model="selectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
+                            <select style="border-radius:.25rem!important;" ng-model="newServ.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCat()"></select>
                         </div>
                     </div>
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
                       <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="selectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in selectedCat.sub_category"></select>
+                        <select style="border-radius:.25rem!important;" ng-model="newServ.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
                       </div>
                     </div>
                     <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
@@ -217,7 +217,7 @@
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                         <label class="slds-form-element__label" for="text-input-id-1">Price</label>
                         <div class="slds-form-element__control">
-                            <input type="number" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
+                            <input type="text" style="border-radius:.25rem!important;" ng-model="newServ.price" class="form-control"></select>
                         </div>
                     </div>
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
@@ -238,8 +238,12 @@
                             <textarea style="border-radius:.25rem!important;" ng-model="newServ.description" class="form-control"></textarea>
                         </div>
                     </div>
-                    
-                    
+                    <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Notes</label>
+                      <div class="slds-form-element__control">
+                          <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.notes" class="form-control"></textarea>
+                      </div>
+                    </div>                    
                     <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" id="file-selector-primary-label">Service Image</label>
                       <div class="slds-form-element__control">
@@ -275,20 +279,26 @@
             <!-- /.box-header -->
             <div class="box-body">
               <div class="slds-m-around_large slds-grid slds-wrap">
-                <div class="slds-size_1-of-1 slds-grid slds-wrap slds-box">
+                <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap slds-box">
                   <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
                       <div class="slds-form-element__control">
                           <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
                       </div>
                   </div>
-                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                 <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                     <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
                     <div class="slds-form-element__control">
                       <select style="border-radius:.25rem!important;" ng-model="updateSelectedSubCat" class="form-control" ng-options="item.sub_cat_name for item in updateSelectedCat.sub_category"></select>
                     </div>
                   </div>
-                  <div class="slds-align_absolute-center  slds-p-top_medium">
+                  <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
+                      <label class="slds-form-element__label" for="text-input-id-1">Location</label>
+                      <div class="slds-form-element__control">
+                        <input style="border-radius:.25rem!important;" type="text" class="slds-input" g-places-autocomplete ng-model="getlocation" />
+                      </div>
+                    </div> 
+                  <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-if="!updateServ.price && !updateServ.location && !updateServ.promises" ng-click="getService()">Get Service</button>
                   </div>
                 </div>
@@ -340,11 +350,17 @@
                           <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.description" class="form-control"></textarea>
                       </div>
                   </div>
-                  
+                  <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Notes</label>
+                    <div class="slds-form-element__control">
+                        <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.notes" class="form-control"></textarea>
+                    </div>
+                  </div>
                   <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="cancelUpdate()">Cancel</button>
                       <button class="slds-button slds-button_neutral" confirmed-click="deleteServices()" ng-confirm-click>Delete</button>
                       <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
+                      <button class="slds-button slds-button_neutral" ng-click="cloneService(updateServ)">Clone</button>
                   </div>
                 </div>
                
@@ -422,12 +438,17 @@
         $scope.cancelUpdate = function(){
           $scope.updateServ = {};
         }
+        $scope.cloneService = function(service){
+          $scope.newServ =  $scope.updateServ;
+          $scope.updateSubCat();
+        }
         $scope.getService = function(){
           $scope.showSpinner = true;
+          var loc = $scope.getlocation.formatted_address;
           $http({
               method: 'POST',
               url: 'https://freelaunce2.herokuapp.com/user/getServiceDetails',
-              data : {'category':$scope.updateSelectedCat._id, 'sub_category':$scope.updateSelectedSubCat._id},
+              data : {'category':$scope.updateSelectedCat._id, 'sub_category':$scope.updateSelectedSubCat._id,"location":loc},
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
               console.log(data.serviceDetails);
@@ -484,8 +505,8 @@
               }
             }).success(function(result) {
               $scope.newServ.image = result.secure_url;
-              $scope.newServ.category = $scope.selectedCat._id;
-              $scope.newServ.sub_category = $scope.selectedSubCat._id;
+              //$scope.newServ.category = $scope.selectedCat._id;
+              //$scope.newServ.sub_category = $scope.selectedSubCat._id;
               $scope.newServ.location = $scope.location.formatted_address;
               console.log($scope.newServ);
               $http({
@@ -538,9 +559,12 @@
           }
           return -1;
         }
-
+        $scope.updateSubCat=function(){
+            console.log($scope.newServ.category);
+            $scope.subCat = $scope.subCatWithCatIdMap[$scope.newServ.category];
+        }
         $scope.allCat = [];
-
+        $scope.subCatWithCatIdMap = {};
         var getCategories = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
@@ -551,6 +575,9 @@
             }).success(function(data) {
                 console.log( 'data', data.categorylist );
                 $scope.allCat = data.categorylist;
+                for(var i = 0; i < $scope.allCat.length; i++){
+                  $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
+                }
                 $scope.showSpinner = false;
             })
           }else{

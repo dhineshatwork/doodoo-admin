@@ -187,13 +187,13 @@
                           </a>
                         </li>
                         <li>
-                          <a href="headerImage.html">
+                          <a href="notification.html">
                             <i class="fa  fa-bell"></i>
                             <span>Notification</span>
                           </a>
                         </li>
                         <li>
-                            <a href="booking.html">
+                            <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                               <i class="fa fa-bar-chart"></i>
                               <span>Analytics</span>
                             </a>
@@ -336,6 +336,7 @@
         $scope.orderSelected = {};
         $scope.empSelected = {};
         $scope.showSpinner = false;
+        
         $scope.signOut = function(){
           $window.localStorage.clear();
           window.location.href = '../index.html';

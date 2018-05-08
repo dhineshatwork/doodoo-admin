@@ -143,13 +143,13 @@
                       </a>
                     </li>
                     <li>
-                      <a href="headerImage.html">
+                      <a href="notification.html">
                         <i class="fa   fa-bell"></i>
                         <span>Notification</span>
                       </a>
                     </li>
                     <li>
-                        <a href="booking.html">
+                        <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                           <i class="fa fa-bar-chart"></i>
                           <span>Analytics</span>
                         </a>
@@ -184,7 +184,7 @@
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
                 <div class="slds-align_absolute-center " ng-if="allBannerImg">
-                    <div class="slds-size_1-of-2 slds-m-vertical_medium slds-p-horizontal_small bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
+                    <div class="slds-size_5-of-5 slds-medium-size_4-of-5 slds-large-size_7-of-12 slds-m-vertical_medium slds-p-horizontal_small bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
                       <i class="fa fa-trash-o slds-float_right" title="Delete" ng-click="delBannerImg(banImg._id)" style="font-size: 15px;cursor: pointer;"></i>  
                       <img src="{{banImg.img_src}}" ng-if="banImg.img_src"/>
                     </div>
@@ -208,7 +208,7 @@
             <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Offer Image</h2>
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <div class="  slds-align_absolute-center ">
+            <div class=" slds-align_absolute-center ">
               <div class="slds-form-element slds-p-bottom_medium">
                 <label class="slds-form-element__label" id="file-selector-primary-label">Offer Image</label>
                 <div class="slds-form-element__control">
@@ -228,6 +228,7 @@
                 </div>
               </div>
             </div>
+            <div class="slds-align_absolute-center">*Image Dimensions must be 950 px x 350 px</div>
           </div>
           <footer class="slds-modal__footer">
             <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>

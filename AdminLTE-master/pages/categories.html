@@ -24,6 +24,7 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
+  <link rel="stylesheet" href="../bower_components/angular-google-places-autocomplete/src/autocomplete.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -153,13 +154,13 @@
             </a>
           </li>
           <li>
-            <a href="headerImage.html">
+            <a href="notification.html">
               <i class="fa   fa-bell"></i>
               <span>Notification</span>
             </a>
           </li>
           <li>
-              <a href="booking.html">
+              <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                 <i class="fa fa-bar-chart"></i>
                 <span>Analytics</span>
               </a>
@@ -372,6 +373,14 @@
               <!-- /.box-header -->
               <div class="box-body row" ng-if="!showCat">
                 <div class="col-md-12 row">
+                  <div class="slds-m-left_large slds-form-element slds-float_left col-md-6">
+                    <label class="slds-form-element__label" for="text-input-id-1">Location</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" placeholder="All" g-places-autocomplete ng-model="addlocName" />
+                      <i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.formatted_address" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"
+                          ng-click="filterByLocation(addlocName.formatted_address)"></i>
+                    </div>
+                  </div>
                   <div class="slds-form-element slds-float_right col-md-4">
                     <label class="slds-form-element__label" for="text-input-id-1">Search Category</label>
                     <div class="slds-form-element__control">
@@ -380,11 +389,11 @@
                   </div>
                 </div>
                 <div class="col-md-12 slds-grid slds-wrap">
-                  <div class="slds-size_1-of-3 slds-p-top_x-large slds-align_absolute-center slds-grid slds-wrap" ng-repeat="cat in allCat | filter:{ name: searchKey}"
+                  <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-top_x-large slds-align_absolute-center slds-grid slds-wrap" ng-repeat="cat in allCat | filter:{ name: searchKey}"
                     ng-click="viewCat(cat)" style="cursor:pointer;">
                     <span class="slds-align_absolute-center slds-size_1-of-1">
-                      <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src" />
-                      <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src" />
                     </span>
                     <span class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{cat.name}}</span>
                   </div>
@@ -396,16 +405,16 @@
                   <h3 class="slds-p-left_medium box-title">Category View</h3>
                 </span>
                 <span class="slds-col slds-p-top_large  slds-align_absolute-center actionFix slds-grid slds-wrap">
-                  <div class="slds-size_4-of-5 slds-grid slds-wrap">
+                  <div class="slds-size_2-of-3 slds-medium-size_4-of-5 slds-large-size_4-of-5 slds-grid slds-wrap">
                     <span class="slds-size_1-of-1 slds-align_absolute-center">
-                      <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src" />
-                      <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src" />
                     </span>
                     <span class="slds-p-top_xx-small slds-align_absolute-center">
                       <h3 class="box-title">{{catView.name}}</h3>
                     </span>
                   </div>
-                  <div class="slds-size_1-of-5"><!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
+                  <div class="slds-size_1-of-3 slds-medium-size_1-of-5 slds-large-size_1-of-5"><!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
                     <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
                     <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" confirmed-click="delCat()" ng-confirm-click></i>
                   </div>
@@ -423,11 +432,11 @@
                     </div>
                   </div>
                   <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                      <div class="slds-size_1-of-3  actionFix slds-p-top_x-large slds-align_absolute-center slds-grid" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
+                      <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 actionFix slds-p-top_x-large slds-align_absolute-center slds-grid" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
                         <div class="slds-size_3-of-4 slds-grid slds-wrap">
                           <div class="slds-align_absolute-center slds-size_1-of-1">
-                            <img style="width:6.5rem;height:4.5rem;border-radius: 0.25rem;" alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src" />
-                            <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src" />
+                            <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src" />
+                            <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src" />
                           </div>
                           <div class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{subcat.sub_cat_name}}</div>
                         </div>
@@ -464,8 +473,8 @@
                   <div class="slds-m-around_large" ng-if="updateSubCatReg">
                     <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
                       <span>
-                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src" />
-                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src" />
+                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src" />
+                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src" />
                       </span>
                       <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
                         <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
@@ -488,8 +497,8 @@
                   <div class="slds-m-around_large" ng-if="updateCatReg">
                     <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
                       <span>
-                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src" />
-                        <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src" />
+                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src" />
+                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src" />
                       </span>
                       <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
                         <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
@@ -573,9 +582,11 @@
   <script src="../dist/js/adminlte.min.js"></script>
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAONFiPe-AiSCZNx7vKpYQWtC4fAqo3pvg"></script>
+  <script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
   <!-- page script -->
   <script>
-    var app = angular.module('categoryApp', []);
+    var app = angular.module('categoryApp', ['google.places']);
     app.controller('categoryCtrl', function ($scope, $http, $window, $location) {
       $scope.catName = '';
       $scope.subCatName = '';
@@ -666,6 +677,7 @@
         }
       }
       $scope.updateCat = function () {
+        $scope.isOpenModal = false;
         $scope.showSpinner = true;
         if ($scope.updateCatPic.files) {
           var fd = new FormData();
@@ -712,6 +724,7 @@
       };
       $scope.updateSubCat = function () {
         $scope.showSpinner = true;
+        $scope.isOpenModal = false;
         if ($scope.updateCatPic.files) {
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
@@ -854,6 +867,24 @@
         });
       };
       $scope.allCat = [];
+      $scope.filterByLocation = function(loc){
+        $scope.showSpinner = true;
+        console.log(loc);
+        $http({
+          method: 'POST',
+          data:{'location':loc},
+          url: 'https://freelaunce2.herokuapp.com/user/categorylist',
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.category);
+          var cat = [];
+          for(var i = 0;i<data.category.length;i++){
+            cat[i] = data.category[i].category;
+          }
+          $scope.allCat = cat;
+          $scope.showSpinner = false;
+        })
+      }
       var getCategories = function () {
         $scope.showSpinner = true;
         if ($window.localStorage['isLogin']) {

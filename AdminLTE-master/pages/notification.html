@@ -5,7 +5,7 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="shortcut icon" href="../dist/img/favicon.ico" type="image/x-icon">
   <link rel="icon" href="../dist/img/favicon.ico" type="image/x-icon">
-  <title>Dodoo | Header Images</title>
+  <title>Dodoo | Notification</title>
   <!-- Tell the browser to be responsive to screen width -->
   <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
   <!-- Bootstrap 3.3.7 -->
@@ -105,7 +105,7 @@
                           <span>Revenue Details</span>
                         </a>
                       </li>
-                    <li>
+                    <li> 
                     <li>
                       <a href="categories.html">
                         <i class="fa  fa-list-alt"></i>
@@ -130,7 +130,7 @@
                             <span>Users</span>
                           </a>
                         </li-->
-                    <li class="active">
+                    <li>
                       <a href="headerImage.html">
                         <i class="fa   fa-upload"></i>
                         <span>Header Image</span>
@@ -138,11 +138,11 @@
                     </li>
                     <li>
                       <a href="offerImage.html">
-                        <i class="fa   fa-cloud-upload"></i>
+                        <i class="fa  fa-cloud-upload"></i>
                         <span>Offer Image</span>
                       </a>
                     </li>
-                    <li>
+                    <li class="active">
                       <a href="notification.html">
                         <i class="fa   fa-bell"></i>
                         <span>Notification</span>
@@ -166,11 +166,11 @@
     <!-- Content Header (Page header) -->
     <section class="content-header">
       <h1>
-       Header Images
+       Notification 
       </h1>
       <ol class="breadcrumb">
         <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Header Images</li>
+        <li class="active">Notification</li>
       </ol>
     </section>
     <section class="content">
@@ -178,17 +178,43 @@
             <div class="col-md-12">
             <div class="box">
             <div class="box-header">
-                <h3 class="box-title">Header Images</h3>
-                <button class="slds-float_right slds-button slds-button_neutral" ng-if="allBannerImg.length < 5" ng-click="showModal()">Add New</button>
+                <h3 class="box-title">Notification</h3>
             </div>
             <!-- /.box-header -->
             <div class="box-body" style="overflow-x:auto;">
-                <div class="slds-grid slds-wrap">
-                    <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-m-vertical_medium slds-p-horizontal_small bannerImgAction" ng-repeat="banImg in allBannerImg | orderBy :banImg.order">
-                      <i class="fa fa-trash-o slds-float_right" title="Delete" ng-click="delBannerImg(banImg._id)" style="font-size: 15px;cursor: pointer;"></i>  
-                      <img src="{{banImg.img_src}}" ng-if="banImg.img_src"/>
+              <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-align_absolute-center">
+                  <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_xx-large">
+                    <label class="slds-form-element__label" for="text-input-id-1">Label</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="notify.name" />
                     </div>
                   </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-align_absolute-center">
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element  slds-p-vertical_small slds-p-horizontal_xx-large">
+                  <label class="slds-form-element__label" id="file-selector-primary-label">Notification Image</label>
+                  <div class="slds-form-element__control">
+                    <div class="slds-file-selector slds-file-selector_files slds-grid">
+                      <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                        <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
+                        <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
+                          <span class="slds-file-selector__button slds-button slds-button_neutral">
+                            <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
+                            </svg-->Upload Files</span>
+                          <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
+                        </label>
+                      </div>
+                     <p ng-bind="newBannerPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="slds-align_absolute-center slds-p-vertical_small slds-p-horizontal_xx-large">
+                  <button class="slds-button slds-button_neutral" ng-click="notifyImage()">Add</button>
+                </div>
+              </div>
             </div>
             <!-- /.box-body --style="max-width: 20rem!important;max-height: 20rem!important;">
         </div>
@@ -197,47 +223,7 @@
         </div>
         </div>
     </section>
-    <div style="height: 640px;" ng-if="isModalOpen">
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
-          <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
-              <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
-              <span class="slds-assistive-text">Close</span>
-            </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Add Header Image</h2>
-          </header>
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <div class="slds-align_absolute-center">
-              <div class="slds-form-element slds-p-bottom_medium">
-                <label class="slds-form-element__label" id="file-selector-primary-label">Header Image*</label>
-                <div class="slds-form-element__control">
-                  <div class="slds-file-selector slds-file-selector_files slds-grid">
-                    <div class="slds-file-selector__dropzone slds-size_3-of-9">
-                      <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
-                      <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
-                        <span class="slds-file-selector__button slds-button slds-button_neutral">
-                          <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
-                            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                          </svg-->Upload Files</span>
-                        <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
-                      </label>
-                    </div>
-                   <p ng-bind="newBannerPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="slds-align_absolute-center">*Image Dimensions must be 950 px x 350 px</div>
-          </div>
-          <footer class="slds-modal__footer">
-            <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="addBannerImg()">Add</button>
-          </footer>
-        </div>
-      </section>
-      <div class="slds-backdrop slds-backdrop_open"></div>
-    </div>
+    
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
@@ -286,11 +272,10 @@
         $scope.isModalOpen = false;
         $scope.newBannerPic = {};
         $scope.showSpinner = false;
-        $scope.closeModal = function(){
-          $scope.isModalOpen = false;
-          $scope.newBannerPic = {};
+        $scope.showModal = function(){
+          $scope.isModalOpen = true;
         };
-        $scope.addBannerImg = function(){
+        $scope.notifyImage = function(){
           console.log($scope.newBannerPic);
           $scope.isModalOpen = false;
           $scope.showSpinner = true;
@@ -305,53 +290,28 @@
                   'X-Requested-With': 'XMLHttpRequest'
               }
           }).success(function(data) {
+            console.log(data.secure_url);
+            $scope.notify.img_src = data.secure_url;
+            
             $http({
                     method: 'POST',
-                    url: 'https://freelaunce2.herokuapp.com/admin/addbannerpic',
-                    data :  {
-                              "email": $scope.email,
-                              "img_src": [data.secure_url]
-                            },
+                    url: 'https://freelaunce2.herokuapp.com/admin/fcmsend',
+                    data : $scope.notify,
                     headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                     console.log( 'data', data );
                     $scope.showSpinner = false;
-                    getBannerImages();
+                    $scope.newBannerPic = {};
+                    $scope.newBannerPicName = '';
+                    $scope.notify = {};
             })
           });
         };
-        $scope.delBannerImg = function(id){
-          console.log(id);
-          $scope.showSpinner = true;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/deleteBannerPic',
-              data : {'banner_id':id,"email": $scope.email},
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data);
-              getBannerImages();
-              $scope.showSpinner = false;
-          })
-        };
-        $scope.showModal = function(){
-          $scope.isModalOpen = true;
-        };
-
-        $scope.allBannerImg = [];
+        
         var getBannerImages = function(){
           $scope.showSpinner = true;
           if($window.localStorage['isLogin']){
-            $http({
-                method: 'GET',
-                url: 'https://freelaunce2.herokuapp.com/user/getbannerpic',
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data.banner_img );
-                $scope.email = data.email;
-                $scope.allBannerImg = data.banner_img;
-                $scope.showSpinner = false;
-            })
+            $scope.showSpinner = false;
           }else{
             $scope.showSpinner = false;
             window.location.href = '../index.html';

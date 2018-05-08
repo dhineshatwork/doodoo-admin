@@ -187,13 +187,13 @@
                           </a>
                         </li>
                         <li>
-                          <a href="headerImage.html">
+                          <a href="notification.html">
                             <i class="fa  fa-bell"></i>
                             <span>Notification</span>
                           </a>
                         </li>
                         <li>
-                            <a href="booking.html">
+                            <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                               <i class="fa fa-bar-chart"></i>
                               <span>Analytics</span>
                             </a>
@@ -258,8 +258,8 @@
                                   <td>{{pendingOrder.price}}</td>
                                   <td>
                                     <div class="slds-button-group" role="group">
-                                      <button class="slds-button slds-button_neutral " ng-click="cancelOrder(pendingOrder._id)">Cancel</button>
-                                      <button class="slds-button slds-button_neutral " ng-click="acceptOrder(true,pendingOrder)">Accept Order</button>
+                                      <button class="slds-button slds-button_neutral " confirmed-click="cancelOrder(pendingOrder._id)" ng-confirm-click>Cancel</button>
+                                      <button class="slds-button slds-button_neutral " confirmed-click="acceptOrder(true,pendingOrder)" ng-confirm-click>Accept Order</button>
                                     </div>
                                   </td>
                                 </tr>
@@ -296,7 +296,7 @@
                                   <td>{{inprogressOrder.price}}</td>
                                   <td>{{inprogressOrder.emp_name}}</td>
                                   <td>
-                                    <button class="slds-button slds-button_neutral " ng-click="cancelOrder(inprogressOrder._id)">Cancel</button>
+                                    <button class="slds-button slds-button_neutral " confirmed-click="cancelOrder(inprogressOrder._id)" ng-confirm-click>Cancel</button>
                                   </td>
                                 </tr>
                             </tbody>
@@ -392,7 +392,7 @@
           </header>
           <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
             <div class="slds-m-around_large">
-              <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+              <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap" ng-if="allEmp.length > 0">
                 <div class="slds-form-element slds-p-bottom_small">
                   <label class="slds-form-element__label" for="text-input-id-1">Employee</label>
                   <div class="slds-form-element__control">
@@ -400,11 +400,15 @@
                   </div>
                 </div>
               </div>
+              <div class="slds-align_absolute-center" ng-if="allEmp.length <= 0">
+                Opt Employee is not found!!
+              </div>
             </div>
           </div>
           <footer class="slds-modal__footer">
             <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="acceptOrder(false,null)">Save</button>
+            <button class="slds-button slds-button_brand" ng-click="acceptOrder(false,null)" ng-if="allEmp.length > 0">Save</button>
+            <button class="slds-button slds-button_brand" confirmed-click="cancelOrder(orderSelected._id)" ng-confirm-click ng-if="allEmp.length <= 0">Cancel Order</button>
           </footer>
         </div>
       </section>
@@ -474,7 +478,9 @@
                 data : {'location':$scope.orderSelected._id,"category_id": $scope.empSelected.id},
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
-                $scope.showModal();
+              console.log(data.employeeList);
+              $scope.allEmp = data.employeeList;
+              $scope.showModal();
             })
             
           }else{
@@ -533,7 +539,7 @@
             window.location.href = '../index.html';
           }
         };
-        getEmployees();
+        //getEmployees();
 
         $scope.allBookingDetails = [];
         var getAllBookingDetails = function(isFromInit){
@@ -573,11 +579,37 @@
                       }]
                   })
                 })
+                }else{
+                  console.log('--reload table---');
+                  /*$('#pendingTable').DataTable().fnDestroy();
+                  $(function () {
+                    $('#pendingTable').DataTable().destroy();
+                    $('#pendingTable').DataTable({
+                      "columnDefs": [{
+                          "orderable": false,
+                          "targets": [0,7]
+                      }],
+                    })
+                  })*/
                 }
             })
         };
         getAllBookingDetails(true);
     });
+    app.directive('ngConfirmClick', [
+        function(){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick || "Are you sure want to cancel this Order?";
+                    var clickAction = attr.confirmedClick;
+                    element.bind('click',function (event) {
+                        if ( window.confirm(msg) ) {
+                            scope.$eval(clickAction)
+                        }
+                    });
+                }
+            };
+    }])
   </script>
 
   </body>

@@ -239,7 +239,7 @@
                     <div class="slds-form-element slds-p-bottom_medium">
                       <label class="slds-form-element__label" for="text-input-id-1">Category</label>
                       <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCat()"></select>
+                        <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(false)"></select>
                       </div>
                     </div>
                     <div class="slds-form-element slds-p-bottom_medium">
@@ -289,7 +289,7 @@
                             <th>Mobile</th>
                             <!--th>Alternate Mobile</th-->
                             <th>Address</th>
-                            <th>Designation</th>
+                            <th>Category</th>
                             <th style="width:7rem;">Action</th>
                         </tr>
                     </thead>
@@ -300,10 +300,10 @@
                             <td>{{emp.mobile}}</td>
                             <!--td>{{emp.alt_mobile}}</td-->
                             <td>{{emp.address}}</td>
-                            <td>{{catIdMap[emp.designation]}}</td>
+                            <td>{{catIdMap[emp.category]}}</td>
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="deleteEmp(emp._id)"><i class="fa fa-trash-o"></i></button>
+                                    <button type="button" class="btn btn-default btn-sm" confirmed-click="deleteEmp(emp._id)" ng-confirm-click><i class="fa fa-trash-o"></i></button>
                                     <button type="button" class="btn btn-default btn-sm" ng-click="showUpdate(emp)"><i class="fa fa-pencil"></i></button>
                                     <button type="button" class="btn btn-default btn-sm" ng-click="showView(emp)"><i class="fa  fa-eye"></i></button>
                                 </div>
@@ -393,13 +393,13 @@
             <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Category</label>
               <div class="slds-form-element__control">
-                <select style="border-radius:.25rem!important;" ng-model="empToUpdate.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCat()"></select>
+                <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(true)"></select>
               </div>
             </div>
             <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
               <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
               <div class="slds-form-element__control">
-                <select style="border-radius:.25rem!important;" ng-model="empToUpdate.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
+                <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in upSubCat"></select>
               </div>
             </div>
             <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
@@ -506,6 +506,7 @@
                     console.log( 'data', data );
                     $scope.showSpinner = false;
                     $scope.addlocName = {};
+                    $scope.newEmp = {};
                     getEmployees();
             })
           });
@@ -529,6 +530,7 @@
           $scope.showEdit = true;
           $scope.isView = false;
           $scope.empToUpdate = emp;
+          $scope.updateSubCatList();
           //$scope.updatelocName = emp.location.length > 0 ? emp.location:{};
         };
         $scope.showView = function(emp){
@@ -642,9 +644,13 @@
           $scope.addlocName = {};
           $scope.updateAddlocName = {};
         };
-        $scope.updateSubCat=function(){
-            console.log($scope.newEmp.category);
-            $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
+        $scope.updateSubCatList=function(isForUpdate){
+            if(isForUpdate){
+              $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
+            }else{
+              console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
+              $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
+            }
         }
         $scope.allEmp = [];
         var getEmployees = function(isInit){
@@ -733,6 +739,21 @@
           }
       };
     });
+    app.directive('ngConfirmClick', [
+        function(){
+            return {
+                link: function (scope, element, attr) {
+                    var msg = attr.ngConfirmClick || "Are you sure want to delete?";
+                    var clickAction = attr.confirmedClick;
+                    element.bind('click',function (event) {
+                        if ( window.confirm(msg) ) {
+                            scope.$eval(clickAction)
+                        }
+                    });
+                }
+            };
+    }])
+    
 </script>
 </body>
 </html>

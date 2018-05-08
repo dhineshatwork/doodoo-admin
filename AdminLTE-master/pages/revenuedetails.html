@@ -227,7 +227,10 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
-                <div class="tab-pane" id="completed">
+                      <div class="slds-float_right">
+                          <a id="dlink"  style="display:none;"></a>
+                          <input type="button" class="slds-button slds-button" onclick="tableToExcel('completeTable', 'W3C Example Table', 'MyFile.xls')" value="Export to Excel">
+                        </div>
                     <div class="slds-box slds-m-around_medium">
                         <table id="completeTable" class="table table-bordered table-hover">
                             <thead>
@@ -256,7 +259,6 @@
                       </div>
                 </div>
                 <!-- /#completed -->
-  </div>
   </div>
           </div>
           <!-- /.col -->
@@ -449,6 +451,27 @@
         };
         getAllBookingDetails(true);
     });
+    var tableToExcel = (function () {
+    var uri = 'data:application/vnd.ms-excel;base64,',
+        template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+        base64 = function (s) {
+            return window.btoa(unescape(encodeURIComponent(s)))
+        }, format = function (s, c) {
+            return s.replace(/{(\w+)}/g, function (m, p) {
+                return c[p];
+            })
+        }
+    return function (table, name, filename) {
+        if (!table.nodeType) table = document.getElementById(table)
+        var ctx = {
+            worksheet: name || 'Worksheet',
+            table: table.innerHTML
+        }
+   document.getElementById("dlink").href = uri + base64(format(template, ctx));
+            document.getElementById("dlink").download = filename;
+            document.getElementById("dlink").click();
+    }
+})()
   </script>
 
   </body>

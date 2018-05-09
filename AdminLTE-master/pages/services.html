@@ -445,16 +445,19 @@
         $scope.getService = function(){
           $scope.showSpinner = true;
           var loc = $scope.getlocation.formatted_address;
+          console.log(loc,'loc::<>');
           $http({
               method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/user/getServiceDetails',
+              url: 'https://freelaunce2.herokuapp.com/admin/getServiceDetails',
               data : {'category':$scope.updateSelectedCat._id, 'sub_category':$scope.updateSelectedSubCat._id,"location":loc},
               headers: {'Content-Type':'application/json'}
           }).success(function(data) {
-              console.log(data.serviceDetails);
+              console.log(data);
               $scope.showSpinner = false;
-              $scope.updateServ = data.serviceDetails;
-              $scope.updateServlocation = $scope.updateServ.location != null ? $scope.updateServ.location : {formatted_address:''};
+              if(data.status){
+                $scope.updateServ = data.serviceDetails;
+                $scope.updateServlocation = $scope.updateServ.location != null ? $scope.updateServ.location : {formatted_address:''};
+              }
           })
         };
         $scope.updateServices = function(){

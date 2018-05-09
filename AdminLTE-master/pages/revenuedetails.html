@@ -221,18 +221,23 @@
       <section class="content">
         <div class="row">
           <div class="col-xs-12">
-              <div class="box">
+              <div class="box box-info">
                   <div class="box-header">
                       <h3 class="box-title">Completed Bookings</h3>
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
-                      <div class="slds-float_right">
-                          <a id="dlink"  style="display:none;"></a>
-                          <input type="button" class="slds-button slds-button" onclick="tableToExcel('completeTable', 'W3C Example Table', 'MyFile.xls')" value="Export to Excel">
+                    
+                    <div class="slds-box slds-m-around_medium slds-grid slds-wrap">
+                        <div class="slds-size_1-of-1"  style="position: absolute;margin-top: 1rem;">
+                          <div class="slds-align_absolute-center">
+                            <a id="dlink"  style="display:none;"></a>
+                            <input type="button" class="slds-button slds-button_neutral" onclick="tableToExcel('completeTable', 'W3C Example Table', 'MyFile.xls')" value="Export as Excel"/>
+                          </div>
                         </div>
-                    <div class="slds-box slds-m-around_medium">
+                        <div class="slds-size_1-of-1">
                         <table id="completeTable" class="table table-bordered table-hover">
+                            <caption>Completed Orders - {{today | date : "MMMM-yyyy"}}</caption>
                             <thead>
                                 <tr>
                                     <th>Booking Id</th>
@@ -241,6 +246,7 @@
                                     <th>Sub Category</th>
                                     <th style="width: 3.5rem!important;">Booked on</th>
                                     <th>Location</th>
+                                    <th>Employee Name</th>                                    
                                     <th>Price</th>
                                 </tr>
                             </thead>
@@ -251,11 +257,13 @@
                                   <td>{{completedOrder.category}}</td>
                                   <td>{{completedOrder.sub_category}}</td>
                                   <td>{{completedOrder.booked_on  | date:'dd/MM/yyyy hh:mm a'}}</td>
-                                  <td>{{completedOrder.location}}</td-->
+                                  <td>{{completedOrder.location}}</td>
+                                  <td>{{completedOrder.emp_name}}</td>
                                   <td>{{completedOrder.price}}</td>
                                 </tr>
                             </tbody>
                         </table>
+                      </div>
                       </div>
                 </div>
                 <!-- /#completed -->
@@ -338,7 +346,7 @@
         $scope.orderSelected = {};
         $scope.empSelected = {};
         $scope.showSpinner = false;
-        
+        $scope.today = new Date();
         $scope.signOut = function(){
           $window.localStorage.clear();
           window.location.href = '../index.html';

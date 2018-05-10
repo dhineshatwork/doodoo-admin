@@ -86,7 +86,8 @@
           <ul class="nav navbar-nav">
             <!-- User Account: style can be found in dropdown.less -->
             <li class="dropdown user user-menu">
-              <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>
+              <a href="#" ng-click="signOut()">
+                <i class="fa  fa-sign-out"></i>Sign out</a>
             </li>
           </ul>
         </div>
@@ -99,11 +100,11 @@
         <ul class="sidebar-menu" data-widget="tree">
           <li class="header">MAIN NAVIGATION</li>
           <li>
-              <a href="../dashboard.html">
-                <i class="fa fa-dashboard"></i>
-                <span>Dashboard</span>
-              </a>
-            </li>
+            <a href="../dashboard.html">
+              <i class="fa fa-dashboard"></i>
+              <span>Dashboard</span>
+            </a>
+          </li>
           <li>
             <a href="booking.html">
               <i class="fa fa-book"></i>
@@ -111,25 +112,25 @@
             </a>
           </li>
           <li>
-              <a href="revenuedetails.html">
-                <i class="fa fa-inr"></i>
-                <span>Revenue Details</span>
+            <a href="revenuedetails.html">
+              <i class="fa fa-inr"></i>
+              <span>Revenue Details</span>
+            </a>
+          </li>
+          <li>
+            <li class="active">
+              <a href="categories.html">
+                <i class="fa  fa-list-alt"></i>
+                <span>Category</span>
               </a>
             </li>
-          <li>
-          <li class="active">
-            <a href="categories.html">
-              <i class="fa  fa-list-alt"></i>
-              <span>Category</span>
-            </a>
-          </li>
-          <li>
-            <a href="services.html">
-              <i class="fa  fa-wrench"></i>
-              <span>Services</span>
-            </a>
-          </li>
-          <li>
+            <li>
+              <a href="services.html">
+                <i class="fa  fa-wrench"></i>
+                <span>Services</span>
+              </a>
+            </li>
+            <li>
               <a href="employees.html">
                 <i class="fa fa-fw fa-users"></i>
                 <span>Employees</span>
@@ -141,31 +142,31 @@
                   <span>Users</span>
                 </a>
               </li-->
-          <li>
-            <a href="headerImage.html">
-              <i class="fa   fa-upload"></i>
-              <span>Header Image</span>
-            </a>
-          </li>
-          <li>
-            <a href="offerImage.html">
-              <i class="fa   fa-cloud-upload"></i>
-              <span>Offer Image</span>
-            </a>
-          </li>
-          <li>
-            <a href="notification.html">
-              <i class="fa   fa-bell"></i>
-              <span>Notification</span>
-            </a>
-          </li>
-          <li>
+            <li>
+              <a href="headerImage.html">
+                <i class="fa   fa-upload"></i>
+                <span>Header Image</span>
+              </a>
+            </li>
+            <li>
+              <a href="offerImage.html">
+                <i class="fa   fa-cloud-upload"></i>
+                <span>Offer Image</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification.html">
+                <i class="fa   fa-bell"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+            <li>
               <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
                 <i class="fa fa-bar-chart"></i>
                 <span>Analytics</span>
               </a>
             </li>
-          <li>
+            <li>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -240,7 +241,7 @@
                             <span class="slds-file-selector__button slds-button slds-button_neutral">
                               <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                                </svg-->Upload Files</span>
+                                </svg-->Upload Image</span>
                             <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
                           </label>
                         </div>
@@ -331,7 +332,7 @@
                             <span class="slds-file-selector__button slds-button slds-button_neutral">
                               <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                     <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
-                                  </svg-->Upload Files</span>
+                                  </svg-->Upload Image</span>
                             <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
                           </label>
                         </div>
@@ -339,7 +340,8 @@
                       </div>
                     </div>
                   </div>
-                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!selectedCat || !subCatName || !subCatImgName" ng-click="addSubCategory()">Add</button>
+                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!selectedCat || !subCatName || !subCatImgName"
+                    ng-click="addSubCategory()">Add</button>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -376,9 +378,9 @@
                   <div class="slds-m-left_large slds-form-element slds-float_left col-md-6">
                     <label class="slds-form-element__label" for="text-input-id-1">Location</label>
                     <div class="slds-form-element__control">
-                      <input type="text" id="filterLocInput" class="slds-input" placeholder="All" g-places-autocomplete ng-model="filterLoc"/>
+                      <input type="text" id="filterLocInput" class="slds-input" placeholder="All" g-places-autocomplete ng-model="filterLoc" />
                       <i class="fa fa-check slds-p-top_x-small" ng-if="filterLoc.formatted_address" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"
-                          ng-click="filterByLocation(filterLoc.formatted_address)"></i>
+                        ng-click="filterByLocation(filterLoc.formatted_address)"></i>
                       <!--i class="fa fa-remove" ng-if="showClose" ng-click="getAllCat()" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"></i-->
                     </div>
                   </div>
@@ -390,11 +392,13 @@
                   </div>
                 </div>
                 <div class="col-md-12 slds-grid slds-wrap">
-                  <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-top_x-large slds-align_absolute-center slds-grid slds-wrap" ng-repeat="cat in allCat | filter:{ name: searchKey}"
-                    ng-click="viewCat(cat)" style="cursor:pointer;">
+                  <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 slds-p-top_x-large slds-align_absolute-center slds-grid slds-wrap"
+                    ng-repeat="cat in allCat | filter:{ name: searchKey}" ng-click="viewCat(cat)" style="cursor:pointer;">
                     <span class="slds-align_absolute-center slds-size_1-of-1">
-                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src" />
-                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!cat.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{cat.name}}" ng-src="{{cat.img_src}}" ng-if="cat.img_src"
+                      />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image"
+                        ng-if="!cat.img_src" />
                     </span>
                     <span class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{cat.name}}</span>
                   </div>
@@ -408,14 +412,17 @@
                 <span class="slds-col slds-p-top_large  slds-align_absolute-center actionFix slds-grid slds-wrap">
                   <div class="slds-size_2-of-3 slds-medium-size_4-of-5 slds-large-size_4-of-5 slds-grid slds-wrap">
                     <span class="slds-size_1-of-1 slds-align_absolute-center">
-                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src" />
-                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!catView.img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{catView.img_src}}" ng-if="catView.img_src"
+                      />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image"
+                        ng-if="!catView.img_src" />
                     </span>
                     <span class="slds-p-top_xx-small slds-align_absolute-center">
                       <h3 class="box-title">{{catView.name}}</h3>
                     </span>
                   </div>
-                  <div class="slds-size_1-of-3 slds-medium-size_1-of-5 slds-large-size_1-of-5"><!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
+                  <div class="slds-size_1-of-3 slds-medium-size_1-of-5 slds-large-size_1-of-5">
+                    <!--style="position: absolute;bottom: 5.5rem;right: 10.5rem;"-->
                     <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(true, catView)"></i>
                     <i style="cursor:pointer;" title="Delete" class="fa fa-trash slds-p-left_xx-small" confirmed-click="delCat()" ng-confirm-click></i>
                   </div>
@@ -433,86 +440,93 @@
                     </div>
                   </div>
                   <div class="slds-size_1-of-1 slds-grid slds-wrap">
-                      <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 actionFix slds-p-top_x-large slds-align_absolute-center slds-grid" ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
-                        <div class="slds-size_3-of-4 slds-grid slds-wrap">
-                          <div class="slds-align_absolute-center slds-size_1-of-1">
-                            <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}" ng-if="subcat.sub_img_src" />
-                            <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!subcat.sub_img_src" />
-                          </div>
-                          <div class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{subcat.sub_cat_name}}</div>
+                    <div class="slds-size_1-of-2 slds-medium-size_4-of-12 slds-large-size_4-of-12 actionFix slds-p-top_x-large slds-align_absolute-center slds-grid"
+                      ng-repeat="subcat in catView.sub_category | filter:{ sub_cat_name: subCatSearchKey}">
+                      <div class="slds-size_3-of-4 slds-grid slds-wrap">
+                        <div class="slds-align_absolute-center slds-size_1-of-1">
+                          <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="{{subcat.sub_cat_name}}" ng-src="{{subcat.sub_img_src}}"
+                            ng-if="subcat.sub_img_src" />
+                          <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image"
+                            ng-if="!subcat.sub_img_src" />
                         </div>
-                        <span class="slds-size_1-of-4">
-                            <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
-                            <i confirmed-click="deleteSubCat(subcat._id)" ng-confirm-click title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
-                        </span>
+                        <div class="slds-size_1-of-1 slds-align_absolute-center slds-p-top_xx-small">{{subcat.sub_cat_name}}</div>
                       </div>
+                      <span class="slds-size_1-of-4">
+                        <i class="fa fa-pencil slds-p-left_medium" title="Edit" style="cursor:pointer;" ng-click="openUpdateModal(false, subcat)"></i>
+                        <i confirmed-click="deleteSubCat(subcat._id)" ng-confirm-click title="Delete" class="fa fa-trash slds-p-left_small" style="cursor:pointer;"></i>
+                      </span>
                     </div>
                   </div>
                 </div>
               </div>
-              <!-- /.box-body slds-avatar_circle  -->
             </div>
-
-            <!-- /.box -->
+            <!-- /.box-body slds-avatar_circle  -->
           </div>
-          <div ng-if="isOpenModal" style="height: 640px;">
-            <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
-              class="slds-modal slds-fade-in-open">
-              <div class="slds-modal__container">
-                <header class="slds-modal__header">
-                  <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;"
-                    ng-click="closeModal()">
+
+          <!-- /.box -->
+        </div>
+        <div ng-if="isOpenModal" style="height: 640px;">
+          <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+            class="slds-modal slds-fade-in-open">
+            <div class="slds-modal__container">
+              <header class="slds-modal__header">
+                <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;"
+                  ng-click="closeModal()">
+                  <span>
+                    <i class="fa fa-close" style="font-size:1.85rem;"></i>
+                  </span>
+                  <span class="slds-assistive-text">Close</span>
+                </button>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateCatReg">Update Category</h2>
+                <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateSubCatReg">Update Sub Category</h2>
+              </header>
+              <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+                <div class="slds-m-around_large" ng-if="updateSubCatReg">
+                  <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
                     <span>
-                      <i class="fa fa-close" style="font-size:1.85rem;"></i>
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}"
+                        ng-if="updateSubCatReg.sub_img_src" />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image"
+                        ng-if="!updateSubCatReg.sub_img_src" />
                     </span>
-                    <span class="slds-assistive-text">Close</span>
-                  </button>
-                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateCatReg">Update Category</h2>
-                  <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate" ng-if="updateSubCatReg">Update Sub Category</h2>
-                </header>
-                <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-                  <div class="slds-m-around_large" ng-if="updateSubCatReg">
-                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
-                      <span>
-                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateSubCatReg.sub_img_src}}" ng-if="updateSubCatReg.sub_img_src" />
-                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateSubCatReg.sub_img_src" />
-                      </span>
-                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
-                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
-                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(false)"></i>
-                      </span>
-                    </div>
-                    <div class="slds-form-element slds-p-bottom_small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateSubCatReg.sub_cat_name" />
-                      </div>
-                    </div>
-                    <div class="slds-form-element slds-p-bottom_small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
-                      <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
-                      </div>
+                    <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                      <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                      <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(false)"></i>
+                    </span>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Sub Category Name</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateSubCatReg.sub_cat_name" />
                     </div>
                   </div>
-                  <div class="slds-m-around_large" ng-if="updateCatReg">
-                    <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
-                      <span>
-                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src" />
-                        <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image" ng-if="!updateCatReg.img_src" />
-                      </span>
-                      <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
-                        <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
-                        <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(true)"></i>
-                      </span>
+                  <div class="slds-form-element slds-p-bottom_small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                    <div class="slds-form-element__control">
+                      <select style="border-radius:.25rem!important;" ng-model="updateSelectedCat" class="form-control" ng-options="item.name for item in allCat"></select>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_small">
-                      <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateCatReg.name" />
-                      </div>
+                  </div>
+                </div>
+                <div class="slds-m-around_large" ng-if="updateCatReg">
+                  <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
+                    <span>
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{updateCatReg.img_src}}" ng-if="updateCatReg.img_src"
+                      />
+                      <img style="width:9.5rem;height:6.5rem;border-radius: 0.25rem;" src="..\dist\img\uploadImg.png" title="Upload New Image"
+                        ng-if="!updateCatReg.img_src" />
+                    </span>
+                    <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small">
+                      <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" file-browser></i>
+                      <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delCatPic(true)"></i>
+                    </span>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_small">
+                    <label class="slds-form-element__label" for="text-input-id-1">Category Name</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="updateCatReg.name" />
                     </div>
-                    <!--div class="slds-form-element slds-p-bottom_small">
+                  </div>
+                  <!--div class="slds-form-element slds-p-bottom_small">
                       <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                       <div class="slds-form-element__control">
                         <div class="slds-combobox">
@@ -531,25 +545,25 @@
                         </span>
                       </div>
                     </div-->
-                  </div>
                 </div>
-                <footer class="slds-modal__footer">
-                  <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-                  <button class="slds-button slds-button_brand" ng-click="updateCat()" ng-if="updateCatReg">Save</button>
-                  <button class="slds-button slds-button_brand" ng-click="updateSubCat()" ng-if="updateSubCatReg">Save</button>
-                </footer>
               </div>
-            </section>
-            <div class="slds-backdrop slds-backdrop_open"></div>
-          </div>
+              <footer class="slds-modal__footer">
+                <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
+                <button class="slds-button slds-button_brand" ng-click="updateCat()" ng-if="updateCatReg">Save</button>
+                <button class="slds-button slds-button_brand" ng-click="updateSubCat()" ng-if="updateSubCatReg">Save</button>
+              </footer>
+            </div>
+          </section>
+          <div class="slds-backdrop slds-backdrop_open"></div>
         </div>
-      </section>
-
-      <!-- /.content -->
     </div>
-    <!-- /.content-wrapper -->
+    </section>
 
-    <div class="control-sidebar-bg"></div>
+    <!-- /.content -->
+  </div>
+  <!-- /.content-wrapper -->
+
+  <div class="control-sidebar-bg"></div>
   </div>
   <div ng-if="showSpinner" style="height: 6rem;">
     <div>
@@ -871,18 +885,18 @@
         });
       };
       $scope.allCat = [];
-      $scope.filterByLocation = function(loc){
+      $scope.filterByLocation = function (loc) {
         $scope.showSpinner = true;
         console.log(loc);
         $http({
           method: 'POST',
-          data:{'location':loc},
+          data: { 'location': loc },
           url: 'https://freelaunce2.herokuapp.com/user/categorylist',
           headers: { 'Content-Type': 'application/json' }
         }).success(function (data) {
           console.log('data', data.category);
           var cat = [];
-          for(var i = 0;i<data.category.length;i++){
+          for (var i = 0; i < data.category.length; i++) {
             cat[i] = data.category[i].category;
           }
           $scope.allCat = cat;
@@ -890,8 +904,8 @@
           $scope.showClose = true;
         })
       }
-      $scope.getAllCat = function(){
-        var ele=document.getElementById('filterLocInput');
+      $scope.getAllCat = function () {
+        var ele = document.getElementById('filterLocInput');
         ele.value = null;
         getCategories();
       }
@@ -908,7 +922,7 @@
             $scope.showSpinner = false;
             $scope.filterLoc = null;
             $scope.showClose = false;
-           })
+          })
         } else {
           window.location.href = '../index.html';
         }
@@ -958,19 +972,19 @@
       };
     });
     app.directive('ngConfirmClick', [
-        function(){
-            return {
-                link: function (scope, element, attr) {
-                    var msg = attr.ngConfirmClick || "Are you sure want to delete?";
-                    var clickAction = attr.confirmedClick;
-                    element.bind('click',function (event) {
-                        if ( window.confirm(msg) ) {
-                            scope.$eval(clickAction)
-                        }
-                    });
-                }
-            };
-    }])
+      function () {
+        return {
+          link: function (scope, element, attr) {
+            var msg = attr.ngConfirmClick || "Are you sure want to delete?";
+            var clickAction = attr.confirmedClick;
+            element.bind('click', function (event) {
+              if (window.confirm(msg)) {
+                scope.$eval(clickAction)
+              }
+            });
+          }
+        };
+      }])
   </script>
 </body>
 

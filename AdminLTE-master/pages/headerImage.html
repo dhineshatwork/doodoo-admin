@@ -232,7 +232,7 @@
           </div>
           <footer class="slds-modal__footer">
             <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="addBannerImg()">Add</button>
+            <button class="slds-button slds-button_brand" ng-disabled="!newBannerPicName" ng-click="addBannerImg()">Add</button>
           </footer>
         </div>
       </section>

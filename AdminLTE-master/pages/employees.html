@@ -266,7 +266,9 @@
                         </div>
                       </div>
                     </div>
-                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addEmp()">Add</button>
+                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!newEmp.name || !newEmp.email ||
+                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName" 
+                    ng-click="addEmp()">Add</button>
                   </div>
                 </div>
                 <!-- /.box-body -->
@@ -284,6 +286,7 @@
                 <table id="example1" class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>Employee Id</th>
                             <th>Name</th>
                             <th>Email</th>
                             <th>Mobile</th>
@@ -295,6 +298,7 @@
                     </thead>
                     <tbody>
                         <tr ng-repeat="emp in allEmp">
+                            <td>{{emp.employee_id}}</td>
                             <td>{{emp.name}}</td>
                             <td>{{emp.email}}</td>
                             <td>{{emp.mobile}}</td>
@@ -351,7 +355,7 @@
                 <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
                 <div class="slds-form-element__control">
                 <!--div class="slds-combobox"-->
-                  <input type="text" id="text-input-id-1"  ng-disabled="isView" class="slds-input"  g-places-autocomplete ng-model="updatelocName" />
+                  <input type="text" id="text-input-id-1"  ng-disabled="isView" class="slds-input"  g-places-autocomplete ng-model="updatelocName" ng-change="updateLocation(updatelocName)"/>
                   <!--i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i-->
                   </div>
                   <!--span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
@@ -417,7 +421,9 @@
           </div>
           <footer class="slds-modal__footer" ng-if="!isView">
             <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="updateEmp()">Update</button>
+            <button class="slds-button slds-button_brand"  ng-disabled="!empToUpdate.name || !empToUpdate.email ||
+            !empToUpdate.mobile || !empToUpdate.address || !updatelocName || !empToUpdate.category || !empToUpdate.sub_category"
+             ng-click="updateEmp()">Update</button>
           </footer>
         </div>
       </section>
@@ -479,6 +485,10 @@
         $scope.updatelocName = {};
         $scope.updateEmpProPic = {};
         $scope.updateAddlocName = {};
+        $scope.updateLocation = function(loc){
+          if(typeof loc == 'object')
+          $scope.updatelocName = loc;
+        }
         $scope.addEmp = function(){
 
           $scope.showSpinner = true;
@@ -530,15 +540,17 @@
           $scope.showEdit = true;
           $scope.isView = false;
           $scope.empToUpdate = emp;
-          $scope.updateSubCatList();
-          //$scope.updatelocName = emp.location.length > 0 ? emp.location:{};
+          $scope.updateSubCatList(true);
+          console.log(emp.location);
+          if(emp.location && emp.location != null)
+            $scope.updatelocName = emp.location.length > 0 ? emp.location:{};
         };
         $scope.showView = function(emp){
           console.log(emp);
           $scope.showEdit = true;
           $scope.empToUpdate = emp;
           $scope.isView = true;
-         // console.log(emp.location.length);
+          console.log(emp.location.length);
           $scope.updatelocName = emp.location && emp.location.length > 0 ? emp.location:{};
         };
         $scope.delEmpPic = function(){
@@ -645,10 +657,10 @@
           $scope.updateAddlocName = {};
         };
         $scope.updateSubCatList=function(isForUpdate){
-            if(isForUpdate){
+            if(!isForUpdate){
               $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
             }else{
-              console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
+              console.log($scope.empToUpdate.category,$scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
               $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
             }
         }
@@ -668,7 +680,7 @@
                   $('#example1').DataTable({
                       "columnDefs": [{
                           "orderable": false,
-                          "targets": [2,3,5]
+                          "targets": [4,3,6]
                       }]
                   })
                 })

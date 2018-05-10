@@ -248,7 +248,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addCategory()">Add</button>
+                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!catImgName || !catName" ng-click="addCategory()">Add</button>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -339,7 +339,7 @@
                       </div>
                     </div>
                   </div>
-                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-click="addSubCategory()">Add</button>
+                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!selectedCat || !subCatName || !subCatImgName" ng-click="addSubCategory()">Add</button>
                 </div>
               </div>
               <!-- /.box-body -->
@@ -589,7 +589,7 @@
   <script>
     var app = angular.module('categoryApp', ['google.places']);
     app.controller('categoryCtrl', function ($scope, $http, $window, $location) {
-      $scope.catName = '';
+      $scope.catName;
       $scope.subCatName = '';
       $scope.catImg;
       $scope.subCatImg;
@@ -598,6 +598,7 @@
       $scope.addlocName;
       $scope.filterLoc;
       $scope.updateLocName = {};
+      $scope.catImgName;
       $scope.addlocNames = [];
       $scope.showCat = false;
       $scope.isOpenModal = false;
@@ -651,7 +652,7 @@
             $scope.catName = null;
             $scope.locNames = null;
             $scope.catImg = null;
-            $scope.catImgName = '';
+            $scope.catImgName = null;
           })
         })
       }

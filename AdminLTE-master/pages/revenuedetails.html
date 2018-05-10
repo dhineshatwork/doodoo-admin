@@ -227,12 +227,34 @@
                   </div>
                   <!-- /.box-header -->
                   <div class="box-body">
-                    
+                    <div class="slds-m-around_medium slds-grid slds-wrap">
+                      <div style="height:0;width:10rem;padding-bottom:8rem;background-color:#706e6b;margin-left: 7rem;">
+                        <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
+                          <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
+                          {{totalAmount}}
+                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Total Revenue</p>
+                        </div>
+                      </div>
+                      <div style="height:0;width:10rem;padding-bottom:8rem;background-color:#706e6b;margin-left: 10rem">
+                        <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
+                          <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
+                          {{monthlyAmount}}
+                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Monthly Revenue</p>
+                        </div>
+                      </div>
+                      <div style="height:0;width:10rem;padding-bottom:8rem;background-color:#706e6b;margin-left: 10rem">
+                        <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
+                          <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
+                          {{todayAmount}}
+                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Today Revenue</p>
+                        </div>
+                      </div>
+                    </div>
                     <div class="slds-box slds-m-around_medium slds-grid slds-wrap">
                         <div class="slds-size_1-of-1"  style="position: absolute;margin-top: 1rem;">
                           <div class="slds-align_absolute-center">
                             <a id="dlink"  style="display:none;"></a>
-                            <input type="button" class="slds-button slds-button_neutral" onclick="tableToExcel('completeTable', 'W3C Example Table', 'MyFile.xls')" value="Export as Excel"/>
+                            <input type="button" style="font-family: 'Pangolin', cursive;" class="slds-button slds-button_neutral" onclick="tableToExcel('completeTable', 'W3C Example Table', 'MyFile.xls')" value="Export as Excel"/>
                           </div>
                         </div>
                         <div class="slds-size_1-of-1">
@@ -278,36 +300,6 @@
     <!-- /.content-wrapper -->
     
     <div class="control-sidebar-bg"></div>
-    <div ng-if="isModalOpen" style="height: 640px;">
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
-          <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
-              <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
-              <span class="slds-assistive-text">Close</span>
-            </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Accept Order</h2>
-          </header>
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <div class="slds-m-around_large">
-              <div class="slds-p-bottom_medium slds-align_absolute-center slds-grid slds-wrap">
-                <div class="slds-form-element slds-p-bottom_small">
-                  <label class="slds-form-element__label" for="text-input-id-1">Employee</label>
-                  <div class="slds-form-element__control">
-                    <select style="border-radius:.25rem!important;" ng-model="empSelected.id" class="form-control" ng-options="item._id as item.name for item in allEmp"></select>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <footer class="slds-modal__footer">
-            <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand" ng-click="acceptOrder(false,null)">Save</button>
-          </footer>
-        </div>
-      </section>
-      <div class="slds-backdrop slds-backdrop_open"></div>
-    </div>
   </div>
   <div  ng-if="showSpinner" style="height: 6rem;">
     <div>
@@ -342,6 +334,9 @@
     var app = angular.module('bookingDetailsApp', []);
     app.controller('bookingDetailsCtrl',function($scope, $http, $window, $location){
         $scope.isModalOpen = false;
+        $scope.totalAmount = 0;
+        $scope.monthlyAmount = 0;
+        $scope.todayAmount = 0;
         $scope.newBannerPic = {};
         $scope.orderSelected = {};
         $scope.empSelected = {};

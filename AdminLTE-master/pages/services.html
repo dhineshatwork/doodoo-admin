@@ -241,7 +241,7 @@
                     <div class="slds-size_1-of-2  slds-form-element slds-p-around_x-small">
                       <label class="slds-form-element__label" for="text-input-id-1">Notes</label>
                       <div class="slds-form-element__control">
-                          <textarea type="text" style="border-radius:.25rem!important;" ng-model="updateServ.notes" class="form-control"></textarea>
+                          <textarea type="text" style="border-radius:.25rem!important;" ng-model="newServ.notes" class="form-control"></textarea>
                       </div>
                     </div>                    
                     <div class="slds-size_1-of-2 slds-form-element slds-p-around_x-small">
@@ -263,7 +263,9 @@
                       </div>
                   </div>
                     <div class="slds-size_1-of-1  slds-align_absolute-center  slds-p-top_medium">
-                      <button class="slds-button slds-button_neutral" ng-click="addServices()">Add</button>
+                      <button class="slds-button slds-button_neutral" ng-disabled="!newServPicName || !newServ.notes ||
+                      !newServ.description || !newServ.promises || !newServ.price || !newServ.duration || !location || !newServ.sub_category || !newServ.category" 
+                      ng-click="addServices()">Add</button>
                     </div>
                   </div>
                 </div>
@@ -359,7 +361,8 @@
                   <div class="slds-size_1-of-1 slds-align_absolute-center  slds-p-top_medium">
                       <button class="slds-button slds-button_neutral" ng-click="cancelUpdate()">Cancel</button>
                       <button class="slds-button slds-button_neutral" confirmed-click="deleteServices()" ng-confirm-click>Delete</button>
-                      <button class="slds-button slds-button_neutral" ng-click="updateServices()">Save</button>
+                      <button class="slds-button slds-button_neutral" ng-disabled="!updateServ.notes ||
+                      !updateServ.description || !updateServ.promises || !updateServ.price || !updateServ.duration || !getlocation || !updateServ.sub_category || !updateServ.category" ng-click="updateServices()">Save</button>
                       <button class="slds-button slds-button_neutral" ng-click="cloneService(updateServ)">Clone</button>
                   </div>
                 </div>

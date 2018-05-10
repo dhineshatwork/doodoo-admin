@@ -376,10 +376,10 @@
                   <div class="slds-m-left_large slds-form-element slds-float_left col-md-6">
                     <label class="slds-form-element__label" for="text-input-id-1">Location</label>
                     <div class="slds-form-element__control">
-                      <input type="text" id="filterLocInput" class="slds-input" placeholder="All" g-places-autocomplete ng-model="filterLoc"/>
-                      <i class="fa fa-check slds-p-top_x-small" ng-if="filterLoc.formatted_address" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"
+                      <input type="text" id="filterLocInput" class="slds-input" ng-change="updateLoc(filterLoc)" placeholder="All" g-places-autocomplete ng-model="filterLoc"/>
+                      <i class="fa fa-check slds-p-top_x-small" ng-if="showFilter && !showClose" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"
                           ng-click="filterByLocation(filterLoc.formatted_address)"></i>
-                      <!--i class="fa fa-remove" ng-if="showClose" ng-click="getAllCat()" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"></i-->
+                      <i class="fa fa-remove" ng-if="showClose" ng-click="getAllCat()" style="position: absolute;bottom: .5rem;right: 1.5rem;cursor: pointer;"></i>
                     </div>
                   </div>
                   <div class="slds-form-element slds-float_right col-md-4">
@@ -595,6 +595,7 @@
       $scope.subCatImg;
       $scope.locName;
       $scope.locNames = [];
+      $scope.showFilter = false;
       $scope.addlocName;
       $scope.filterLoc;
       $scope.updateLocName = {};
@@ -605,6 +606,10 @@
       $scope.showSpinner = false;
       $scope.updateCatPic = {};
       $scope.showClose = false;
+      $scope.updateLoc = function(loc){
+        if(typeof loc == 'object')
+          $scope.showFilter = true;
+      }
       $scope.delCatPic = function (isForCat) {
         if (isForCat) {
           $scope.updateCatReg.img_src = '';
@@ -893,6 +898,7 @@
       $scope.getAllCat = function(){
         var ele=document.getElementById('filterLocInput');
         ele.value = null;
+        $scope.showFilter = false;
         getCategories();
       }
       var getCategories = function () {
@@ -906,8 +912,9 @@
             console.log('data', data.categorylist);
             $scope.allCat = data.categorylist;
             $scope.showSpinner = false;
-            $scope.filterLoc = null;
+            $scope.filterLoc = {};
             $scope.showClose = false;
+            $scope.$apply();
            })
         } else {
           window.location.href = '../index.html';

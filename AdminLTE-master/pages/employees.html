@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -11,7 +12,7 @@
   <!-- Bootstrap 3.3.7 -->
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
-  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
+  <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
   <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
@@ -33,197 +34,207 @@
   <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
   <![endif]-->
   <style>
-    label{
-      margin-bottom:0!important;
+    label {
+      margin-bottom: 0!important;
     }
+
     .ng-cloak {
-     display: none !important;
+      display: none !important;
     }
-    .pac-container{
+
+    .pac-container {
       z-index: 10000!important;
     }
   </style>
   <!-- Google Font -->
-  <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 </head>
-<body class="hold-transition skin-blue sidebar-mini ng-cloak" ng-app="empApp" ng-controller="empCtrl">
-    <div class="wrapper">
 
-        <header class="main-header">
-          <!-- Logo -->
-          <a href="../dashboard.html" class="logo">
-            <!-- mini logo for sidebar mini 50x50 pixels -->
-            <span class="logo-mini"><b>DoDoo</b></span>
-            <!-- logo for regular state and mobile devices -->
-            <span class="logo-lg"><b>DoDoo</b> - Admin</span>
-          </a>
-          <!-- Header Navbar: style can be found in header.less -->
-          <nav class="navbar navbar-static-top">
-            <!-- Sidebar toggle button-->
-            <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
-              <span class="sr-only">Toggle navigation</span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
+<body class="hold-transition skin-blue sidebar-mini ng-cloak" ng-app="empApp" ng-controller="empCtrl">
+  <div class="wrapper">
+
+    <header class="main-header">
+      <!-- Logo -->
+      <a href="../dashboard.html" class="logo">
+        <!-- mini logo for sidebar mini 50x50 pixels -->
+        <span class="logo-mini">
+          <b>DoDoo</b>
+        </span>
+        <!-- logo for regular state and mobile devices -->
+        <span class="logo-lg">
+          <b>DoDoo</b> - Admin</span>
+      </a>
+      <!-- Header Navbar: style can be found in header.less -->
+      <nav class="navbar navbar-static-top">
+        <!-- Sidebar toggle button-->
+        <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </a>
+
+        <div class="navbar-custom-menu">
+          <ul class="nav navbar-nav">
+            <!-- User Account: style can be found in dropdown.less -->
+            <li class="dropdown user user-menu">
+              <a href="#" ng-click="signOut()">
+                <i class="fa  fa-sign-out"></i>Sign out</a>
+            </li>
+          </ul>
+        </div>
+      </nav>
+    </header>
+    <!-- Left side column. contains the logo and sidebar -->
+    <aside class="main-sidebar">
+      <!-- sidebar: style can be found in sidebar.less -->
+      <section class="sidebar">
+        <ul class="sidebar-menu" data-widget="tree">
+          <li class="header">MAIN NAVIGATION</li>
+          <li>
+            <a href="../dashboard.html">
+              <i class="fa fa-dashboard"></i>
+              <span>Dashboard</span>
             </a>
-      
-            <div class="navbar-custom-menu">
-              <ul class="nav navbar-nav">
-                <!-- User Account: style can be found in dropdown.less -->
-                <li class="dropdown user user-menu">
-                  <a href="#" ng-click="signOut()"><i class="fa  fa-sign-out"></i>Sign out</a>   
-                </li>
-              </ul>
-            </div>
-          </nav>
-        </header>
-        <!-- Left side column. contains the logo and sidebar -->
-        <aside class="main-sidebar">
-          <!-- sidebar: style can be found in sidebar.less -->
-          <section class="sidebar">
-            <ul class="sidebar-menu" data-widget="tree">
-                  <li class="header">MAIN NAVIGATION</li>
-                  <li>
-                      <a href="../dashboard.html">
-                        <i class="fa fa-dashboard"></i>
-                        <span>Dashboard</span>
-                      </a>
-                    </li>
-                  <li>
-                      <a href="booking.html">
-                        <i class="fa fa-book"></i>
-                        <span>Bookings</span>
-                      </a>
-                    </li>
-                    <li>
-                        <a href="revenuedetails.html">
-                          <i class="fa fa-inr"></i>
-                          <span>Revenue Details</span>
-                        </a>
-                      </li>
-                    <li>
-                    <li>
-                      <a href="categories.html">
-                        <i class="fa  fa-list-alt"></i>
-                        <span>Category</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="services.html">
-                        <i class="fa  fa-wrench"></i>
-                        <span>Services</span>
-                      </a>
-                    </li>
-                    <li class="active">
-                        <a href="employees.html">
-                          <i class="fa fa-fw fa-users"></i>
-                          <span>Employees</span>
-                        </a>
-                      </li>
-                      <!--li>
+          </li>
+          <li>
+            <a href="booking.html">
+              <i class="fa fa-book"></i>
+              <span>Bookings</span>
+            </a>
+          </li>
+          <li>
+            <a href="revenuedetails.html">
+              <i class="fa fa-inr"></i>
+              <span>Revenue Details</span>
+            </a>
+          </li>
+          <li>
+            <li>
+              <a href="categories.html">
+                <i class="fa  fa-list-alt"></i>
+                <span>Category</span>
+              </a>
+            </li>
+            <li>
+              <a href="services.html">
+                <i class="fa  fa-wrench"></i>
+                <span>Services</span>
+              </a>
+            </li>
+            <li class="active">
+              <a href="employees.html">
+                <i class="fa fa-fw fa-users"></i>
+                <span>Employees</span>
+              </a>
+            </li>
+            <!--li>
                           <a href="employees.html">
                             <i class="fa fa-fw fa-users"></i>
                             <span>Users</span>
                           </a>
                         </li-->
-                    
-                    <li>
-                      <a href="headerImage.html">
-                        <i class="fa   fa-upload"></i>
-                        <span>Header Image</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="offerImage.html">
-                        <i class="fa   fa-cloud-upload"></i>
-                        <span>Offer Image</span>
-                      </a>
-                    </li>
-                    <li>
-                      <a href="notification.html">
-                        <i class="fa   fa-bell"></i>
-                        <span>Notification</span>
-                      </a>
-                    </li>
-                    <li>
-                        <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
-                          <i class="fa fa-bar-chart"></i>
-                          <span>Analytics</span>
-                        </a>
-                      </li>
-                    <li>
-                </ul>
-              </section>
-          <!-- /.sidebar -->
-        </aside>
-      
-        
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-    <!-- Content Header (Page header) -->
-    <section class="content-header">
-      <h1>
-        Employees
-        <!--small>advanced tables</small-->
-      </h1>
-      <ol class="breadcrumb">
-        <li><a href="#"><i class="fa fa-dashboard"></i> Home</a></li>
-        <li class="active">Employees</li>
-      </ol>
-    </section>
-    <section class="content">
+
+            <li>
+              <a href="headerImage.html">
+                <i class="fa   fa-upload"></i>
+                <span>Header Image</span>
+              </a>
+            </li>
+            <li>
+              <a href="offerImage.html">
+                <i class="fa   fa-cloud-upload"></i>
+                <span>Offer Image</span>
+              </a>
+            </li>
+            <li>
+              <a href="notification.html">
+                <i class="fa   fa-bell"></i>
+                <span>Notification</span>
+              </a>
+            </li>
+            <li>
+              <a href="" onclick="window.open('https://www.firebase.com/login/', '_blank');">
+                <i class="fa fa-bar-chart"></i>
+                <span>Analytics</span>
+              </a>
+            </li>
+            <li>
+        </ul>
+      </section>
+      <!-- /.sidebar -->
+    </aside>
+
+
+    <!-- Content Wrapper. Contains page content -->
+    <div class="content-wrapper">
+      <!-- Content Header (Page header) -->
+      <section class="content-header">
+        <h1>
+          Employees
+          <!--small>advanced tables</small-->
+        </h1>
+        <ol class="breadcrumb">
+          <li>
+            <a href="#">
+              <i class="fa fa-dashboard"></i> Home</a>
+          </li>
+          <li class="active">Employees</li>
+        </ol>
+      </section>
+      <section class="content">
         <div class="row">
-            <div class="col-md-4">
-              <div class="box box-solid">
-                <div class="box-header with-border">
-                  <h3 class="box-title">Add Employee</h3>
-                  
-                  <div class="box-tools">
-                      <button type="button" class="btn btn-box-tool" data-widget="collapse"><i class="fa fa-minus"></i>
-                      </button>
-                  </div>
+          <div class="col-md-4">
+            <div class="box box-solid">
+              <div class="box-header with-border">
+                <h3 class="box-title">Add Employee</h3>
+
+                <div class="box-tools">
+                  <button type="button" class="btn btn-box-tool" data-widget="collapse">
+                    <i class="fa fa-minus"></i>
+                  </button>
                 </div>
-                <div class="box-body no-padding">
-                  <div class="slds-m-around_large">
-                    
-                    <div class="slds-form-element slds-p-bottom_small">
-                      
-                      <label class="slds-form-element__label" for="text-input-id-1">Name</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.name" />
-                      </div>
+              </div>
+              <div class="box-body no-padding">
+                <div class="slds-m-around_large">
+
+                  <div class="slds-form-element slds-p-bottom_small">
+
+                    <label class="slds-form-element__label" for="text-input-id-1">Name</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.name" />
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.email" />
-                      </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="empEmail" class="slds-input" ng-model="newEmp.email" ng-blur="validateEmail($event)"/>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.mobile" />
-                      </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
+                    <div class="slds-form-element__control">
+                      <input type="number" id="text-input-id-1" class="slds-input" ng-model="newEmp.mobile" />
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.alt_mobile" />
-                      </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
+                    <div class="slds-form-element__control">
+                      <input type="number" id="text-input-id-1" class="slds-input" ng-model="newEmp.alt_mobile" />
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Address</label>
-                      <div class="slds-form-element__control">
-                        <textarea id="text-input-id-1" class="slds-textarea" ng-model="newEmp.address">
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Address</label>
+                    <div class="slds-form-element__control">
+                      <textarea id="text-input-id-1" class="slds-textarea" ng-model="newEmp.address">
                         </textarea>
-                      </div>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Available Location</label>
-                      <div class="slds-form-element__control">
-                        <input type="text" id="text-input-id-1" class="slds-input"  g-places-autocomplete ng-model="addlocName" />
-                        <!--i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Available Location</label>
+                    <div class="slds-form-element__control">
+                      <input type="text" id="text-input-id-1" class="slds-input" g-places-autocomplete ng-model="addlocName" />
+                      <!--i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
                         </div>
                         <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
                           <span class="slds-pill__action">
@@ -235,128 +246,143 @@
                           </button>
                         </span-->
                     </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Category</label>
+                    <div class="slds-form-element__control">
+                      <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat"
+                        ng-change="updateSubCatList(false)"></select>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Category</label>
-                      <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(false)"></select>
-                      </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
+                    <div class="slds-form-element__control">
+                      <select style="border-radius:.25rem!important;" ng-model="newEmp.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
                     </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
-                      <div class="slds-form-element__control">
-                        <select style="border-radius:.25rem!important;" ng-model="newEmp.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in subCat"></select>
-                      </div>
-                    </div>
-                    <div class="slds-form-element slds-p-bottom_medium">
-                      <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
-                      <div class="slds-form-element__control">
-                        <div class="slds-file-selector slds-file-selector_files slds-grid">
-                          <div class="slds-file-selector__dropzone slds-size_3-of-9">
-                            <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)"  aria-labelledby="file-selector-primary-label file-selector-secondary-label" id="cat" accept="image/*"/>
-                            <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
-                              <span class="slds-file-selector__button slds-button slds-button_neutral">
-                                <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" id="file-selector-primary-label">Employee Image</label>
+                    <div class="slds-form-element__control">
+                      <div class="slds-file-selector slds-file-selector_files slds-grid">
+                        <div class="slds-file-selector__dropzone slds-size_3-of-9">
+                          <input type="file" class="slds-file-selector__input slds-assistive-text" ng-file-select="onFileSelect($files)" aria-labelledby="file-selector-primary-label file-selector-secondary-label"
+                            id="cat" accept="image/*" />
+                          <label class="slds-file-selector__body" for="cat" id="file-selector-secondary-label">
+                            <span class="slds-file-selector__button slds-button slds-button_neutral">
+                              <!--svg class="slds-button__icon slds-button__icon_left" aria-hidden="true">
                                   <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="../bower_components/SLDS/icons/utility-sprite/svg/symbols.svg#upload" />
                                 </svg-->Upload Files</span>
-                              <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
-                            </label>
-                          </div>
-                         <p ng-bind="empProPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
+                            <!--span class="slds-file-selector__text slds-medium-show">or Drop Files</span-->
+                          </label>
                         </div>
+                        <p ng-bind="empProPicName" class="slds-p-top_x-small slds-truncate slds-p-left_small"></p>
                       </div>
                     </div>
-                    <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!newEmp.name || !newEmp.email ||
-                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName" 
+                  </div>
+                  <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!newEmp.name || !newEmp.email ||
+                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName"
                     ng-click="addEmp()">Add</button>
+                </div>
+              </div>
+              <!-- /.box-body -->
+            </div>
+            <!-- /. box -->
+          </div>
+          <!-- /.col -->
+          <div class="col-md-8">
+            <div class="box">
+              <div class="box-header">
+                <h3 class="box-title">All Employees</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body">
+                <table id="example1" class="table table-bordered table-hover">
+                  <thead>
+                    <tr>
+                      <th>Employee Id</th>
+                      <th>Name</th>
+                      <th>Email</th>
+                      <th>Mobile</th>
+                      <!--th>Alternate Mobile</th-->
+                      <th>Address</th>
+                      <th>Category</th>
+                      <th style="width:7rem;">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr ng-repeat="emp in allEmp">
+                      <td>{{emp.employee_id}}</td>
+                      <td>{{emp.name}}</td>
+                      <td>{{emp.email}}</td>
+                      <td>{{emp.mobile}}</td>
+                      <!--td>{{emp.alt_mobile}}</td-->
+                      <td>{{emp.address}}</td>
+                      <td>{{catIdMap[emp.category]}}</td>
+                      <td>
+                        <div class="btn-group">
+                          <button type="button" class="btn btn-default btn-sm" confirmed-click="deleteEmp(emp._id)" ng-confirm-click>
+                            <i class="fa fa-trash-o"></i>
+                          </button>
+                          <button type="button" class="btn btn-default btn-sm" ng-click="showUpdate(emp)">
+                            <i class="fa fa-pencil"></i>
+                          </button>
+                          <button type="button" class="btn btn-default btn-sm" ng-click="showView(emp)">
+                            <i class="fa  fa-eye"></i>
+                          </button>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+              <!-- /.box-body -->
+            </div>
+
+            <!-- /.box -->
+          </div>
+        </div>
+      </section>
+      <div style="height: 640px;" ng-if="showEdit">
+        <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+          class="slds-modal slds-fade-in-open">
+          <div class="slds-modal__container">
+            <header class="slds-modal__header">
+              <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;"
+                ng-click="closeModal()">
+                <span>
+                  <i class="fa fa-close" style="font-size:1.85rem;"></i>
+                </span>
+                <span class="slds-assistive-text">Close</span>
+              </button>
+              <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
+            </header>
+            <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+              <div class="slds-grid slds-wrap">
+                <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
+                  <span>
+                    <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"
+                    />
+                    <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic"
+                      title="Upload Employee Image" />
+                  </span>
+                  <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small" ng-if="!isView">
+                    <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
+                    <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
+                  </span>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Name</label>
+                  <div class="slds-form-element__control">
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.name" />
                   </div>
                 </div>
-                <!-- /.box-body -->
-            </div>
-              <!-- /. box -->
-            </div>
-            <!-- /.col -->
-            <div class="col-md-8">
-            <div class="box">
-            <div class="box-header">
-                <h3 class="box-title">All Employees</h3>
-            </div>
-            <!-- /.box-header -->
-            <div class="box-body">
-                <table id="example1" class="table table-bordered table-hover">
-                    <thead>
-                        <tr>
-                            <th>Employee Id</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Mobile</th>
-                            <!--th>Alternate Mobile</th-->
-                            <th>Address</th>
-                            <th>Category</th>
-                            <th style="width:7rem;">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr ng-repeat="emp in allEmp">
-                            <td>{{emp.employee_id}}</td>
-                            <td>{{emp.name}}</td>
-                            <td>{{emp.email}}</td>
-                            <td>{{emp.mobile}}</td>
-                            <!--td>{{emp.alt_mobile}}</td-->
-                            <td>{{emp.address}}</td>
-                            <td>{{catIdMap[emp.category]}}</td>
-                            <td>
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-default btn-sm" confirmed-click="deleteEmp(emp._id)" ng-confirm-click><i class="fa fa-trash-o"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="showUpdate(emp)"><i class="fa fa-pencil"></i></button>
-                                    <button type="button" class="btn btn-default btn-sm" ng-click="showView(emp)"><i class="fa  fa-eye"></i></button>
-                                </div>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            <!-- /.box-body -->
-        </div>
-
-        <!-- /.box -->
-        </div>
-        </div>
-    </section>
-    <div style="height: 640px;" ng-if="showEdit">
-      <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1" class="slds-modal slds-fade-in-open">
-        <div class="slds-modal__container">
-          <header class="slds-modal__header">
-            <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;" ng-click="closeModal()">
-              <span><i class="fa fa-close" style="font-size:1.85rem;"></i></span>  
-              <span class="slds-assistive-text">Close</span>
-            </button>
-            <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">Update Employee</h2>
-          </header>
-          <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
-            <div class="slds-grid slds-wrap">
-            <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
-              <span>
-                  <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{empToUpdate.profile_pic}}" ng-if="empToUpdate.profile_pic"/>
-                  <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!empToUpdate.profile_pic" title="Upload Employee Image"/>
-              </span>
-              <span class="slds-p-bottom_x-large slds-grid slds-p-left_xx-small" ng-if="!isView">
-                <i class="fa fa-pencil slds-p-left_medium" style="cursor:pointer;" ng-click="updateEmpPic()" file-browser></i>
-                <i style="cursor:pointer;" class="fa fa-trash slds-p-left_small" ng-click="delEmpPic()"></i>
-              </span>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Name</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.name" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
-                <div class="slds-form-element__control">
-                <!--div class="slds-combobox"-->
-                  <input type="text" id="text-input-id-1"  ng-disabled="isView" class="slds-input"  g-places-autocomplete ng-model="updatelocName" ng-change="updateLocation(updatelocName)"/>
-                  <!--i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i-->
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+                  <div class="slds-form-element__control">
+                    <!--div class="slds-combobox"-->
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" g-places-autocomplete ng-model="updatelocName"
+                      ng-change="updateLocation(updatelocName)" />
+                    <!--i class="fa fa-check slds-p-top_x-small" ng-if="updateAddlocName.loc_name" style="position: absolute;right: 1.5rem;cursor: pointer;" ng-click="pushLocName(true)"></i-->
                   </div>
                   <!--span class="slds-pill slds-pill_link" ng-repeat="loc in empToUpdate.location">
                     <span class="slds-pill__action">
@@ -368,404 +394,416 @@
                     </button>
                   </span>
                 </div-->
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.mobile" />
-              </div>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-                <label class="slds-form-element__label" for="text-input-id-1">Address</label>
-                <div class="slds-form-element__control">
-                  <textarea id="text-input-id-1" class="slds-textarea" ng-disabled="isView" ng-model="empToUpdate.address">
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
+                  <div class="slds-form-element__control">
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" ng-blur="validateEmail($event)"/>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
+                  <div class="slds-form-element__control">
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.mobile" />
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Address</label>
+                  <div class="slds-form-element__control">
+                    <textarea id="text-input-id-1" class="slds-textarea" ng-disabled="isView" ng-model="empToUpdate.address">
                   </textarea>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
+                  <div class="slds-form-element__control">
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.alt_mobile" />
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Category</label>
+                  <div class="slds-form-element__control">
+                    <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.category" class="form-control"
+                      ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(true)"></select>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
+                  <div class="slds-form-element__control">
+                    <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.sub_category" class="form-control"
+                      ng-options="item._id as item.sub_cat_name for item in upSubCat"></select>
+                  </div>
+                </div>
+                <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+                  <div class="slds-form-element__control">
+                    <span class="slds-checkbox">
+                      <input type="checkbox" name="options" id="checkbox-2" ng-disabled="isView" ng-model="empToUpdate.availability_status" />
+                      <label class="slds-checkbox__label" for="checkbox-2">
+                        <span class="slds-checkbox_faux"></span>
+                        <span class="slds-form-element__label">Availability Status</span>
+                      </label>
+                    </span>
+                  </div>
                 </div>
               </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
-              <div class="slds-form-element__control">
-                <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.alt_mobile" />
-              </div>
             </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Category</label>
-              <div class="slds-form-element__control">
-                <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.category" class="form-control" ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(true)"></select>
-              </div>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
-              <div class="slds-form-element__control">
-                <select style="border-radius:.25rem!important;" ng-disabled="isView" ng-model="empToUpdate.sub_category" class="form-control" ng-options="item._id as item.sub_cat_name for item in upSubCat"></select>
-              </div>
-            </div>
-            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
-              <div class="slds-form-element__control">
-                <span class="slds-checkbox">
-                  <input type="checkbox" name="options" id="checkbox-2" ng-disabled="isView" ng-model="empToUpdate.availability_status" />
-                  <label class="slds-checkbox__label" for="checkbox-2">
-                    <span class="slds-checkbox_faux"></span>
-                    <span class="slds-form-element__label">Availability Status</span>
-                  </label>
-                </span>
-              </div>
-            </div>
-          </div>
-          </div>
-          <footer class="slds-modal__footer" ng-if="!isView">
-            <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
-            <button class="slds-button slds-button_brand"  ng-disabled="!empToUpdate.name || !empToUpdate.email ||
+            <footer class="slds-modal__footer" ng-if="!isView">
+              <button class="slds-button slds-button_neutral " ng-click="closeModal()">Cancel</button>
+              <button class="slds-button slds-button_brand" ng-disabled="!empToUpdate.name || !empToUpdate.email ||
             !empToUpdate.mobile || !empToUpdate.address || !updatelocName || !empToUpdate.category || !empToUpdate.sub_category"
-             ng-click="updateEmp()">Update</button>
-          </footer>
-        </div>
-      </section>
-      <div class="slds-backdrop slds-backdrop_open"></div>
+                ng-click="updateEmp()">Update</button>
+            </footer>
+          </div>
+        </section>
+        <div class="slds-backdrop slds-backdrop_open"></div>
+      </div>
+      <!-- /.content -->
     </div>
-    <!-- /.content -->
+    <!-- /.content-wrapper -->
+
+    <div class="control-sidebar-bg"></div>
   </div>
-  <!-- /.content-wrapper -->
- 
-  <div class="control-sidebar-bg"></div>
-</div>
-<div  ng-if="showSpinner" style="height: 6rem;">
-  <div>
-    <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
-      <span class="slds-assistive-text">Loading</span>
-      <div class="slds-spinner__dot-a"></div>
-      <div class="slds-spinner__dot-b"></div>
+  <div ng-if="showSpinner" style="height: 6rem;">
+    <div>
+      <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
+        <span class="slds-assistive-text">Loading</span>
+        <div class="slds-spinner__dot-a"></div>
+        <div class="slds-spinner__dot-b"></div>
+      </div>
+      <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
     </div>
-    <div class="slds-backdrop slds-backdrop_open" style="opacity:.4;"></div>
   </div>
-</div>
-<!-- ./wrapper -->
-<!-- Angular Material requires Angular.js Libraries -->
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
-<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
+  <!-- ./wrapper -->
+  <!-- Angular Material requires Angular.js Libraries -->
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-animate.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-aria.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.5/angular-messages.min.js"></script>
 
-<!-- jQuery 3 -->
-<script src="../bower_components/jquery/dist/jquery.min.js"></script>
-<!-- Bootstrap 3.3.7 -->
-<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-<!-- DataTables -->
-<script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
-<!--script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script-->
-<!-- SlimScroll -->
-<script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
-<!-- FastClick -->
-<script src="../bower_components/fastclick/lib/fastclick.js"></script>
-<!-- AdminLTE App -->
-<script src="../dist/js/adminlte.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../dist/js/demo.js"></script>
-<!-- page script -->
-<script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAONFiPe-AiSCZNx7vKpYQWtC4fAqo3pvg"></script>
+  <!-- jQuery 3 -->
+  <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+  <!-- Bootstrap 3.3.7 -->
+  <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+  <!-- DataTables -->
+  <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
+  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
+  <!--script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script-->
+  <!-- SlimScroll -->
+  <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+  <!-- FastClick -->
+  <script src="../bower_components/fastclick/lib/fastclick.js"></script>
+  <!-- AdminLTE App -->
+  <script src="../dist/js/adminlte.min.js"></script>
+  <!-- AdminLTE for demo purposes -->
+  <script src="../dist/js/demo.js"></script>
+  <!-- page script -->
+  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAONFiPe-AiSCZNx7vKpYQWtC4fAqo3pvg"></script>
 
-<script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
-<script>
-  
-  var app = angular.module('empApp', ['google.places']);
-    app.controller('empCtrl',function($scope, $http, $window, $location){
-        $scope.newEmp = {location:[]};
-        $scope.showEdit = false;
-        $scope.showSpinner = false;
-        $scope.showUpdatePicSelector = false;
-        $scope.isView = false;
-        $scope.addlocName;
-        $scope.updatelocName = {};
-        $scope.updateEmpProPic = {};
-        $scope.updateAddlocName = {};
-        $scope.updateLocation = function(loc){
-          if(typeof loc == 'object')
+  <script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
+  <script>
+
+    var app = angular.module('empApp', ['google.places']);
+    app.controller('empCtrl', function ($scope, $http, $window, $location) {
+      $scope.newEmp = { location: [] };
+      $scope.showEdit = false;
+      $scope.showSpinner = false;
+      $scope.showUpdatePicSelector = false;
+      $scope.isView = false;
+      $scope.addlocName;
+      $scope.updatelocName = {};
+      $scope.updateEmpProPic = {};
+      $scope.updateAddlocName = {};
+      $scope.updateLocation = function (loc) {
+        if (typeof loc == 'object')
           $scope.updatelocName = loc;
-        }
-        $scope.addEmp = function(){
+      }
+      $scope.addEmp = function () {
 
-          $scope.showSpinner = true;
+        $scope.showSpinner = true;
 
+        var fd = new FormData();
+        fd.append('upload_preset', 'mytrda6j');
+        fd.append('file', $scope.empProPic);
+
+        $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload', fd, {
+          headers: {
+            'Content-Type': undefined,
+            'X-Requested-With': 'XMLHttpRequest'
+          }
+        }).success(function (result) {
+          $scope.newEmp.profile_pic = result.secure_url;
+          $scope.newEmp.location = $scope.addlocName.formatted_address;
+          console.log($scope.newEmp);
+
+          $http({
+            method: 'POST',
+            url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
+            data: $scope.newEmp,
+            headers: { 'Content-Type': 'application/json' }
+          }).success(function (data) {
+            console.log('data', data);
+            $scope.showSpinner = false;
+            $scope.addlocName = {};
+            $scope.newEmp = {};
+            getEmployees();
+          })
+        });
+      }
+      $scope.validateEmail = function($event){
+        var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!regex.test($event.target.value)) 
+          $(event.target).addClass('slds-has-error');
+        else
+          $(event.target).removeClass('slds-has-error');
+      }
+      $scope.deleteEmp = function (id) {
+        console.log(id);
+        $scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/deleteEmployee',
+          data: { 'employee_id': id },
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data);
+          $scope.showSpinner = false;
+          getEmployees();
+        })
+      };
+      $scope.showUpdate = function (emp) {
+        console.log(emp);
+        $scope.showEdit = true;
+        $scope.isView = false;
+        $scope.empToUpdate = emp;
+        $scope.updateSubCatList(true);
+        console.log(emp.location);
+        if (emp.location && emp.location != null)
+          $scope.updatelocName = emp.location.length > 0 ? emp.location : {};
+      };
+      $scope.showView = function (emp) {
+        console.log(emp);
+        $scope.showEdit = true;
+        $scope.empToUpdate = emp;
+        $scope.isView = true;
+        console.log(emp.location.length);
+        $scope.updatelocName = emp.location && emp.location.length > 0 ? emp.location : {};
+      };
+      $scope.delEmpPic = function () {
+        $scope.empToUpdate.profile_pic = '';
+        //$scope.$digest();
+      };
+      $scope.updateEmpPic = function () {
+        $scope.showUpdatePicSelector = true;
+      };
+      $scope.updateEmp = function () {
+        $scope.showSpinner = true;
+        $scope.showEdit = false;
+        console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
+        if ($scope.updateEmpProPic.files) {
           var fd = new FormData();
           fd.append('upload_preset', 'mytrda6j');
-          fd.append('file',  $scope.empProPic);
-
-          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
+          fd.append('file', $scope.updateEmpProPic.files);
+          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload', fd, {
             headers: {
-                'Content-Type': undefined,
-                'X-Requested-With': 'XMLHttpRequest'
+              'Content-Type': undefined,
+              'X-Requested-With': 'XMLHttpRequest'
             }
-          }).success(function(result) {
-            $scope.newEmp.profile_pic = result.secure_url;
-            $scope.newEmp.location = $scope.addlocName.formatted_address;
-            console.log($scope.newEmp);
-          
-            $http({
-                    method: 'POST',
-                    url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
-                    data : $scope.newEmp,
-                    headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                    console.log( 'data', data );
-                    $scope.showSpinner = false;
-                    $scope.addlocName = {};
-                    $scope.newEmp = {};
-                    getEmployees();
-            })
-          });
-        }
-        $scope.deleteEmp = function(id){
-          console.log(id);
-          $scope.showSpinner = true;
-          $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/deleteEmployee',
-              data : {'employee_id':id},
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data);
-              $scope.showSpinner = false;
-              getEmployees();
-          })
-        };
-        $scope.showUpdate = function(emp){
-          console.log(emp);
-          $scope.showEdit = true;
-          $scope.isView = false;
-          $scope.empToUpdate = emp;
-          $scope.updateSubCatList(true);
-          console.log(emp.location);
-          if(emp.location && emp.location != null)
-            $scope.updatelocName = emp.location.length > 0 ? emp.location:{};
-        };
-        $scope.showView = function(emp){
-          console.log(emp);
-          $scope.showEdit = true;
-          $scope.empToUpdate = emp;
-          $scope.isView = true;
-          console.log(emp.location.length);
-          $scope.updatelocName = emp.location && emp.location.length > 0 ? emp.location:{};
-        };
-        $scope.delEmpPic = function(){
-          $scope.empToUpdate.profile_pic = '';
-          //$scope.$digest();
-        };
-        $scope.updateEmpPic = function(){
-          $scope.showUpdatePicSelector = true;
-        };
-        $scope.updateEmp = function(){
-          $scope.showSpinner = true;
-          $scope.showEdit = false;
-          console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
-          if($scope.updateEmpProPic.files){
-            var fd = new FormData();
-            fd.append('upload_preset', 'mytrda6j');
-            fd.append('file',  $scope.updateEmpProPic.files);
-            $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload',fd,{
-              headers: {
-                  'Content-Type': undefined,
-                  'X-Requested-With': 'XMLHttpRequest'
-              }
-            }).success(function(result) {
-              $scope.empToUpdate.profile_pic = result.secure_url;
-              $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-              console.log(updatelocName);
-              $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
-              console.log($scope.empToUpdate);
-              $scope.showEdit = false;
-              $http({
-                  method: 'POST',
-                  url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-                  data :  $scope.empToUpdate,
-                  headers: {'Content-Type':'application/json'}
-              }).success(function(data) {
-                  console.log( 'data', data);
-                  $scope.showSpinner = false;
-                  getEmployees();
-                  
-                  $scope.empToUpdate = null;
-                  $scope.updatelocName = {};
-                  $scope.updateEmpProPic = {};
-              })
-            });
-          }else{
+          }).success(function (result) {
+            $scope.empToUpdate.profile_pic = result.secure_url;
             $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-            console.log($scope.updatelocName);
+            console.log(updatelocName);
             $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
             console.log($scope.empToUpdate);
             $scope.showEdit = false;
             $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-                data :  $scope.empToUpdate,
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                $scope.showSpinner = false;
-                $scope.updatelocName = {};
-                getEmployees();
-                $scope.showEdit = false;
-                $scope.empToUpdate = null;
-            })
-          }
-        };
-        $scope.signOut = function(){
-          $window.localStorage.clear();
-          window.location.href = '../index.html';
-        };
-
-        $scope.closeModal = function(){
-          $scope.showEdit = false;
-          $scope.empToUpdate = null;
-          $scope.isView = false;
-        };
-        $scope.popLocName = function(isFromUpdate, loc){
-          if(isFromUpdate){
-            var index = $scope.findIndexInData($scope.empToUpdate.location,'loc_name',loc.loc_name);
-            $scope.empToUpdate.location.splice(index, 1);
-          }else{
-            var index = $scope.findIndexInData($scope.newEmp.location,'loc_name',loc.loc_name);
-            $scope.newEmp.location.splice(index, 1);
-          }
-        };
-        $scope.findIndexInData = function(data, property, value) {
-          for(var i = 0, l = data.length ; i < l ; i++) {
-            if(data[i][property] == value) {
-              return i;
-            }
-          }
-          return -1;
-        };
-        $scope.pushLocName = function(isFromUpdate){
-          if(isFromUpdate){
-            if(!($scope.empToUpdate.hasOwnProperty('location'))){
-              $scope.empToUpdate['location'] = [];
-            }
-            $scope.empToUpdate.location.push($scope.updateAddlocName);
-          }else{
-            $scope.newEmp.location.push($scope.addlocName);
-          }
-          console.log($scope.addlocName,$scope.empToUpdate);
-          $scope.addlocName = {};
-          $scope.updateAddlocName = {};
-        };
-        $scope.updateSubCatList=function(isForUpdate){
-            if(!isForUpdate){
-              $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
-            }else{
-              console.log($scope.empToUpdate.category,$scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
-              $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
-            }
-        }
-        $scope.allEmp = [];
-        var getEmployees = function(isInit){
-          $scope.showSpinner = true;
-          $http({
-              method: 'GET',
-              url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
-              headers: {'Content-Type':'application/json'}
-          }).success(function(data) {
-              console.log( 'data', data );
-              
-              $scope.allEmp = data.employeeList;
-              if(isInit){
-                $(function () {
-                  $('#example1').DataTable({
-                      "columnDefs": [{
-                          "orderable": false,
-                          "targets": [4,3,6]
-                      }]
-                  })
-                })
-              }
+              method: 'POST',
+              url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
+              data: $scope.empToUpdate,
+              headers: { 'Content-Type': 'application/json' }
+            }).success(function (data) {
+              console.log('data', data);
               $scope.showSpinner = false;
-          })
-        };
-        getEmployees(true);
-        $scope.allCat = [];
-        $scope.catIdMap = {};
-        $scope.subCatWithCatIdMap = {}; 
-        var getCategories = function(){
-          $scope.showSpinner = true;
-          if($window.localStorage['isLogin']){
-            $http({
-                method: 'GET',
-                url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data.categorylist );
-                $scope.allCat = data.categorylist;
-                for(var i = 0; i < $scope.allCat.length; i++){
-                  $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
-                  $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
-                }
-                console.log($scope.subCatWithCatIdMap,'<:::Map:::>',$scope.catIdMap);
-                $scope.showSpinner = false;
+              getEmployees();
+
+              $scope.empToUpdate = null;
+              $scope.updatelocName = {};
+              $scope.updateEmpProPic = {};
             })
-          }else{
-            window.location.href = '../index.html';
-          }
-        };
-        getCategories();
-    });
-    app.directive("ngFileSelect",function(){
-      
-        return {
-            link: function($scope,el){
-                
-                el.bind("change", function(e){
-                    var mySelectedFile = (e.srcElement || e.target).files[0];
-                    $scope.empProPic = mySelectedFile;
-                    $scope.empProPicName = mySelectedFile.name;
-                    $scope.$digest();
-                })
-            }
+          });
+        } else {
+          $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
+          console.log($scope.updatelocName);
+          $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
+          console.log($scope.empToUpdate);
+          $scope.showEdit = false;
+          $http({
+            method: 'POST',
+            url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
+            data: $scope.empToUpdate,
+            headers: { 'Content-Type': 'application/json' }
+          }).success(function (data) {
+            console.log('data', data);
+            $scope.showSpinner = false;
+            $scope.updatelocName = {};
+            getEmployees();
+            $scope.showEdit = false;
+            $scope.empToUpdate = null;
+          })
         }
+      };
+      $scope.signOut = function () {
+        $window.localStorage.clear();
+        window.location.href = '../index.html';
+      };
+
+      $scope.closeModal = function () {
+        $scope.showEdit = false;
+        $scope.empToUpdate = null;
+        $scope.isView = false;
+      };
+      $scope.popLocName = function (isFromUpdate, loc) {
+        if (isFromUpdate) {
+          var index = $scope.findIndexInData($scope.empToUpdate.location, 'loc_name', loc.loc_name);
+          $scope.empToUpdate.location.splice(index, 1);
+        } else {
+          var index = $scope.findIndexInData($scope.newEmp.location, 'loc_name', loc.loc_name);
+          $scope.newEmp.location.splice(index, 1);
+        }
+      };
+      $scope.findIndexInData = function (data, property, value) {
+        for (var i = 0, l = data.length; i < l; i++) {
+          if (data[i][property] == value) {
+            return i;
+          }
+        }
+        return -1;
+      };
+      $scope.pushLocName = function (isFromUpdate) {
+        if (isFromUpdate) {
+          if (!($scope.empToUpdate.hasOwnProperty('location'))) {
+            $scope.empToUpdate['location'] = [];
+          }
+          $scope.empToUpdate.location.push($scope.updateAddlocName);
+        } else {
+          $scope.newEmp.location.push($scope.addlocName);
+        }
+        console.log($scope.addlocName, $scope.empToUpdate);
+        $scope.addlocName = {};
+        $scope.updateAddlocName = {};
+      };
+      $scope.updateSubCatList = function (isForUpdate) {
+        if (!isForUpdate) {
+          $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
+          $scope.$apply();
+        } else {
+          console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
+          $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
+          $scope.$apply();
+        }
+      }
+      $scope.allEmp = [];
+      var getEmployees = function (isInit) {
+        $scope.showSpinner = true;
+        $http({
+          method: 'GET',
+          url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data);
+
+          $scope.allEmp = data.employeeList;
+          if (isInit) {
+            $(function () {
+              $('#example1').DataTable({
+                "columnDefs": [{
+                  "orderable": false,
+                  "targets": [4, 3, 6]
+                }]
+              })
+            })
+          }
+          $scope.showSpinner = false;
+        })
+      };
+      getEmployees(true);
+      $scope.allCat = [];
+      $scope.catIdMap = {};
+      $scope.subCatWithCatIdMap = {};
+      var getCategories = function () {
+        $scope.showSpinner = true;
+        if ($window.localStorage['isLogin']) {
+          $http({
+            method: 'GET',
+            url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
+            headers: { 'Content-Type': 'application/json' }
+          }).success(function (data) {
+            console.log('data', data.categorylist);
+            $scope.allCat = data.categorylist;
+            for (var i = 0; i < $scope.allCat.length; i++) {
+              $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
+              $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
+            }
+            console.log($scope.subCatWithCatIdMap, '<:::Map:::>', $scope.catIdMap);
+            $scope.showSpinner = false;
+          })
+        } else {
+          window.location.href = '../index.html';
+        }
+      };
+      getCategories();
+    });
+    app.directive("ngFileSelect", function () {
+
+      return {
+        link: function ($scope, el) {
+
+          el.bind("change", function (e) {
+            var mySelectedFile = (e.srcElement || e.target).files[0];
+            $scope.empProPic = mySelectedFile;
+            $scope.empProPicName = mySelectedFile.name;
+            $scope.$digest();
+          })
+        }
+      }
     });
     app.directive('fileBrowser', function () {
-      
+
       return {
-          template: '<input type="file" style="display: none;" />' +
-              '<ng-transclude></ng-transclude>',
-          transclude: true,
-          link: function ($scope, element) {
-              var fileInput = element.children('input[file]');
-              
-              fileInput.on('change', function (e) {
-                  var file = (e.srcElement || e.target).files[0];
-                  console.log(file, $scope.updateEmpProPic);
-                  $scope.updateEmpProPic.files = file;
-                  $scope.$digest();
-              });
-              
-              element.on('click', function () {
-                  fileInput[0].click();
-              });
-          }
+        template: '<input type="file" style="display: none;" />' +
+          '<ng-transclude></ng-transclude>',
+        transclude: true,
+        link: function ($scope, element) {
+          var fileInput = element.children('input[file]');
+
+          fileInput.on('change', function (e) {
+            var file = (e.srcElement || e.target).files[0];
+            console.log(file, $scope.updateEmpProPic);
+            $scope.updateEmpProPic.files = file;
+            $scope.$digest();
+          });
+
+          element.on('click', function () {
+            fileInput[0].click();
+          });
+        }
       };
     });
     app.directive('ngConfirmClick', [
-        function(){
-            return {
-                link: function (scope, element, attr) {
-                    var msg = attr.ngConfirmClick || "Are you sure want to delete?";
-                    var clickAction = attr.confirmedClick;
-                    element.bind('click',function (event) {
-                        if ( window.confirm(msg) ) {
-                            scope.$eval(clickAction)
-                        }
-                    });
-                }
-            };
-    }])
-    
-</script>
+      function () {
+        return {
+          link: function (scope, element, attr) {
+            var msg = attr.ngConfirmClick || "Are you sure want to delete?";
+            var clickAction = attr.confirmedClick;
+            element.bind('click', function (event) {
+              if (window.confirm(msg)) {
+                scope.$eval(clickAction)
+              }
+            });
+          }
+        };
+      }])
+
+  </script>
 </body>
+
 </html>

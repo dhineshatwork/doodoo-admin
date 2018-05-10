@@ -208,19 +208,19 @@
                   <div class="slds-form-element slds-p-bottom_medium">
                     <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
                     <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.email" />
+                      <input type="text" id="empEmail" class="slds-input" ng-model="newEmp.email" ng-blur="validateEmail($event)"/>
                     </div>
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
                     <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
                     <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.mobile" />
+                      <input type="number" id="text-input-id-1" class="slds-input" ng-model="newEmp.mobile" />
                     </div>
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
                     <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
                     <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" class="slds-input" ng-model="newEmp.alt_mobile" />
+                      <input type="number" id="text-input-id-1" class="slds-input" ng-model="newEmp.alt_mobile" />
                     </div>
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
@@ -398,7 +398,7 @@
                 <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
                   <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
                   <div class="slds-form-element__control">
-                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" />
+                    <input type="text" id="text-input-id-1" ng-disabled="isView" class="slds-input" ng-model="empToUpdate.email" ng-blur="validateEmail($event)"/>
                   </div>
                 </div>
                 <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
@@ -549,6 +549,13 @@
           })
         });
       }
+      $scope.validateEmail = function($event){
+        var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        if(!regex.test($event.target.value)) 
+          $(event.target).addClass('slds-has-error');
+        else
+          $(event.target).removeClass('slds-has-error');
+      }
       $scope.deleteEmp = function (id) {
         console.log(id);
         $scope.showSpinner = true;
@@ -687,9 +694,11 @@
       $scope.updateSubCatList = function (isForUpdate) {
         if (!isForUpdate) {
           $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
+          $scope.$apply();
         } else {
           console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
           $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
+          $scope.$apply();
         }
       }
       $scope.allEmp = [];

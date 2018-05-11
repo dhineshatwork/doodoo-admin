@@ -694,11 +694,11 @@
       $scope.updateSubCatList = function (isForUpdate) {
         if (!isForUpdate) {
           $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
-          $scope.$apply();
+         // $scope.$apply();
         } else {
           console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
           $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
-          $scope.$apply();
+         // $scope.$apply();
         }
       }
       $scope.allEmp = [];

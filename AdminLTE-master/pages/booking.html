@@ -228,16 +228,16 @@
             <div class="nav-tabs-custom">
               <ul class="nav nav-tabs">
                 <li class="active">
-                  <a href="#pending" data-toggle="tab">Requested</a>
+                  <a href="#pending" ng-click="getPendingBookings()" data-toggle="tab">Requested</a>
                 </li>
                 <li>
-                  <a href="#inprogress" data-toggle="tab">On going</a>
+                  <a href="#inprogress" ng-click="getInprogressBookings()" data-toggle="tab">On going</a>
                 </li>
                 <li>
-                  <a href="#completed" ng-click="completedBookings()" data-toggle="tab">Completed</a>
+                  <a href="#completed" ng-click="getCompletedBookings()" data-toggle="tab">Completed</a>
                 </li>
                 <li>
-                  <a href="#cancelled" data-toggle="tab">Cancelled</a>
+                  <a href="#cancelled" ng-click="getCancelledBookings()" data-toggle="tab">Cancelled</a>
                 </li>
               </ul>
               <div class="tab-content">
@@ -469,12 +469,110 @@
       $scope.orderSelected = {};
       $scope.empSelected = {};
       $scope.showSpinner = false;
+      $scope.allBookingDetails = [];
+
       $scope.signOut = function () {
         $window.localStorage.clear();
         window.location.href = '../index.html';
       };
-      $scope.completedBookings = function () {
+      $scope.getCompletedBookings = function () {
         console.log('completed');
+        $scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/orderList',
+          data:{'status':'Completed'},
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.bookingDetails);
+          $scope.allBookingDetails = data.bookingDetails;
+          $scope.showSpinner = false;
+          //$(function () {
+            console.log($.fn.dataTable.isDataTable( '#completeTable' ));
+            if ( $.fn.dataTable.isDataTable( '#completeTable' ) ) {
+              table = $('#completeTable').DataTable().ajax.reload();
+            }
+            else {
+              table = $('#completeTable').DataTable({
+                "columnDefs": [{
+                  "orderable": false,
+                  "targets": [0]
+                }]
+              })
+          }
+          });
+       // });
+        
+      };
+      $scope.getPendingBookings = function () {
+        console.log('pending');
+        $scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/orderList',
+          data:{'status':'Pending'},
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.bookingDetails);
+          $scope.allBookingDetails = data.bookingDetails;
+          $scope.showSpinner = false;
+          if ( $.fn.dataTable.isDataTable( '#completeTable' ) ) {
+              table = $('#completeTable').DataTable();
+            }
+            else {
+              table = $('#pendingTable').DataTable({
+                "columnDefs": [{
+                  "orderable": false,
+                  "targets": [0, 7]
+                }]
+              })
+        }
+        });
+        
+      };
+      $scope.getCancelledBookings = function () {
+        console.log('canceled');
+        $scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/orderList',
+          data:{'status':'Cancelled'},
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.bookingDetails);
+          $scope.allBookingDetails = data.bookingDetails;
+          $scope.showSpinner = false;
+          $(function () {
+          $('#cancelTable').DataTable({
+              "columnDefs": [{
+                "orderable": false,
+                "targets": [0]
+              }]
+            })
+          })
+        });
+      };
+      $scope.getInprogressBookings = function () {
+        console.log('inprogress');
+        $scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/orderList',
+          data:{'status':'Accepted'},
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.bookingDetails);
+          $scope.allBookingDetails = data.bookingDetails;
+          $scope.showSpinner = false;
+          $(function () {
+          $('#inprogressTable').DataTable({
+                "columnDefs": [{
+                  "orderable": false,
+                  "targets": [0, 8]
+                }]
+              })
+        })
+        });
       };
       $scope.toggleActionBtn = function ($event) {
         if ($event.currentTarget.getAttribute("class").includes('slds-is-close')) {
@@ -489,10 +587,11 @@
         if (isFromCard) {
           console.log(order);
           $scope.orderSelected = order;
+          console.log({ 'location': $scope.orderSelected.location, "category_id": $scope.orderSelected.category,"sub_category": $scope.orderSelected.sub_category});
           $http({
             method: 'POST',
             url: 'https://freelaunce2.herokuapp.com/admin/searchEmployee',
-            data: { 'location': $scope.orderSelected._id, "category_id": $scope.empSelected.id },
+            data: { 'location': $scope.orderSelected.location, "category_id": $scope.orderSelected.category,"sub_category": $scope.orderSelected.sub_category},
             headers: { 'Content-Type': 'application/json' }
           }).success(function (data) {
             console.log(data.employeeList);
@@ -556,62 +655,8 @@
           window.location.href = '../index.html';
         }
       };
-      //getEmployees();
-
-      $scope.allBookingDetails = [];
-      var getAllBookingDetails = function (isFromInit) {
-        $scope.showSpinner = true;
-        $http({
-          method: 'GET',
-          url: 'https://freelaunce2.herokuapp.com/admin/orderList',
-          headers: { 'Content-Type': 'application/json' }
-        }).success(function (data) {
-          console.log('data', data.bookingDetails);
-          $scope.allBookingDetails = data.bookingDetails;
-          $scope.showSpinner = false;
-          if (isFromInit) {
-            $(function () {
-              $('#cancelTable').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [0]
-                }]
-              })
-              $('#completeTable').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [0]
-                }]
-              })
-              $('#inprogressTable').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [0, 8]
-                }]
-              })
-              $('#pendingTable').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [0, 7]
-                }]
-              })
-            })
-          } else {
-            console.log('--reload table---');
-            /*$('#pendingTable').DataTable().fnDestroy();
-            $(function () {
-              $('#pendingTable').DataTable().destroy();
-              $('#pendingTable').DataTable({
-                "columnDefs": [{
-                    "orderable": false,
-                    "targets": [0,7]
-                }],
-              })
-            })*/
-          }
-        })
-      };
-      getAllBookingDetails(true);
+       
+      $scope.getPendingBookings();
     });
     app.directive('ngConfirmClick', [
       function () {

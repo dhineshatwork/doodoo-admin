@@ -232,21 +232,21 @@
                         <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
                           <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
                           {{totalAmount}}
-                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Total Revenue</p>
+                          <div style="position:  absolute!important;padding-bottom: 6rem!important;font-family: 'Pangolin', cursive!important;">Total Revenue</div>
                         </div>
                       </div>
                       <div style="height:0;width:10rem;padding-bottom:8rem;background-color:#706e6b;margin-left: 10rem">
                         <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
                           <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
                           {{monthlyAmount}}
-                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Monthly Revenue</p>
+                          <p style="position:  absolute!important;padding-bottom: 6rem!important;font-family: 'Pangolin', cursive!important;">Monthly Revenue</p>
                         </div>
                       </div>
                       <div style="height:0;width:10rem;padding-bottom:8rem;background-color:#706e6b;margin-left: 10rem">
                         <div class="slds-align_absolute-center" style="color: white;padding-top: 3.5rem;">
                           <i class="fa fa-rupee" style="padding-right: 0.3rem;"></i>
                           {{todayAmount}}
-                          <p style="position:  absolute;padding-bottom: 6rem;font-family: 'Pangolin', cursive;">Today Revenue</p>
+                          <p style="position:  absolute!important;padding-bottom: 6rem!important;font-family: 'Pangolin', cursive!important;">Today Revenue</p>
                         </div>
                       </div>
                     </div>
@@ -276,8 +276,8 @@
                                 <tr  ng-repeat="completedOrder in allBookingDetails | filter:{ booked: true, status : 'Completed'}">
                                   <td>{{completedOrder.booking_id}}</td>
                                   <td>{{completedOrder.user_name}}</td>
-                                  <td>{{completedOrder.category}}</td>
-                                  <td>{{completedOrder.sub_category}}</td>
+                                  <td>{{completedOrder.category_name}}</td>
+                                  <td>{{completedOrder.sub_category_name}}</td>
                                   <td>{{completedOrder.booked_on  | date:'dd/MM/yyyy hh:mm a'}}</td>
                                   <td>{{completedOrder.location}}</td>
                                   <td>{{completedOrder.emp_name}}</td>
@@ -358,36 +358,7 @@
             $(event.currentTarget).addClass('slds-is-close');
           }
         }
-        $scope.acceptOrder = function(isFromCard, order){
-          if(isFromCard){
-            console.log(order);
-            $scope.orderSelected = order;
-            $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/searchEmployee',
-                data : {'location':$scope.orderSelected._id,"category_id": $scope.empSelected.id},
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                $scope.showModal();
-            })
-            
-          }else{
-            console.log($scope.orderSelected._id, $scope.empSelected.id);
-            $scope.isModalOpen = false;
-            $scope.showSpinner = true;
-            
-            $http({
-                method: 'POST',
-                url: 'https://freelaunce2.herokuapp.com/admin/acceptOrder',
-                data : {'order_id':$scope.orderSelected._id,"employee_id": $scope.empSelected.id},
-                headers: {'Content-Type':'application/json'}
-            }).success(function(data) {
-                console.log( 'data', data);
-                getAllBookingDetails(false);
-                $scope.showSpinner = false;
-            })
-          }
-        };
+        
         $scope.cancelOrder = function(orderId){
           console.log(orderId);
           $scope.showSpinner = true;
@@ -434,7 +405,7 @@
             $scope.showSpinner = true;
             $http({
                 method: 'GET',
-                url: 'https://freelaunce2.herokuapp.com/admin/orderList',
+                url: 'https://freelaunce2.herokuapp.com/admin/getCurrentMonthOrders',
                 headers: {'Content-Type':'application/json'}
             }).success(function(data) {
                 console.log( 'data', data.bookingDetails );

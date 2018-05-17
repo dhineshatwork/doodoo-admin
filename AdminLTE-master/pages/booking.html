@@ -262,8 +262,8 @@
                         <tr ng-repeat="pendingOrder in allBookingDetails | filter:{ booked: true, status : 'Pending'}">
                           <td>{{pendingOrder.booking_id}}</td>
                           <td>{{pendingOrder.user_name}}</td>
-                          <td>{{pendingOrder.category}}</td>
-                          <td>{{pendingOrder.sub_category}}</td>
+                          <td>{{pendingOrder.category_name}}</td>
+                          <td>{{pendingOrder.sub_category_name}}</td>
                           <td>{{pendingOrder.booked_on | date:'dd/MM/yyyy hh:mm a'}}</td>
                           <td>{{pendingOrder.location}}</td-->
                             <td>{{pendingOrder.price}}</td>
@@ -300,8 +300,8 @@
                         <tr ng-repeat="inprogressOrder in allBookingDetails | filter:{ booked: true, status : 'Accepted'}">
                           <td>{{inprogressOrder.booking_id}}</td>
                           <td>{{inprogressOrder.user_name}}</td>
-                          <td>{{inprogressOrder.category}}</td>
-                          <td>{{inprogressOrder.sub_category}}</td>
+                          <td>{{inprogressOrder.category_name}}</td>
+                          <td>{{inprogressOrder.sub_category_name}}</td>
                           <td>{{inprogressOrder.booked_on | date:'dd/MM/yyyy hh:mm a'}}</td>
                           <td>{{inprogressOrder.location}}</td>
                           <td>{{inprogressOrder.price}}</td>
@@ -335,8 +335,8 @@
                         <tr ng-repeat="completedOrder in allBookingDetails | filter:{ booked: true, status : 'Completed'}">
                           <td>{{completedOrder.booking_id}}</td>
                           <td>{{completedOrder.user_name}}</td>
-                          <td>{{completedOrder.category}}</td>
-                          <td>{{completedOrder.sub_category}}</td>
+                          <td>{{completedOrder.category_name}}</td>
+                          <td>{{completedOrder.sub_category_name}}</td>
                           <td>{{completedOrder.booked_on | date:'dd/MM/yyyy hh:mm a'}}</td>
                           <td>{{completedOrder.location}}</td>
                           <td>{{completedOrder.emp_name}}</td>
@@ -367,8 +367,8 @@
                         <tr ng-repeat="canceledOrder in allBookingDetails | filter:{ booked: true, status : 'Cancelled'}">
                           <td>{{canceledOrder.booking_id}}</td>
                           <td>{{canceledOrder.user_name}}</td>
-                          <td>{{canceledOrder.category}}</td>
-                          <td>{{canceledOrder.sub_category}}</td>
+                          <td>{{canceledOrder.category_name}}</td>
+                          <td>{{canceledOrder.sub_category_name}}</td>
                           <td>{{canceledOrder.booked_on | date:'dd/MM/yyyy hh:mm a'}}</td>
                           <td>{{canceledOrder.location}}</td>
                           <td>{{canceledOrder.price}}</td>

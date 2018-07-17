@@ -248,6 +248,18 @@
                     </div>
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Password</label>
+                    <div class="slds-form-element__control">
+                      <input type="password" class="slds-input" ng-model="temppassword"/>
+                    </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
+                    <label class="slds-form-element__label" for="text-input-id-1">Confirm Password</label>
+                    <div class="slds-form-element__control">
+                      <input type="password" class="slds-input" ng-model="newEmp.password" ng-disabled="!temppassword"/>
+                    </div>
+                  </div>
+                  <div class="slds-form-element slds-p-bottom_medium">
                     <label class="slds-form-element__label" for="text-input-id-1">Category</label>
                     <div class="slds-form-element__control">
                       <select style="border-radius:.25rem!important;" ng-model="newEmp.category" class="form-control" ng-options="item._id as item.name for item in allCat"
@@ -280,7 +292,7 @@
                     </div>
                   </div>
                   <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!newEmp.name || !newEmp.email ||
-                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName"
+                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName || !temppassword || !newEmp.password || newEmp.password != temppassword"
                     ng-click="addEmp()">Add</button>
                 </div>
               </div>

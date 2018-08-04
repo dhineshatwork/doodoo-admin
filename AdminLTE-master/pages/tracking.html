@@ -56,6 +56,7 @@
         background-color: rgb(9, 216, 9);
         border-radius: 50%;
         display: inline-block;
+        margin-top: .6rem;
     }
 
     .reddot {
@@ -64,6 +65,7 @@
         background-color: red;
         border-radius: 50%;
         display: inline-block;
+        margin-top: .6rem;
     }
   </style>
   <!-- Google Font -->
@@ -206,23 +208,33 @@
       <section class="content">
         <div class="row">
             <div class="col-md-9">
-                <div class="box">
+                <div class="box" ng-if="adminLoc && !selectedEmpLoc">
                     <div class="box-header">
                         <h3 class="box-title">{{adminLoc.name}}</h3>
                     </div>
-                    <div class="box-body" ng-if="adminLoc">
-                        <map center="{{adminLoc.location}}" zoom="15" map-type-id="MapTypeId.SATELLITE">
+                    <div class="box-body">
+                        <map center="{{adminLoc.location}}" zoom="17" map-type-id="MapTypeId.SATELLITE">
                             <marker position="{{adminLoc.location}}" />
                         </map>
                     </div>
                 </div>
+                <div class="box" ng-if="selectedEmpLoc">
+                  <div class="box-header">
+                      <h3 class="box-title">{{selectedEmpLoc.employee_id}} -- {{selectedEmpLoc.name}}</h3>
+                  </div>
+                  <div class="box-body">
+                      <map center="{{selectedEmpLoc.location}}" zoom="15" map-type-id="MapTypeId.SATELLITE">
+                          <marker position="{{selectedEmpLoc.location}}" />
+                      </map>
+                  </div>
+              </div>
             </div>
             <div class="col-md-3">
                 <div class="box">
                     <div class="box-body">
                         <input type="text" ng-model="searchEmp" class="slds-input" placeholder="Search Employee..."/>
                         <div class="slds-box slds-m-top_small">
-                            <div ng-repeat="emp in allEmp | filter:{ name: searchEmp}">
+                            <div ng-repeat="emp in allEmp | filter:{ name: searchEmp}" ng-click="getEmpCurrentLoc(emp.employee_id)">
                                 <span class="slds-avatar slds-avatar_circle slds-avatar_medium">
                                     <img alt="Person name" ng-src="{{emp.profile_pic}}" ng-if="emp.profile_pic"/>
                                     <img alt="Person name" src="../SLDS/images/avatar2.jpg" ng-if="! emp.profile_pic"/>
@@ -284,7 +296,7 @@
   <script>
 
     var app = angular.module('empApp', ['google.places','ngMap']);
-    app.controller('empCtrl', function ($scope, $http, $window, $location) {
+    app.controller('empCtrl', function ($scope, $http, $window, $location, $interval) {
       
       $scope.showSpinner = false;
       $scope.allEmp = [];
@@ -298,59 +310,53 @@
       getLocation();
       function showPosition(position) {
         $scope.adminLoc ={ name: 'My Current Location', location: [position.coords.latitude,position.coords.longitude]};
-        console.log($scope.adminLoc);
         $scope.$apply();
       }
-      var getEmployees = function (isInit) {
-        $scope.showSpinner = true;
+      
+      $scope.getEmpCurrentLoc = function(empId){
+        $scope.selectedEmpLoc = $scope.allEmpLocMap[empId];
+      };
+
+      $scope.allEmpLocMap = {};
+      $interval(function () {
         $http({
           method: 'GET',
-          url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
+          url: 'https://freelaunce2.herokuapp.com/admin/getLocation',
           headers: { 'Content-Type': 'application/json' }
         }).success(function (data) {
-          console.log('data', data);
-
-          $scope.allEmp = data.employeeList;
-          if (isInit) {
-            $(function () {
-              $('#example1').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [4, 3, 6]
-                }]
-              })
-            })
+          
+          $scope.allEmpLoc = data.coordinates;
+          for (var i = 0; i < $scope.allEmpLoc.length; i++) {
+            $scope.allEmpLocMap[$scope.allEmpLoc[i].employee_id] = {
+              name: $scope.empNameMap[$scope.allEmpLoc[i].employee_id],
+              location: [$scope.allEmpLoc[i].lat,$scope.allEmpLoc[i].long],
+              employee_id: $scope.allEmpLoc[i].employee_id
+            };
           }
-          $scope.showSpinner = false;
         })
-      };
-      getEmployees(true);
-      
-      $scope.allCat = [];
-      $scope.catIdMap = {};
-      $scope.subCatWithCatIdMap = {};
-      var getCategories = function () {
+      }, 15000);
+      $scope.empNameMap = {};
+      var getEmployees = function () {
         $scope.showSpinner = true;
         if ($window.localStorage['isLogin']) {
           $http({
             method: 'GET',
-            url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
+            url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
             headers: { 'Content-Type': 'application/json' }
           }).success(function (data) {
-            console.log('data', data.categorylist);
-            $scope.allCat = data.categorylist;
-            for (var i = 0; i < $scope.allCat.length; i++) {
-              $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
-              $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
+            console.log('data', data);
+            $scope.allEmp = data.employeeList;
+            for (var i = 0; i < $scope.allEmp.length; i++) {
+              $scope.empNameMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i].name;
             }
-            console.log($scope.subCatWithCatIdMap, '<:::Map:::>', $scope.catIdMap);
+            console.log('empNameMap::>',$scope.empNameMap);
             $scope.showSpinner = false;
           })
         } else {
           window.location.href = '../index.html';
         }
       };
-      getCategories();
+      getEmployees();
     });
   </script>
 </body>

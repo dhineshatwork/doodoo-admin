@@ -123,19 +123,19 @@
               </a>
             </li>
             <li class="active treeview menu-open">
-              <a href="#">
-                <i class="fa fa-fw fa-users"></i>
-                <span>Employees</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="employees.html"><i class="fa fa-circle-o"></i>Add/View</a></li>
-                <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
-                <li class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li>
-              </ul>
-            </li>
+                <a href="#">
+                  <i class="fa fa-fw fa-users"></i>
+                  <span>Employees</span>
+                  <span class="pull-right-container">
+                    <i class="fa fa-angle-left pull-right"></i>
+                  </span>
+                </a>
+                <ul class="treeview-menu">
+                  <li><a href="employees.html"><i class="fa fa-circle-o"></i>Add/View</a></li>
+                  <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
+                  <li  class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li>
+                </ul>
+              </li>
             <li>
               <a href="headerImage.html">
                 <i class="fa   fa-upload"></i>
@@ -160,7 +160,10 @@
                 <span>Analytics</span>
               </a>
             </li>
-            <li>
+            <!-- <li class="header">Employee</li>
+            <li><a href="employees.html"><i class="fa fa-circle-o"></i>Add/View</a></li>
+            <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
+            <li class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li> -->
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -184,10 +187,42 @@
         </ol>
       </section>
       <section class="content">
-        <div class="row">
-          
-        </div>
-      </section>
+          <!-- <div class="slds-grid slds-wrap">
+           <div class="slds-size_1-of-3" ng-repeat="reqPlace in allLeavereq">
+             <article class="slds-card">
+               <div class="slds-card__header slds-grid">
+                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                   <div class="slds-media__figure">
+                     <span class="slds-icon_container slds-icon-standard-account" title="account">
+                       <img style="width:6.5rem;height:5.5rem;border-radius: 0.25rem;" src="{{reqPlace.title_img}}"/>
+                     </span>
+                   </div>
+                   <div class="slds-media__body">
+                     <h2 class="slds-card__header-title slds-truncate">
+                       <div>
+                         <span class="slds-text-heading_small" style="font-size: 2rem;" title="{{reqPlace.name}}">{{reqPlace.name}}</span>
+                       </div>
+                       <div>
+                         <span class="">Open: <b>{{reqPlace.opening_time}} - {{reqPlace.closing_time}}</b></span>
+                       </div>
+                       <div>
+                         <span class="">{{reqPlace.street_no}},{{reqPlace.area}},</span>
+                       </div>
+                       <div>
+                         <span class="">{{reqPlace.city}} - {{reqPlace.pincode}}, {{reqPlace.state}}</span>
+                       </div>
+                     </h2>
+                   </div>
+                 </header>
+               </div>
+               <footer class="slds-card__footer">
+                 <button class="slds-button slds-button_neutral" ng-click="placeacceptance('Accepted',reqPlace._id)">Accept</button>
+                 <button class="slds-button slds-button_destructive" ng-click="placeacceptance('Rejected',reqPlace._id)">Reject</button>
+               </footer>
+             </article>
+           </div>
+         </div>
+       </section> -->
     </div>
     <div class="control-sidebar-bg"></div>
   </div>
@@ -232,304 +267,43 @@
 
     var app = angular.module('empApp', ['google.places']);
     app.controller('empCtrl', function ($scope, $http, $window, $location) {
-      $scope.newEmp = { location: [] };
-      $scope.showEdit = false;
-      $scope.showSpinner = false;
-      $scope.showUpdatePicSelector = false;
-      $scope.isView = false;
-      $scope.addlocName;
-      $scope.updatelocName = {};
-      $scope.updateEmpProPic = {};
-      $scope.updateAddlocName = {};
-      $scope.updateLocation = function (loc) {
-        if (typeof loc == 'object')
-          $scope.updatelocName = loc;
-      }
-      $scope.addEmp = function () {
-
-        $scope.showSpinner = true;
-
-        var fd = new FormData();
-        fd.append('upload_preset', 'mytrda6j');
-        fd.append('file', $scope.empProPic);
-
-        $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload', fd, {
-          headers: {
-            'Content-Type': undefined,
-            'X-Requested-With': 'XMLHttpRequest'
-          }
-        }).success(function (result) {
-          $scope.newEmp.profile_pic = result.secure_url;
-          $scope.newEmp.location = $scope.addlocName.formatted_address;
-          console.log($scope.newEmp);
-
-          $http({
-            method: 'POST',
-            url: 'https://freelaunce2.herokuapp.com/admin/addNewEmployee',
-            data: $scope.newEmp,
-            headers: { 'Content-Type': 'application/json' }
-          }).success(function (data) {
-            console.log('data', data);
-            $scope.showSpinner = false;
-            $scope.addlocName = {};
-            $scope.newEmp = {};
-            getEmployees();
-          })
-        });
-      }
-      $scope.validateEmail = function($event){
-        var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-        if(!regex.test($event.target.value)) 
-          $(event.target).addClass('slds-has-error');
-        else
-          $(event.target).removeClass('slds-has-error');
-      }
-      $scope.deleteEmp = function (id) {
-        console.log(id);
-        $scope.showSpinner = true;
-        $http({
-          method: 'POST',
-          url: 'https://freelaunce2.herokuapp.com/admin/deleteEmployee',
-          data: { 'employee_id': id },
-          headers: { 'Content-Type': 'application/json' }
-        }).success(function (data) {
-          console.log('data', data);
-          $scope.showSpinner = false;
-          getEmployees();
-        })
-      };
-      $scope.showUpdate = function (emp) {
-        console.log(emp);
-        $scope.showEdit = true;
-        $scope.isView = false;
-        $scope.empToUpdate = emp;
-        $scope.updateSubCatList(true);
-        console.log(emp.location);
-        if (emp.location && emp.location != null)
-          $scope.updatelocName = emp.location.length > 0 ? emp.location : {};
-      };
-      $scope.showView = function (emp) {
-        console.log(emp);
-        $scope.showEdit = true;
-        $scope.empToUpdate = emp;
-        $scope.isView = true;
-        console.log(emp.location.length);
-        $scope.updatelocName = emp.location && emp.location.length > 0 ? emp.location : {};
-      };
-      $scope.delEmpPic = function () {
-        $scope.empToUpdate.profile_pic = '';
-        //$scope.$digest();
-      };
-      $scope.updateEmpPic = function () {
-        $scope.showUpdatePicSelector = true;
-      };
-      $scope.updateEmp = function () {
-        $scope.showSpinner = true;
-        $scope.showEdit = false;
-        console.log($scope.updateEmpProPic.files, $scope.empToUpdate);
-        if ($scope.updateEmpProPic.files) {
-          var fd = new FormData();
-          fd.append('upload_preset', 'mytrda6j');
-          fd.append('file', $scope.updateEmpProPic.files);
-          $http.post('https://api.cloudinary.com/v1_1/jaggu07/image/upload', fd, {
-            headers: {
-              'Content-Type': undefined,
-              'X-Requested-With': 'XMLHttpRequest'
-            }
-          }).success(function (result) {
-            $scope.empToUpdate.profile_pic = result.secure_url;
-            $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-            console.log(updatelocName);
-            $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
-            console.log($scope.empToUpdate);
-            $scope.showEdit = false;
-            $http({
-              method: 'POST',
-              url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-              data: $scope.empToUpdate,
-              headers: { 'Content-Type': 'application/json' }
-            }).success(function (data) {
-              console.log('data', data);
-              $scope.showSpinner = false;
-              getEmployees();
-
-              $scope.empToUpdate = null;
-              $scope.updatelocName = {};
-              $scope.updateEmpProPic = {};
-            })
-          });
-        } else {
-          $scope.empToUpdate.employee_id = $scope.empToUpdate._id;
-          console.log($scope.updatelocName);
-          $scope.empToUpdate.location = $scope.updatelocName.formatted_address;
-          console.log($scope.empToUpdate);
-          $scope.showEdit = false;
-          $http({
-            method: 'POST',
-            url: 'https://freelaunce2.herokuapp.com/admin/updateEmployeeDetails',
-            data: $scope.empToUpdate,
-            headers: { 'Content-Type': 'application/json' }
-          }).success(function (data) {
-            console.log('data', data);
-            $scope.showSpinner = false;
-            $scope.updatelocName = {};
-            getEmployees();
-            $scope.showEdit = false;
-            $scope.empToUpdate = null;
-          })
-        }
-      };
-      $scope.signOut = function () {
-        $window.localStorage.clear();
-        window.location.href = '../index.html';
-      };
-
-      $scope.closeModal = function () {
-        $scope.showEdit = false;
-        $scope.empToUpdate = null;
-        $scope.isView = false;
-      };
-      $scope.popLocName = function (isFromUpdate, loc) {
-        if (isFromUpdate) {
-          var index = $scope.findIndexInData($scope.empToUpdate.location, 'loc_name', loc.loc_name);
-          $scope.empToUpdate.location.splice(index, 1);
-        } else {
-          var index = $scope.findIndexInData($scope.newEmp.location, 'loc_name', loc.loc_name);
-          $scope.newEmp.location.splice(index, 1);
-        }
-      };
-      $scope.findIndexInData = function (data, property, value) {
-        for (var i = 0, l = data.length; i < l; i++) {
-          if (data[i][property] == value) {
-            return i;
-          }
-        }
-        return -1;
-      };
-      $scope.pushLocName = function (isFromUpdate) {
-        if (isFromUpdate) {
-          if (!($scope.empToUpdate.hasOwnProperty('location'))) {
-            $scope.empToUpdate['location'] = [];
-          }
-          $scope.empToUpdate.location.push($scope.updateAddlocName);
-        } else {
-          $scope.newEmp.location.push($scope.addlocName);
-        }
-        console.log($scope.addlocName, $scope.empToUpdate);
-        $scope.addlocName = {};
-        $scope.updateAddlocName = {};
-      };
-      $scope.updateSubCatList = function (isForUpdate) {
-        if (!isForUpdate) {
-          $scope.subCat = $scope.subCatWithCatIdMap[$scope.newEmp.category];
-         // $scope.$apply();
-        } else {
-          console.log($scope.empToUpdate.category, $scope.subCatWithCatIdMap, $scope.subCatWithCatIdMap[$scope.empToUpdate.category]);
-          $scope.upSubCat = $scope.subCatWithCatIdMap[$scope.empToUpdate.category];
-         // $scope.$apply();
-        }
-      }
-      $scope.allEmp = [];
-      var getEmployees = function (isInit) {
-        $scope.showSpinner = true;
+      
+      var getLeaveReqList = function(){
         $http({
           method: 'GET',
-          url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
+          url: 'https://freelaunce2.herokuapp.com/admin/leaveFormList',
           headers: { 'Content-Type': 'application/json' }
         }).success(function (data) {
-          console.log('data', data);
-
-          $scope.allEmp = data.employeeList;
-          if (isInit) {
-            $(function () {
-              $('#example1').DataTable({
-                "columnDefs": [{
-                  "orderable": false,
-                  "targets": [4, 3, 6]
-                }]
-              })
-            })
-          }
-          $scope.showSpinner = false;
-        })
+          $scope.allLeavereq = data.leaveList;
+        });
       };
-      getEmployees(true);
-      $scope.allCat = [];
-      $scope.catIdMap = {};
-      $scope.subCatWithCatIdMap = {};
-      var getCategories = function () {
+
+      $scope.allEmp = [];
+      $scope.empMap = {};
+      var getEmployees = function () {
         $scope.showSpinner = true;
         if ($window.localStorage['isLogin']) {
           $http({
             method: 'GET',
-            url: 'https://freelaunce2.herokuapp.com/admin/categorylist',
+            url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
             headers: { 'Content-Type': 'application/json' }
           }).success(function (data) {
-            console.log('data', data.categorylist);
-            $scope.allCat = data.categorylist;
-            for (var i = 0; i < $scope.allCat.length; i++) {
-              $scope.catIdMap[($scope.allCat[i])._id] = $scope.allCat[i].name;
-              $scope.subCatWithCatIdMap[($scope.allCat[i])._id] = $scope.allCat[i].sub_category;
+            console.log('data', data);
+            $scope.allEmp = data.employeeList;
+            for (var i = 0; i < $scope.allEmp.length; i++) {
+              $scope.empMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i];
             }
-            console.log($scope.subCatWithCatIdMap, '<:::Map:::>', $scope.catIdMap);
+            console.log('empMap::>',$scope.empMap);
             $scope.showSpinner = false;
+            getEmpLocation();
           })
         } else {
           window.location.href = '../index.html';
         }
       };
-      getCategories();
+      getEmployees();
+      getLeaveReqList();
     });
-    app.directive("ngFileSelect", function () {
-
-      return {
-        link: function ($scope, el) {
-
-          el.bind("change", function (e) {
-            var mySelectedFile = (e.srcElement || e.target).files[0];
-            $scope.empProPic = mySelectedFile;
-            $scope.empProPicName = mySelectedFile.name;
-            $scope.$digest();
-          })
-        }
-      }
-    });
-    app.directive('fileBrowser', function () {
-
-      return {
-        template: '<input type="file" style="display: none;" />' +
-          '<ng-transclude></ng-transclude>',
-        transclude: true,
-        link: function ($scope, element) {
-          var fileInput = element.children('input[file]');
-
-          fileInput.on('change', function (e) {
-            var file = (e.srcElement || e.target).files[0];
-            console.log(file, $scope.updateEmpProPic);
-            $scope.updateEmpProPic.files = file;
-            $scope.$digest();
-          });
-
-          element.on('click', function () {
-            fileInput[0].click();
-          });
-        }
-      };
-    });
-    app.directive('ngConfirmClick', [
-      function () {
-        return {
-          link: function (scope, element, attr) {
-            var msg = attr.ngConfirmClick || "Are you sure want to delete?";
-            var clickAction = attr.confirmedClick;
-            element.bind('click', function (event) {
-              if (window.confirm(msg)) {
-                scope.$eval(clickAction)
-              }
-            });
-          }
-        };
-      }])
 
   </script>
 </body>

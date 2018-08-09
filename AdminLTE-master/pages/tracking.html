@@ -67,6 +67,7 @@
         display: inline-block;
         margin-top: .6rem;
     }
+
   </style>
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
@@ -208,23 +209,46 @@
       <section class="content">
         <div class="row">
             <div class="col-md-9">
-                <div class="box" ng-if="adminLoc && !selectedEmpLoc">
+                <div class="box" ng-if="showAll && allLoc">
                     <div class="box-header">
-                        <h3 class="box-title">{{adminLoc.name}}</h3>
+                        <h3 class="box-title">All Employees</h3>
                     </div>
                     <div class="box-body">
-                        <map center="{{adminLoc.location}}" zoom="17" map-type-id="MapTypeId.SATELLITE">
-                            <marker position="{{adminLoc.location}}" />
-                        </map>
+                      <ng-map center="current-position" zoom="15">
+                        <custom-marker ng-repeat="empLoc in allLoc" position="{{empLoc.location}}"  on-mouseover="mouseover(empLoc)" on-mouseout="mouseout(empLoc)"
+                        on-click="click(empLoc.emp)"  scrollwheel="false"
+                        zoom-to-include-markers="auto">
+                          <div>
+                            <img src="../dist/img/empmapicon.png"/>
+                            <section ng-show="empLoc.showPopover" class="slds-popover slds-nubbin_top-left">
+                              <div class="slds-popover__body">
+                                <p>{{empLoc.emp.employee_id}} -- {{empLoc.emp.name}}</p>
+                              </div>
+                            </section> 
+                          </div>
+                        </custom-marker>
+                      </ng-map>
                     </div>
                 </div>
-                <div class="box" ng-if="selectedEmpLoc">
+                <div class="box" ng-if="selectedEmpLoc && !showAll">
                   <div class="box-header">
-                      <h3 class="box-title">{{selectedEmpLoc.employee_id}} -- {{selectedEmpLoc.name}}</h3>
+                      <h3 class="box-title">{{selectedEmpLoc.emp.employee_id}} -- {{selectedEmpLoc.emp.name}}</h3>
                   </div>
                   <div class="box-body">
-                      <map center="{{selectedEmpLoc.location}}" zoom="15" map-type-id="MapTypeId.SATELLITE">
-                          <marker position="{{selectedEmpLoc.location}}" />
+                      <map center="selectedEmpLoc.location" zoom="15">
+                        <custom-marker position="{{selectedEmpLoc.location}}"
+                          on-mouseover="mouseover()" on-mouseout="mouseout()"
+                          on-click="click(selectedEmpLoc.emp)" scrollwheel="false"
+                          zoom-to-include-markers="auto">
+                          <div>
+                            <img src="../dist/img/empmapicon.png"/>
+                            <section ng-if="showPopover" class="slds-hide slds-popover slds-nubbin_top-left" role="dialog" aria-label="Dialog Title" aria-describedby="dialog-body-id-17">
+                              <div class="slds-popover__body" id="dialog-body-id-17">
+                                <p>{{selectedEmpLoc.emp.employee_id}} -- {{selectedEmpLoc.emp.name}}</p>
+                              </div>
+                            </section> 
+                          </div>
+                        </custom-marker>
                       </map>
                   </div>
               </div>
@@ -232,6 +256,17 @@
             <div class="col-md-3">
                 <div class="box">
                     <div class="box-body">
+                        <div class="slds-form-element slds-m-vertical_small slds-m-horizontal_x-large">
+                          <div class="slds-form-element__control">
+                            <span class="slds-checkbox">
+                              <input type="checkbox" name="options" id="checkbox-2" ng-model="showAll" />
+                              <label class="slds-checkbox__label" for="checkbox-2">
+                                <span class="slds-checkbox_faux"></span>
+                                <span class="slds-form-element__label">Show All</span>
+                              </label>
+                            </span>
+                          </div>
+                        </div>
                         <input type="text" ng-model="searchEmp" class="slds-input" placeholder="Search Employee..."/>
                         <div class="slds-box slds-m-top_small">
                             <div ng-repeat="emp in allEmp | filter:{ name: searchEmp}" ng-click="getEmpCurrentLoc(emp.employee_id)">
@@ -255,6 +290,105 @@
     </div>
     <div class="control-sidebar-bg"></div>
   </div>
+  <div style="height: 640px;" ng-if="showModel">
+    <section role="dialog" tabindex="-1" aria-labelledby="modal-heading-01" aria-modal="true" aria-describedby="modal-content-id-1"
+      class="slds-modal slds-fade-in-open">
+      <div class="slds-modal__container">
+        <header class="slds-modal__header">
+          <button class="slds-button slds-button_icon slds-modal__close slds-button_icon-inverse" title="Close" style="color: #fff!important;"
+            ng-click="closeModal()">
+            <span>
+              <i class="fa fa-close" style="font-size:1.85rem;"></i>
+            </span>
+            <span class="slds-assistive-text">Close</span>
+          </button>
+          <h2 id="modal-heading-01" class="slds-text-heading_medium slds-hyphenate">{{viewEmp.name}}</h2>
+        </header>
+        <div class="slds-modal__content slds-p-around_medium" id="modal-content-id-1">
+          <div class="slds-grid slds-wrap">
+            <div class="slds-size_1-of-1 slds-align_absolute-center slds-grid slds-wrap">
+              <span>
+                <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" alt="Person name" ng-src="{{viewEmp.profile_pic}}" ng-if="viewEmp.profile_pic"
+                />
+                <img style="width:9.5rem;height:7.5rem;border-radius: 0.25rem;" src="..\dist\img\userAvatar.png" ng-if="!viewEmp.profile_pic"
+                  title="Upload Employee Image" />
+              </span>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Name</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="true" class="slds-input" ng-model="viewEmp.name" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Available Locations</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="true" class="slds-input" g-places-autocomplete ng-model="updatelocName"
+                  ng-change="updateLocation(updatelocName)" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Email Id</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="true" class="slds-input" ng-model="viewEmp.email" ng-blur="validateEmail($event)"/>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Mobile No.</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="true" class="slds-input" ng-model="viewEmp.mobile" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Address</label>
+              <div class="slds-form-element__control">
+                <textarea id="text-input-id-1" class="slds-textarea" ng-disabled="true" ng-model="viewEmp.address">
+              </textarea>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Alternate Mobile No.</label>
+              <div class="slds-form-element__control">
+                <input type="text" id="text-input-id-1" ng-disabled="true" class="slds-input" ng-model="viewEmp.alt_mobile" />
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Category</label>
+              <div class="slds-form-element__control">
+                <select style="border-radius:.25rem!important;" ng-disabled="true" ng-model="viewEmp.category" class="form-control"
+                  ng-options="item._id as item.name for item in allCat" ng-change="updateSubCatList(true)"></select>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <label class="slds-form-element__label" for="text-input-id-1">Sub Category</label>
+              <div class="slds-form-element__control">
+                <select style="border-radius:.25rem!important;" ng-disabled="true" ng-model="viewEmp.sub_category" class="form-control"
+                  ng-options="item._id as item.sub_cat_name for item in upSubCat"></select>
+              </div>
+            </div>
+            <div class="slds-size_1-of-1 slds-medium-size_6-of-12 slds-large-size_6-of-12 slds-form-element slds-p-vertical_small slds-p-horizontal_medium">
+              <div class="slds-form-element__control">
+                <span class="slds-checkbox">
+                  <input type="checkbox" name="options" id="checkbox-2" ng-disabled="true" ng-model="viewEmp.availability_status" />
+                  <label class="slds-checkbox__label" for="checkbox-2">
+                    <span class="slds-checkbox_faux"></span>
+                    <span class="slds-form-element__label">Availability Status</span>
+                  </label>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <div class="slds-backdrop slds-backdrop_open"></div>
+  </div>
+  <!-- /.content -->
+</div>
+<!-- /.content-wrapper -->
+
+<div class="control-sidebar-bg"></div>
+</div>
   <div ng-if="showSpinner" style="height: 6rem;">
     <div>
       <div role="status" class="slds-spinner slds-spinner_brand slds-spinner_large">
@@ -290,35 +424,51 @@
   <!-- AdminLTE for demo purposes -->
   <script src="../dist/js/demo.js"></script>
   <!-- page script -->
-  <script src="https://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyAONFiPe-AiSCZNx7vKpYQWtC4fAqo3pvg"></script>
+  <script type="text/javascript" src="http://maps.google.com/maps/api/js?key=AIzaSyB5Y3zUo6VXFMa1DdR6knOp4nMVwgBpqBQ"></script>
 
   <script src="../bower_components/angular-google-places-autocomplete/src/autocomplete.js"></script>
   <script>
 
     var app = angular.module('empApp', ['google.places','ngMap']);
     app.controller('empCtrl', function ($scope, $http, $window, $location, $interval) {
+      $scope.showAll = true;
+      $scope.showModel = false;
+      $scope.showPopover = [];
+
+      $scope.mouseover = function(event, empLoc){
+        empLoc.showPopover = true;
+      };
+
+      $scope.closeModal = function () {
+        $scope.showModel = false;
+      };
+
+      $scope.mouseout = function(event, empLoc){
+        empLoc.showPopover = false;
+      };
       
+      $scope.click = function(event, emp){
+        $scope.showModel = true;
+        $scope.viewEmp = emp;
+      };
+
       $scope.showSpinner = false;
       $scope.allEmp = [];
-      var getLocation = function() {
-          if (navigator.geolocation) {
-              navigator.geolocation.getCurrentPosition(showPosition);
-          } else { 
-              alert("Geolocation is not supported by this browser.");
-          }
-      }
-      getLocation();
-      function showPosition(position) {
-        $scope.adminLoc ={ name: 'My Current Location', location: [position.coords.latitude,position.coords.longitude]};
-        $scope.$apply();
-      }
-      
+     
       $scope.getEmpCurrentLoc = function(empId){
+        $scope.selectedempId = empId;
+        $scope.showAll = false;
         $scope.selectedEmpLoc = $scope.allEmpLocMap[empId];
       };
 
       $scope.allEmpLocMap = {};
+      $scope.allLoc = [];
+
       $interval(function () {
+        getEmpLocation();
+      }, 10000);
+
+      var getEmpLocation = function(){
         $http({
           method: 'GET',
           url: 'https://freelaunce2.herokuapp.com/admin/getLocation',
@@ -327,15 +477,23 @@
           
           $scope.allEmpLoc = data.coordinates;
           for (var i = 0; i < $scope.allEmpLoc.length; i++) {
-            $scope.allEmpLocMap[$scope.allEmpLoc[i].employee_id] = {
-              name: $scope.empNameMap[$scope.allEmpLoc[i].employee_id],
+            let j = {
+              emp: $scope.empMap[$scope.allEmpLoc[i].employee_id],
               location: [$scope.allEmpLoc[i].lat,$scope.allEmpLoc[i].long],
-              employee_id: $scope.allEmpLoc[i].employee_id
+              showPopover:false
             };
+            $scope.allEmpLocMap[$scope.allEmpLoc[i].employee_id] = j;
+            $scope.allLoc[i] = j;
+          }
+          console.log('allLoc::>>>',$scope.allLoc);
+          if($scope.selectedempId){
+            $scope.showAll = false;
+            $scope.selectedEmpLoc = $scope.allEmpLocMap[$scope.selectedempId];
           }
         })
-      }, 15000);
-      $scope.empNameMap = {};
+      };
+
+      $scope.empMap = {};
       var getEmployees = function () {
         $scope.showSpinner = true;
         if ($window.localStorage['isLogin']) {
@@ -347,17 +505,18 @@
             console.log('data', data);
             $scope.allEmp = data.employeeList;
             for (var i = 0; i < $scope.allEmp.length; i++) {
-              $scope.empNameMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i].name;
+              $scope.empMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i];
             }
-            console.log('empNameMap::>',$scope.empNameMap);
+            console.log('empMap::>',$scope.empMap);
             $scope.showSpinner = false;
+            getEmpLocation();
           })
         } else {
           window.location.href = '../index.html';
         }
       };
       getEmployees();
-    });
+  });
   </script>
 </body>
 

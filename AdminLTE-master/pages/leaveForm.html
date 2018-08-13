@@ -122,7 +122,7 @@
                 <span>Services</span>
               </a>
             </li>
-            <li class="active treeview menu-open">
+            <!-- <li class="active treeview menu-open">
                 <a href="#">
                   <i class="fa fa-fw fa-users"></i>
                   <span>Employees</span>
@@ -135,7 +135,7 @@
                   <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
                   <li  class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li>
                 </ul>
-              </li>
+              </li> -->
             <li>
               <a href="headerImage.html">
                 <i class="fa   fa-upload"></i>
@@ -160,10 +160,10 @@
                 <span>Analytics</span>
               </a>
             </li>
-            <!-- <li class="header">Employee</li>
+            <li class="header">Employee</li>
             <li><a href="employees.html"><i class="fa fa-circle-o"></i>Add/View</a></li>
             <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
-            <li class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li> -->
+            <li class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -187,42 +187,56 @@
         </ol>
       </section>
       <section class="content">
-          <!-- <div class="slds-grid slds-wrap">
-           <div class="slds-size_1-of-3" ng-repeat="reqPlace in allLeavereq">
-             <article class="slds-card">
-               <div class="slds-card__header slds-grid">
-                 <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                   <div class="slds-media__figure">
-                     <span class="slds-icon_container slds-icon-standard-account" title="account">
-                       <img style="width:6.5rem;height:5.5rem;border-radius: 0.25rem;" src="{{reqPlace.title_img}}"/>
-                     </span>
-                   </div>
-                   <div class="slds-media__body">
-                     <h2 class="slds-card__header-title slds-truncate">
-                       <div>
-                         <span class="slds-text-heading_small" style="font-size: 2rem;" title="{{reqPlace.name}}">{{reqPlace.name}}</span>
-                       </div>
-                       <div>
-                         <span class="">Open: <b>{{reqPlace.opening_time}} - {{reqPlace.closing_time}}</b></span>
-                       </div>
-                       <div>
-                         <span class="">{{reqPlace.street_no}},{{reqPlace.area}},</span>
-                       </div>
-                       <div>
-                         <span class="">{{reqPlace.city}} - {{reqPlace.pincode}}, {{reqPlace.state}}</span>
-                       </div>
-                     </h2>
-                   </div>
-                 </header>
-               </div>
-               <footer class="slds-card__footer">
-                 <button class="slds-button slds-button_neutral" ng-click="placeacceptance('Accepted',reqPlace._id)">Accept</button>
-                 <button class="slds-button slds-button_destructive" ng-click="placeacceptance('Rejected',reqPlace._id)">Reject</button>
-               </footer>
-             </article>
-           </div>
+          <div class="row">
+            <div class="col-md-12">
+              <div class="box">
+              <div class="box-header">
+                  <h3 class="box-title">Leave Request</h3>
+              </div>
+              <!-- /.box-header -->
+              <div class="box-body" style="overflow-x:auto;">
+                <div class="slds-grid slds-wrap">
+                  <div class="slds-size_1-of-4 slds-p-around_xx-small" ng-repeat="reqPlace in allLeavereq">
+                    <article class="slds-card">
+                      <div class="slds-card__header slds-grid">
+                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
+                          <div class="slds-media__figure">
+                            <span class="slds-icon_container slds-icon-standard-account" title="account">
+                              <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="{{reqPlace.emp_details.profile_pic}}"/>
+                            </span>
+                          </div>
+                          <div class="slds-media__body">
+                            <h2 class="slds-card__header-title slds-truncate">
+                              <div>
+                                <span class="slds-text-heading_small" style="font-size: 2rem;" title="{{reqPlace.emp_details.name}}">{{reqPlace.emp_details.name}}</span>
+                              </div>
+                            </h2>
+                          </div>
+                        </header>
+                      </div>
+                      <div class="slds-card_body">
+                        <div>
+                          <div class="slds-align_absolute-center">
+                            <span class="slds-m-horizontal_small">From: <b>{{reqPlace.leave_from}}</b></span>
+                            <span>To: <b>{{reqPlace.leave_to}}</b></span><br/>
+                          </div>
+                          <div class="slds-p-vertical_small slds-p-horizontal_small">
+                            {{reqPlace.reason}}
+                          </div>
+                        </div>
+                      </div>
+                      <footer class="slds-card__footer">
+                        <button class="slds-button slds-button_neutral" ng-click="leaveacceptance('Accepted',reqPlace._id)">Accept</button>
+                        <button class="slds-button slds-button_destructive" ng-click="leaveacceptance('Rejected',reqPlace._id)">Reject</button>
+                      </footer>
+                    </article>
+                  </div>
+                </div>
+                </div>
+              </div>
          </div>
-       </section> -->
+         </div>
+       </section>
     </div>
     <div class="control-sidebar-bg"></div>
   </div>
@@ -275,6 +289,10 @@
           headers: { 'Content-Type': 'application/json' }
         }).success(function (data) {
           $scope.allLeavereq = data.leaveList;
+          for (var i = 0; i < $scope.allLeavereq.length; i++) {
+            $scope.allLeavereq[i]['emp_details'] = $scope.empMap[$scope.allLeavereq[i].emp_id];
+          }
+          console.log('allLeavereq::',$scope.allLeavereq);
         });
       };
 
@@ -293,16 +311,28 @@
             for (var i = 0; i < $scope.allEmp.length; i++) {
               $scope.empMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i];
             }
-            console.log('empMap::>',$scope.empMap);
+            console.log('empMap',$scope.empMap);
             $scope.showSpinner = false;
-            getEmpLocation();
+            getLeaveReqList();
           })
         } else {
           window.location.href = '../index.html';
         }
       };
       getEmployees();
-      getLeaveReqList();
+      $scope.leaveacceptance = function(status, id){
+        /*$scope.showSpinner = true;
+        $http({
+          method: 'POST',
+          url: 'https://freelaunce2.herokuapp.com/admin/leave_acceptance',
+          data: {'_id': id, 'status':status},
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data);
+          $scope.showSpinner = false;
+          getLeaveReqList();
+        }); */
+      };
     });
 
   </script>

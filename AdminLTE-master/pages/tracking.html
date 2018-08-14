@@ -217,8 +217,8 @@
                         <h3 class="box-title">All Employees</h3>
                     </div>
                     <div class="box-body">
-                      <ng-map center="current-position" zoom="15">
-                        <marker position="current" animation="Animation.BOUNCE" centered="true"></marker>
+                      <ng-map center="currentlocation" zoom="15">
+                        <marker position="currentlocation" animation="Animation.BOUNCE" centered="true"></marker>
                         <custom-marker ng-repeat="empLoc in allLoc" position="{{empLoc.location}}"  on-mouseover="mouseover(empLoc)" on-mouseout="mouseout(empLoc)"
                         on-click="click(empLoc.emp)"  scrollwheel="false"
                         zoom-to-include-markers="true">
@@ -438,6 +438,19 @@
       $scope.showAll = true;
       $scope.showModel = false;
       $scope.showPopover = [];
+
+      var getLocation = function() {
+          if (navigator.geolocation) {
+              navigator.geolocation.getCurrentPosition(showPosition);
+          } else { 
+              alert("Geolocation is not supported by this browser.");
+          }
+      }
+      getLocation();
+      function showPosition(position) {
+        $scope.currentlocation = [position.coords.latitude,position.coords.longitude];
+        $scope.$apply();
+      }
 
       $scope.mouseover = function(event, empLoc){
         empLoc.showPopover = true;

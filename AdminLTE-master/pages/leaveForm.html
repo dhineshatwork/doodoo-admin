@@ -295,6 +295,11 @@
           console.log('allLeavereq::',$scope.allLeavereq);
         });
       };
+      
+      $scope.signOut = function(){
+        $window.localStorage.clear();
+        window.location.href = '../index.html';
+      };
 
       $scope.allEmp = [];
       $scope.empMap = {};

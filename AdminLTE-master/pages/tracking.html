@@ -451,6 +451,11 @@
         $scope.currentlocation = [position.coords.latitude,position.coords.longitude];
         $scope.$apply();
       }
+      
+      $scope.signOut = function(){
+        $window.localStorage.clear();
+        window.location.href = '../index.html';
+      };
 
       $scope.mouseover = function(event, empLoc){
         empLoc.showPopover = true;

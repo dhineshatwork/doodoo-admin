@@ -16,10 +16,6 @@
   <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="../bower_components/datatables.net-bs/css/dataTables.bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/material-design-lite/1.1.0/material.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/1.10.16/css/dataTables.material.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../SLDS/salesforce-lightning-design-system.min.css">
   <link rel="stylesheet" href="../dist/css/AdminLTE.min.css">
@@ -162,7 +158,6 @@
       <section class="content-header">
         <h1>
           Employees
-          <!--small>advanced tables</small-->
         </h1>
         <ol class="breadcrumb">
           <li>
@@ -175,52 +170,65 @@
       <section class="content">
           <div class="row">
             <div class="col-md-12">
-              <div class="box">
-              <div class="box-header">
-                  <h3 class="box-title">Leave Request</h3>
-              </div>
-              <!-- /.box-header -->
-              <div class="box-body" style="overflow-x:auto;">
-                <div class="slds-grid slds-wrap">
-                  <div class="slds-size_1-of-4 slds-p-around_xx-small" ng-repeat="reqPlace in allLeavereq | filter : reqPlace.status = 'Pending'">
-                    <article class="slds-card">
-                      <div class="slds-card__header slds-grid">
-                        <header class="slds-media slds-media_center slds-has-flexi-truncate">
-                          <div class="slds-media__figure">
-                            <span class="slds-icon_container slds-icon-standard-account" title="account">
-                              <img style="width:5.5rem;height:4.5rem;border-radius: 0.25rem;" src="{{reqPlace.emp_details.profile_pic}}"/>
-                            </span>
-                          </div>
-                          <div class="slds-media__body">
-                            <h2 class="slds-card__header-title slds-truncate">
-                              <div>
-                                <span class="slds-text-heading_small" style="font-size: 2rem;" title="{{reqPlace.emp_details.name}}">{{reqPlace.emp_details.name}}</span>
-                              </div>
-                            </h2>
-                          </div>
-                        </header>
-                      </div>
-                      <div class="slds-card_body">
-                        <div>
-                          <div class="slds-align_absolute-center">
-                            <span class="slds-m-horizontal_small">From: <b>{{reqPlace.leave_from}}</b></span>
-                            <span>To: <b>{{reqPlace.leave_to}}</b></span><br/>
-                          </div>
-                          <div class="slds-p-vertical_small slds-p-horizontal_small">
-                            {{reqPlace.reason}}
-                          </div>
-                        </div>
-                      </div>
-                      <footer class="slds-card__footer">
-                        <button class="slds-button slds-button_neutral" ng-click="leaveacceptance('Accepted',reqPlace._id)">Accept</button>
-                        <button class="slds-button slds-button_destructive" ng-click="leaveacceptance('Rejected',reqPlace._id)">Reject</button>
-                      </footer>
-                    </article>
-                  </div>
-                </div>
-                </div>
-              </div>
-         </div>
+                <div class="box">
+                    <div class="box-header">
+                        <h3 class="box-title">Attendance</h3>
+                    </div>
+                    <!-- /.box-header -->
+                    <div class="box-body">
+                        <article class="slds-card" ng-show="allEmp.length > 0" style="margin-top:1rem;">
+                            <div class="slds-card__header">
+                                <header class="slds-media slds-media_center slds-has-flexi-truncate slds-grid slds-wrap">
+                                    <div class="slds-grid slds-wrap slds-size_1-of-1">
+                                        <div class="slds-size--1-of-6 slds-m-top_medium" ng-show="allEmp.length > 0">
+                                            <input ng-disabled="currentPage == 0" ng-click="paginationFunction('pre');" type="button" class="slds-button slds-button--neutral"
+                                            value="Previous"/> {{currentPage+1}}/{{allEmp.length == 0 ? '1' : (allEmp.length/pageSize | ceil)}}
+                                            <input ng-disabled="currentPage >= allEmp.length/pageSize - 1" ng-click="paginationFunction('next');" type="button" class="slds-button slds-button--neutral"
+                                            value="Next" />
+                                        </div>
+                                        <div class="slds-size--4-of-6"></div>
+                                        <div class="slds-size--1-of-6" ng-show="allEmp.length > 0">
+                                            <label class="slds-form-element__label" for="select-01"></label>
+                                            <div class="slds-form-element__control">
+                                                <div class="slds-select_container">
+                                                    <select class="slds-select" id="select-01" ng-options="item as item for item in selectData" ng-model="pageSize" ng-change="currentPage=0;"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </header>
+                            </div>
+                            <div class="slds-card__header" ng-show="allEmp.length > 0">
+                                <table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_cell-buffer">
+                                    <thead>
+                                        <tr class="slds-text-title_caps">
+                                            <th scope="col">
+                                                <div class="slds-truncate">Employee Id</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Employee Name</div>
+                                            </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr ng-repeat="emp in allEmp | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                            <td class="slds-truncate">
+                                                {{emp.employee_id}}
+                                            </td>
+                                            <td class="slds-truncate">
+                                                {{emp.name}}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                                <div ng-hide="allEmp.length > 0" class="slds-size--1-of-1 slds-text-align_center" style="margin-top: 0.75rem;">
+                                    No data to display.
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+                </div> 
+            </div>
          </div>
        </section>
     </div>
@@ -247,10 +255,7 @@
   <script src="../bower_components/jquery/dist/jquery.min.js"></script>
   <!-- Bootstrap 3.3.7 -->
   <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
-  <!-- DataTables -->
-  <script src="../bower_components/datatables.net/js/jquery.dataTables.min.js"></script>
-  <script src="https://cdn.datatables.net/1.10.16/js/dataTables.material.min.js"></script>
-  <!--script src="../bower_components/datatables.net-bs/js/dataTables.bootstrap.min.js"></script-->
+
   <!-- SlimScroll -->
   <script src="../bower_components/jquery-slimscroll/jquery.slimscroll.min.js"></script>
   <!-- FastClick -->
@@ -266,64 +271,52 @@
   <script>
 
     var app = angular.module('empApp', ['google.places']);
-    app.controller('empCtrl', function ($scope, $http, $window, $location) {
-      
-      var getLeaveReqList = function(){
-        $http({
-          method: 'GET',
-          url: 'https://freelaunce2.herokuapp.com/admin/leaveFormList',
-          headers: { 'Content-Type': 'application/json' }
-        }).success(function (data) {
-          $scope.allLeavereq = data.leaveList;
-          for (var i = 0; i < $scope.allLeavereq.length; i++) {
-            $scope.allLeavereq[i]['emp_details'] = $scope.empMap[$scope.allLeavereq[i].emp_id];
-          }
-          console.log('allLeavereq::',$scope.allLeavereq);
-        });
-      };
-      
-      $scope.signOut = function(){
-        $window.localStorage.clear();
-        window.location.href = '../index.html';
-      };
-
-      $scope.allEmp = [];
-      $scope.empMap = {};
-      var getEmployees = function () {
-        $scope.showSpinner = true;
-        if ($window.localStorage['isLogin']) {
-          $http({
-            method: 'GET',
-            url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
-            headers: { 'Content-Type': 'application/json' }
-          }).success(function (data) {
-            console.log('data', data);
-            $scope.allEmp = data.employeeList;
-            for (var i = 0; i < $scope.allEmp.length; i++) {
-              $scope.empMap[$scope.allEmp[i].employee_id] = $scope.allEmp[i];
-            }
-            console.log('empMap',$scope.empMap);
-            $scope.showSpinner = false;
-            getLeaveReqList();
-          })
-        } else {
-          window.location.href = '../index.html';
+    app.filter('startFrom', function () {
+        return function (input, start) {
+            start = +start;
+            console.log(input);
+            if (input && input.length > 0) return input.slice(start);
         }
-      };
-      getEmployees();
-      $scope.leaveacceptance = function(status, id){
-        $scope.showSpinner = true;
-        $http({
-          method: 'POST',
-          url: 'https://freelaunce2.herokuapp.com/admin/leaveStatus',
-          data: {'leave_id': id, 'status':status},
-          headers: { 'Content-Type': 'application/json' }
-        }).success(function (data) {
-          console.log('data', data);
-          $scope.showSpinner = false;
-          getLeaveReqList();
-        }); 
-      };
+    });
+
+    app.filter('ceil', function() {
+        return function(input) {
+            return Math.ceil(input);
+        };
+    });
+
+    app.controller('empCtrl', function ($scope, $http, $window, $location) {
+        $scope.currentPage = 0;
+        $scope.selectData = ['5', '10', '25', '50', '100'];
+        $scope.pageSize = $scope.selectData[1];
+
+        $scope.paginationFunction = function (direction) {
+            if (direction == 'pre') {
+                $scope.currentPage--;
+            } else if (direction == 'next') {
+                $scope.currentPage++;
+            }
+        }
+        
+        $scope.allEmp = [];
+        
+        var getEmployees = function () {
+            $scope.showSpinner = true;
+            if ($window.localStorage['isLogin']) {
+            $http({
+                method: 'GET',
+                url: 'https://freelaunce2.herokuapp.com/admin/employeeList',
+                headers: { 'Content-Type': 'application/json' }
+            }).success(function (data) {
+                console.log('data', data);
+                $scope.allEmp = data.employeeList;
+                $scope.showSpinner = false;
+            })
+            } else {
+            window.location.href = '../index.html';
+            }
+        };
+        getEmployees();
     });
 
   </script>

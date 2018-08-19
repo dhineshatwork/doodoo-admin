@@ -13,7 +13,7 @@
   <link rel="stylesheet" href="../bower_components/bootstrap/dist/css/bootstrap.min.css">
   <!-- Font Awesome -->
   <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" />
-  <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">
+  <!--link rel="stylesheet" href="../bower_components/font-awesome/css/font-awesome.min.css">-->
   <!-- Ionicons -->
   <link rel="stylesheet" href="../bower_components/Ionicons/css/ionicons.min.css">
   <!-- Theme style -->
@@ -22,7 +22,6 @@
   <!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="../dist/css/skins/_all-skins.min.css">
-  <link rel="stylesheet" href="../bower_components/angular-google-places-autocomplete/src/autocomplete.css">
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
@@ -144,8 +143,9 @@
             </li>
             <li class="header">Employee</li>
             <li><a href="employees.html"><i class="fa fa-circle-o"></i>Add/View</a></li>
+            <li class="active"><a href="attendance.html"><i class="fa fa-circle-o"></i>Attendance</a></li>
             <li><a href="tracking.html"><i class="fa fa-circle-o"></i>Track</a></li>
-            <li class="active"><a href="leaveForm.html"><i class="fa fa-circle-o"></i> Leave Form</a></li>
+            <li><a href="leaveForm.html"><i class="fa fa-circle-o"></i>Leave Form</a></li>
         </ul>
       </section>
       <!-- /.sidebar -->
@@ -176,8 +176,8 @@
                     </div>
                     <!-- /.box-header -->
                     <div class="box-body">
-                        <article class="slds-card" ng-show="allEmp.length > 0" style="margin-top:1rem;">
-                            <div class="slds-card__header">
+                        <article class="slds-card" style="margin-top:1rem;">
+                            <div class="slds-card__header slds-grid">
                                 <header class="slds-media slds-media_center slds-has-flexi-truncate slds-grid slds-wrap">
                                     <div class="slds-grid slds-wrap slds-size_1-of-1">
                                         <div class="slds-size--1-of-6 slds-m-top_medium" ng-show="allEmp.length > 0">
@@ -186,20 +186,27 @@
                                             <input ng-disabled="currentPage >= allEmp.length/pageSize - 1" ng-click="paginationFunction('next');" type="button" class="slds-button slds-button--neutral"
                                             value="Next" />
                                         </div>
-                                        <div class="slds-size--4-of-6"></div>
+                                        <div class="slds-size--4-of-6 slds-grid">
+                                            <div class="slds-size--1-of-3"></div>
+                                            <div class="slds-form-element__control slds-size--1-of-3">
+                                                <label class="slds-form-element__label" for="select-01"></label>
+                                                <input type="text" class="slds-input"  placeholder="Search...."  ng-model="searchTxt"/>
+                                            </div>
+                                            <div class="slds-size--1-of-3"></div>
+                                        </div>
                                         <div class="slds-size--1-of-6" ng-show="allEmp.length > 0">
                                             <label class="slds-form-element__label" for="select-01"></label>
                                             <div class="slds-form-element__control">
                                                 <div class="slds-select_container">
-                                                    <select class="slds-select" id="select-01" ng-options="item as item for item in selectData" ng-model="pageSize" ng-change="currentPage=0;"/>
+                                                    <select class="slds-select" id="select-01" ng-options="item as item for item in selectData" ng-model="pageSize" ng-change="currentPage=0;"></select>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </header>
                             </div>
-                            <div class="slds-card__header" ng-show="allEmp.length > 0">
-                                <table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_cell-buffer">
+                            <div class="slds-card__body slds-card__body_inner">
+                              <table class="slds-table slds-table_fixed-layout slds-table_bordered slds-table_cell-buffer">
                                     <thead>
                                         <tr class="slds-text-title_caps">
                                             <th scope="col">
@@ -208,15 +215,27 @@
                                             <th scope="col">
                                                 <div class="slds-truncate">Employee Name</div>
                                             </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Log In</div>
+                                            </th>
+                                            <th scope="col">
+                                                <div class="slds-truncate">Log out</div>
+                                            </th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr ng-repeat="emp in allEmp | startFrom:currentPage*pageSize | limitTo:pageSize">
+                                        <tr ng-repeat="emp in allEmp | startFrom:currentPage*pageSize | limitTo:pageSize | filter:{ name: searchTxt}">
                                             <td class="slds-truncate">
                                                 {{emp.employee_id}}
                                             </td>
                                             <td class="slds-truncate">
                                                 {{emp.name}}
+                                            </td>
+                                            <td class="slds-truncate">
+                                                <div ng-if="emp.login_time">{{emp.login_time * 1000 | date:'dd/MM/yyyy hh:mm a'}}</div>
+                                            </td>
+                                            <td class="slds-truncate">
+                                                <div ng-if="emp.logout_time">{{emp.logout_time  * 1000  | date:'dd/MM/yyyy hh:mm a'}}</div>
                                             </td>
                                         </tr>
                                     </tbody>
@@ -274,7 +293,6 @@
     app.filter('startFrom', function () {
         return function (input, start) {
             start = +start;
-            console.log(input);
             if (input && input.length > 0) return input.slice(start);
         }
     });
@@ -318,7 +336,6 @@
         };
         getEmployees();
     });
-
   </script>
 </body>
 

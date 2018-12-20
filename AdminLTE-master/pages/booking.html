@@ -583,6 +583,30 @@
           $(event.currentTarget).addClass('slds-is-close');
         }
       }
+
+      var getAllBookingDetails = function (isFromInit) {
+        $scope.showSpinner = true;
+        $http({
+          method: 'GET',
+          url: 'https://freelaunce2.herokuapp.com/admin/getCurrentMonthOrders',
+          headers: { 'Content-Type': 'application/json' }
+        }).success(function (data) {
+          console.log('data', data.bookingDetails);
+          $scope.allBookingDetails = data.bookingDetails;
+          $scope.showSpinner = false;
+          if (isFromInit) {
+            $(function () {
+              $('#completeTable').DataTable({
+                "columnDefs": [{
+                  "orderable": false,
+                  "targets": [0]
+                }]
+              })
+            })
+          }
+        })
+      };
+      
       $scope.acceptOrder = function (isFromCard, order) {
         if (isFromCard) {
           console.log(order);

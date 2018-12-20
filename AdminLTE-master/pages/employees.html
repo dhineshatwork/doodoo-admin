@@ -243,8 +243,10 @@
                   </div>
                   <div class="slds-form-element slds-p-bottom_medium">
                     <label class="slds-form-element__label" for="text-input-id-1">Available Location</label>
-                    <div class="slds-form-element__control">
-                      <input type="text" id="text-input-id-1" class="slds-input" g-places-autocomplete ng-model="addlocName" />
+                    <div class="slds-form-element__control"> 
+                  <select ng-model="newEmp.location" ng-options="loc for loc in locations" id="text-input-id-1" class="slds-input">
+                  </select>
+                      <!-- <input type="text" id="text-input-id-1" class="slds-input" g-places-autocomplete ng-model="addlocName" /> -->
                       <!--i class="fa fa-check slds-p-top_x-small" ng-if="addlocName.loc_name" style="position: absolute;right: .5rem;cursor: pointer;" ng-click="pushLocName(false)"></i>
                         </div>
                         <span class="slds-pill slds-pill_link" ng-repeat="loc in newEmp.location">
@@ -303,7 +305,7 @@
                     </div>
                   </div>
                   <button class="slds-align_absolute-center slds-button slds-button_neutral" ng-disabled="!newEmp.name || !newEmp.email ||
-                    !newEmp.mobile || !newEmp.address || !addlocName || !newEmp.category || !newEmp.sub_category || !empProPicName || !temppassword || !newEmp.password || newEmp.password != temppassword"
+                    !newEmp.mobile || !newEmp.address || !newEmp.location || !newEmp.category || !newEmp.sub_category || !empProPicName || !temppassword || !newEmp.password || newEmp.password != temppassword"
                     ng-click="addEmp()">Add</button>
                 </div>
               </div>
@@ -536,10 +538,12 @@
       $scope.updatelocName = {};
       $scope.updateEmpProPic = {};
       $scope.updateAddlocName = {};
+      $scope.locations = ["Chennai, Tamil Nadu, India","Coimbatore, Tamil Nadu, India","Bangalore, Karnataka, India","Erode, Tamil Nadu, India","Salem, Tamil Nadu, India"]
       $scope.updateLocation = function (loc) {
         if (typeof loc == 'object')
           $scope.updatelocName = loc;
       }
+
       $scope.addEmp = function () {
 
         $scope.showSpinner = true;
@@ -555,7 +559,7 @@
           }
         }).success(function (result) {
           $scope.newEmp.profile_pic = result.secure_url;
-          $scope.newEmp.location = $scope.addlocName.formatted_address;
+       //   $scope.newEmp.location = $scope.addlocName.formatted_address;
           console.log($scope.newEmp);
 
           $http({
@@ -566,12 +570,16 @@
           }).success(function (data) {
             console.log('data', data);
             $scope.showSpinner = false;
-            $scope.addlocName = {};
+            $scope.addlocName = '';
             $scope.newEmp = {};
+            $scope.temppassword = '';
             getEmployees();
           })
         });
       }
+
+     
+
       $scope.validateEmail = function($event){
         var regex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
         if(!regex.test($event.target.value)) 

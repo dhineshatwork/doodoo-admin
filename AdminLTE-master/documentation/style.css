@@ -259,3 +259,7 @@ li.L7,
 li.L9 {
   /* */
 }
+
+.map {
+  height: 500px !important;
+}

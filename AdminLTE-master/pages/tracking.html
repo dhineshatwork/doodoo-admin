@@ -218,7 +218,7 @@
                         <h3 class="box-title">All Employees</h3>
                     </div>
                     <div class="box-body">
-                      <ng-map center="['11.1271','78.6569']" zoom="5">
+                      <ng-map center="['11.1271','78.6569']" zoom="5" style="height: 800px"> 
                         <!-- <marker position="['11.1271','78.6569']" animation="Animation.BOUNCE" centered="true"></marker> -->
                         <custom-marker ng-repeat="empLoc in allLoc" position="{{empLoc.location}}"  on-mouseover="mouseover(empLoc)" on-mouseout="mouseout(empLoc)"
                         on-click="click(empLoc.emp)"  scrollwheel="false"
